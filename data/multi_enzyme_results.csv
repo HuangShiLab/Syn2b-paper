@@ -1,0 +1,14 @@
+genome_label,group,sv_type,sv_size,sv_position,sv_label,mash_proxy,syn2b_adjacency_jaccard,syn2b_breakpoint_count,kendall_tau
+control_1,control,none,0,,control_1,0.010083,0.336683,5148,0.999046
+inversion_100kb_r1,rearranged,inversion,100000,2821326,inversion_100kb,0.010083,0.32592,5274,0.99905
+inversion_100kb_r2,rearranged,inversion,100000,1990567,inversion_100kb,0.010083,0.328978,5238,0.998535
+inversion_500kb_r1,rearranged,inversion,500000,1746652,inversion_500kb,0.010083,0.292871,5674,0.995652
+inversion_500kb_r2,rearranged,inversion,500000,1744463,inversion_500kb,0.010083,0.287736,5738,0.999217
+translocation_100kb_r1,rearranged,translocation,100000,4220385,translocation_100kb,0.010084,0.336124,5155,0.943201
+translocation_100kb_r2,rearranged,translocation,100000,1934838,translocation_100kb,0.010083,0.336511,5150,0.856816
+translocation_500kb_r1,rearranged,translocation,500000,592373,translocation_500kb,0.010083,0.336167,5154,0.854367
+translocation_500kb_r2,rearranged,translocation,500000,1300538,translocation_500kb,0.010083,0.336167,5154,0.912825
+insertion_10kb_r1,rearranged,insertion,10000,304747,insertion_10kb,0.010136,0.336207,5159,0.999046
+insertion_10kb_r2,rearranged,insertion,10000,1848471,insertion_10kb,0.010136,0.336337,5156,0.999046
+deletion_10kb_r1,rearranged,deletion,10000,2093730,deletion_10kb,0.010133,0.336129,5145,0.999039
+deletion_10kb_r2,rearranged,deletion,10000,4384876,deletion_10kb,0.010135,0.336084,5150,0.999041
