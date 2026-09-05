@@ -14,9 +14,10 @@ restriction-enzyme tag adjacency.
 ## One-sentence summary
 
 Syn2b turns microbial genomes into ordered restriction-enzyme tags and reports
-length-weighted structural metrics that are mathematically invariant to assembly
-fragmentation; on 43,334 GTDB-R207 pairs its inverted aligned fraction agrees
-with dnadiff at r = 0.9355, and at ≥97% ANIm the agreement rises to r = 0.996.
+length-weighted structural metrics that are robust to assembly fragmentation; on
+43,334 GTDB-R207 pairs its inverted aligned fraction agrees with dnadiff at
+r = 0.9355 (95% CI 0.934–0.937), and at ≥97% ANIm the agreement rises to
+r = 0.996 (95% CI 0.996–0.996).
 
 ---
 
@@ -133,10 +134,11 @@ Simulated evolutionary regimes reproduce the classic SynTracker patterns:
 - ***N. gonorrhoeae*-like**: both metrics vary, synteny resolves recent rearrangement
 - ***E. coli* hypermutator-like**: low popANI, high synteny (point-mutation driven)
 
-### 5. Runtime scales linearly and is orders of magnitude faster than alignment-based methods
+### 5. Runtime scales linearly and avoids pairwise alignment
 
 Digestion of a 4.6-Mbp genome takes ~0.17 s; pairwise metric computation takes
-<1 s. Full benchmarks are in `results/efficiency_v8/syn2b_struct_benchmark.tsv`.
+<1 s after fixed costs are amortized. Full benchmarks are in
+`results/efficiency_v8/syn2b_struct_benchmark.tsv`.
 
 ---
 
@@ -173,7 +175,7 @@ The SLURM runners are in `scripts/gtdb50k/`:
 # Compute Syn2b inverted fractions on the held-out set
 sbatch scripts/gtdb50k/s12_syn2b_bcgI_invfrac.slurm
 
-# Compare to dnadiff ground truth
+# Compare to dnadiff reference estimate
 python3 scripts/compare_inverted_fractions.py results/gtdb50k
 ```
 
