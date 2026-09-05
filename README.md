@@ -9,15 +9,22 @@ This repository contains the simulation data, analysis scripts, and figures for 
 ├── README.md
 ├── data/                          # Simulation results (CSV)
 │   ├── multi_enzyme_results.csv   # Multi-enzyme (BcgI+AlfI+BplI+CjePI) SV detection
-│   └── enzyme_comparison.csv      # Four-enzyme systematic comparison
+│   ├── enzyme_comparison.csv      # Four-enzyme systematic comparison
+│   └── syntracker_validation/     # SynTracker validation structural raw data
 ├── figures/                       # Generated figures
 │   ├── multi_enzyme_results.png   # Figure: multi-enzyme SV detection
 │   └── figure3_syn2b.png          # Figure: popANI vs Syn2b synteny (4 species)
+├── results/                       # Real-data analysis outputs
+│   ├── gtdb50k/                   # GTDB-R207 50 000-pair structural analysis
+│   ├── closed_inversions/         # Closed-genome inversion / junction validation
+│   └── efficiency_v8/             # Syn2b structural speed benchmark
 ├── scripts/                       # Analysis scripts (copied from main code repo)
 │   ├── simulate_rearrangement.py  # Core simulation engine (SV + digestion)
 │   ├── enzyme_comparison.py       # Four-enzyme comparison
 │   ├── figure3_simulation.py      # SynTracker-like Figure 3 simulation
-│   └── compare_with_syntracker.py # Mash vs Syn2b vs APSS comparison
+│   ├── compare_with_syntracker.py # Mash vs Syn2b vs APSS comparison
+│   ├── gtdb50k/                   # GTDB-R207 structural runners
+│   └── syntracker_validation/     # SynTracker validation runners
 └── report/                        # Generated report
     └── Syn2b_Enzyme_Report.docx
 ```
@@ -42,6 +49,19 @@ Four evolutionary modes were simulated:
 - **H. pylori-like**: No SNPs, high SV → popANI constant, synteny varies (uncorrelated)
 - **N. gonorrhoeae-like**: Medium SNPs, medium SV → both change, synteny has higher resolution
 - **E. coli hypermutator-like**: High SNPs, low SV → both change, popANI has larger range
+
+### GTDB-R207 structural validation
+
+On 43 334 held-out GTDB-R207 pairs, Syn2b's length-weighted inverted aligned
+fraction (`raw_inverted_fraction`) agrees tightly with the dnadiff ground truth:
+
+| comparison | r | slope | intercept |
+|---|---:|---:|---:|
+| Syn2b vs dnadiff inverted fraction | 0.9355 | 0.97 | ≈ 0 |
+
+The full report is in `results/gtdb50k/SV_REANALYSIS.md`.  These structural
+results are part of the Syn2b method paper; the companion Syn2bANI application
+paper focuses on ANI estimation and cites Syn2b for SV metrics.
 
 ## Usage
 
