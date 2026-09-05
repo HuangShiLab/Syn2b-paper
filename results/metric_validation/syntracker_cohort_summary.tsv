@@ -1,0 +1,9 @@
+label	n	median_bp	median_scj	median_obs_frac
+Escherichia_coli_hypermutator_self_floor_bp	0			
+Escherichia_coli_hypermutator_cross_median_bp	253	0.0	24.0	0.9973
+Helicobacter_pylori_self_floor_bp	476	0.0	11.0	0.9951
+Helicobacter_pylori_cross_median_bp	2450	8.0	37.0	0.9779
+Neisseria_gonorrhoeae_self_floor_bp	0			
+Neisseria_gonorrhoeae_cross_median_bp	66	3.0	41.0	0.99295
+Streptomyces_rimosus_self_floor_bp	0			
+Streptomyces_rimosus_cross_median_bp	190	10.0	760.0	0.97985

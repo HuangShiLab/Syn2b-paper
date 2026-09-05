@@ -10,7 +10,8 @@ Target journal: Nature Methods (as indicated by user)
 The manuscript presents a clear conceptual advance — using length-weighted ratios
 of restriction-enzyme tag orientations to estimate structural variation in a way
 that is robust to assembly fragmentation. The GTDB-R207 validation (r = 0.9355
-overall, 0.996 at ≥97% ANIm) is strong. However, several issues need to be
+overall, n = 43,312 complete pairs) is strong; the 95–100% identity band
+(n = 404) gives r = 0.9908. However, several issues need to be
 addressed before submission, ranging from formal rigor to missing comparisons
 and methodological detail.
 
