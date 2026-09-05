@@ -95,10 +95,10 @@ In *E. coli* K-12 (4.54 Mb):
 | enzyme | tag density | inversion Δbreakpoints | indel Δbreakpoints |
 |---|---:|---:|---:|
 | BcgI | 0.63 / kb | +646 | +5 |
-| AlfI | 0.44 / kb | +484 | +4 |
+| AlfI | 0.43 / kb | +484 | +4 |
 | BplI | 0.08 / kb | +64 | +3 |
-| CjePI | 2.06 / kb | +2,018 | +23 |
-| **all four** | **3.21 / kb** | **+3,201** | **+29** |
+| CjePI | 2.04 / kb | +2,018 | +23 |
+| **all four** | **3.19 / kb** | **+3,201** | **+29** |
 
 BcgI and AlfI provide the standard Type IIB backbone; BplI adds a sparser,
 longer-tag arm; CjePI contributes a 3.3× denser Type IIG layer that is
