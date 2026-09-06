@@ -234,20 +234,16 @@ def fig3_gtdb_validation():
     df = df.dropna(subset=["dnadiff_inverted_fraction", "syn2b_raw_inverted_fraction"])
 
     # Attach real contig counts from GTDB metadata
-    contig_df = None
     contig_meta_path = os.path.join(os.path.dirname(ROOT), "Syn2bANI-paper", "data", "gtdb_metadata")
-    try:
-        bac = pd.read_csv(os.path.join(contig_meta_path, "bac120_metadata_r207.tsv"), sep="\t", usecols=["accession", "contig_count"])
-        ar = pd.read_csv(os.path.join(contig_meta_path, "ar53_metadata_r207.tsv"), sep="\t", usecols=["accession", "contig_count"])
-        meta = pd.concat([bac, ar], ignore_index=True)
-        meta["accession_short"] = meta["accession"].str.replace(r"^(GB_|RS_)", "", regex=True)
-        contig_df = meta[["accession_short", "contig_count"]].drop_duplicates("accession_short")
-        df[["q_acc", "r_acc"]] = df["pairid"].str.split("__", expand=True)
-        df = df.merge(contig_df.rename(columns={"accession_short": "q_acc", "contig_count": "q_contigs"}), on="q_acc", how="left")
-        df = df.merge(contig_df.rename(columns={"accession_short": "r_acc", "contig_count": "r_contigs"}), on="r_acc", how="left")
-        df["max_contigs"] = df[["q_contigs", "r_contigs"]].max(axis=1)
-    except Exception as e:
-        print(f"Could not load contig metadata: {e}")
+    bac = pd.read_csv(os.path.join(contig_meta_path, "bac120_metadata_r207.tsv"), sep="\t", usecols=["accession", "contig_count"])
+    ar = pd.read_csv(os.path.join(contig_meta_path, "ar53_metadata_r207.tsv"), sep="\t", usecols=["accession", "contig_count"])
+    meta = pd.concat([bac, ar], ignore_index=True)
+    meta["accession_short"] = meta["accession"].str.replace(r"^(GB_|RS_)", "", regex=True)
+    contig_df = meta[["accession_short", "contig_count"]].drop_duplicates("accession_short")
+    df[["q_acc", "r_acc"]] = df["pairid"].str.split("__", expand=True)
+    df = df.merge(contig_df.rename(columns={"accession_short": "q_acc", "contig_count": "q_contigs"}), on="q_acc", how="left")
+    df = df.merge(contig_df.rename(columns={"accession_short": "r_acc", "contig_count": "r_contigs"}), on="r_acc", how="left")
+    df["max_contigs"] = df[["q_contigs", "r_contigs"]].max(axis=1)
 
     fig = plt.figure(figsize=(7.5, 5.5))
     gs = fig.add_gridspec(2, 2, hspace=0.45, wspace=0.35)
@@ -311,143 +307,152 @@ def fig3_gtdb_validation():
 
     # (d) Fragmentation invariance
     ax = fig.add_subplot(gs[1, 1])
-    if contig_df is not None and df["max_contigs"].notna().sum() > 100:
-        mask = df["max_contigs"].notna()
-        df["resid"] = df["syn2b_raw_inverted_fraction"] - df["dnadiff_inverted_fraction"]
-        r_if, _ = stats.pearsonr(df.loc[mask, "max_contigs"], df.loc[mask, "syn2b_raw_inverted_fraction"])
-        r_resid, _ = stats.pearsonr(df.loc[mask, "max_contigs"], df.loc[mask, "resid"])
-        hb = ax.hexbin(df.loc[mask, "max_contigs"], df.loc[mask, "resid"],
-                       gridsize=40, cmap="Purples", mincnt=1)
-        ax.axhline(0, color="red", ls="--", lw=1)
-        ax.set_xlabel("Max contigs per pair")
-        ax.set_ylabel("Syn2b − dnadiff inverted fraction")
-        ax.set_title("d  Length-weighted ratio is fragmentation-invariant")
-        ax.text(0.95, 0.95,
-                f"r(contigs, raw) = {r_if:.3f}\nr(contigs, residual) = {r_resid:.3f}",
-                transform=ax.transAxes, fontsize=7, verticalalignment="top", horizontalalignment="right",
-                bbox=dict(boxstyle="round", facecolor="white", alpha=0.8))
-    else:
-        xdemo = np.linspace(1, 200, 100)
-        ydemo = np.random.normal(0, 0.02, 100)
-        ax.scatter(xdemo, ydemo, s=3, alpha=0.3, color="purple")
-        ax.axhline(0, color="red", ls="--", lw=1)
-        ax.set_xlabel("Fragment count K")
-        ax.set_ylabel("Syn2b − dnadiff inverted fraction")
-        ax.set_title("d  Length-weighted ratio is fragmentation-invariant")
-        ax.text(0.5, 0.95, "(demo: contig metadata unavailable)", transform=ax.transAxes,
-                ha="center", va="top", fontsize=6, color="gray")
+    if df["max_contigs"].notna().sum() <= 100:
+        raise RuntimeError("Insufficient contig metadata for panel d")
+    mask = df["max_contigs"].notna()
+    df["resid"] = df["syn2b_raw_inverted_fraction"] - df["dnadiff_inverted_fraction"]
+    r_if, _ = stats.pearsonr(df.loc[mask, "max_contigs"], df.loc[mask, "syn2b_raw_inverted_fraction"])
+    r_resid, _ = stats.pearsonr(df.loc[mask, "max_contigs"], df.loc[mask, "resid"])
+    hb = ax.hexbin(df.loc[mask, "max_contigs"], df.loc[mask, "resid"],
+                   gridsize=40, cmap="Purples", mincnt=1)
+    ax.axhline(0, color="red", ls="--", lw=1)
+    ax.set_xlabel("Max contigs per pair")
+    ax.set_ylabel("Syn2b − dnadiff inverted fraction")
+    ax.set_title("d  Length-weighted ratio is fragmentation-invariant")
+    ax.text(0.95, 0.95,
+            f"r(contigs, raw) = {r_if:.3f}\nr(contigs, residual) = {r_resid:.3f}",
+            transform=ax.transAxes, fontsize=7, verticalalignment="top", horizontalalignment="right",
+            bbox=dict(boxstyle="round", facecolor="white", alpha=0.8))
 
     save(fig, "fig3_gtdb_validation.png")
 
 
 # ---------------------------------------------------------------------------
-# Figure 4: popANI vs synteny
+# Figure 4: Real SynTracker cohorts: ANI vs structural divergence
 # ---------------------------------------------------------------------------
 
-def fig4_popani_synteny():
-    sys.path.insert(0, os.path.join(ROOT, "scripts"))
-    from simulate_rearrangement import (
-        parse_fasta, substitute, inversion, translocation, insertion, deletion,
-        digest_multi, adjacency_jaccard, kendall_tau_rank
-    )
+def _norm_pair(a, b):
+    return "__".join(sorted([str(a), str(b)]))
 
-    def popani_proxy(mu_a, mu_b, rng):
-        base = 1.0 - (mu_a + mu_b) * 2.0
-        noise = rng.gauss(0, 0.00001)
-        return min(1.0, max(0.9995, base + noise))
 
-    # Synteny score: heuristic composite of local adjacency and global order.
-    # This score is used only to illustrate the four evolutionary regimes in
-    # Figure 4; the qualitative patterns are robust to the exact weighting
-    # (tested with adjacency-only, tau-only, and 0.5/0.5 composites).
-    def synteny_from_tags(tags_a, tags_b):
-        adj = adjacency_jaccard(tags_a, tags_b)
-        tau = kendall_tau_rank(tags_a, tags_b)
-        if tau is None:
-            tau = 1.0
-        # Equal-weight average of local adjacency and rescaled global order
-        return (adj + (tau + 1) / 2) / 2
+def _load_syntracker_skani(path):
+    """Load skani ANI and return (pair, ani_skani) table."""
+    df = pd.read_csv(path, sep="\t")
+    if "Ref_name" in df.columns and "Query_name" in df.columns:
+        df["ref"] = df["Ref_name"].astype(str)
+        df["query"] = df["Query_name"].astype(str)
+    else:
+        df["ref"] = df["Ref_file"].apply(lambda x: os.path.splitext(os.path.basename(x))[0])
+        df["query"] = df["Query_file"].apply(lambda x: os.path.splitext(os.path.basename(x))[0])
+    df["pair"] = [_norm_pair(q, r) for q, r in zip(df["query"], df["ref"])]
+    df = df.rename(columns={"ANI": "ani_skani"})
+    df = df[["pair", "ani_skani"]].copy()
+    df = df[df["pair"].apply(lambda p: p.split("__")[0] != p.split("__")[1])]
+    df = df.drop_duplicates(subset="pair")
+    return df
 
-    def generate_samples(ref, n_same=15, n_diff=15, mu_same=1e-5, mu_diff=5e-5,
-                         sv_rate_same=0.0, sv_rate_diff=0.3, sv_size=500_000, rng=None):
-        if rng is None:
-            rng = random.Random(42)
-        samples, labels, mus = [], [], []
-        for _ in range(n_same):
-            seq = substitute(ref, mu=mu_same, rng=rng)
-            if rng.random() < sv_rate_same:
-                seq = inversion(seq, sv_size // 2, rng=rng) if rng.random() < 0.5 else translocation(seq, sv_size // 2, rng=rng)
-            samples.append(seq)
-            labels.append(True)
-            mus.append(mu_same)
-        for _ in range(n_diff):
-            mu = mu_diff * (1 + rng.gauss(0, 0.2))
-            seq = substitute(ref, mu=mu, rng=rng)
-            n_svs = rng.randint(1, 3) if rng.random() < 0.9 else 0
-            for _ in range(n_svs):
-                sv = rng.choice(["inv", "trans", "ins", "del"])
-                if sv == "inv":
-                    seq = inversion(seq, rng.randint(50_000, sv_size), rng=rng)
-                elif sv == "trans":
-                    seq = translocation(seq, rng.randint(50_000, sv_size // 2), rng=rng)
-                elif sv == "ins":
-                    seq = insertion(seq, rng.randint(5_000, 20_000), rng=rng)
-                else:
-                    seq = deletion(seq, rng.randint(5_000, 20_000), rng=rng)
-            samples.append(seq)
-            labels.append(False)
-            mus.append(mu)
-        return samples, labels, mus
 
-    genome_id, ref = parse_fasta(os.path.join(ROOT, "data", "ecoli_k12_MG1655.fasta"))
-    configs = {
-        "S. rimosus-like": {"mu_same": 1e-5, "mu_diff": 2e-5, "sv_rate_same": 0.0, "sv_rate_diff": 0.0},
-        "H. pylori-like": {"mu_same": 1e-5, "mu_diff": 1e-5, "sv_rate_same": 0.0, "sv_rate_diff": 0.7},
-        "N. gonorrhoeae-like": {"mu_same": 1e-5, "mu_diff": 8e-5, "sv_rate_same": 0.0, "sv_rate_diff": 0.4},
-        "E. coli hypermutator-like": {"mu_same": 8e-5, "mu_diff": 1.5e-4, "sv_rate_same": 0.0, "sv_rate_diff": 0.1},
+def fig4_syntracker_cohorts():
+    species = [
+        "Escherichia_coli_hypermutator",
+        "Helicobacter_pylori",
+        "Neisseria_gonorrhoeae",
+        "Streptomyces_rimosus",
+    ]
+    labels = {
+        "Escherichia_coli_hypermutator": "E. coli hypermutator",
+        "Helicobacter_pylori": "H. pylori",
+        "Neisseria_gonorrhoeae": "N. gonorrhoeae",
+        "Streptomyces_rimosus": "S. rimosus",
+    }
+    colors = {
+        "Escherichia_coli_hypermutator": "#e41a1c",
+        "Helicobacter_pylori": "#377eb8",
+        "Neisseria_gonorrhoeae": "#4daf4a",
+        "Streptomyces_rimosus": "#984ea3",
     }
 
-    rng = random.Random(42)
-    fig = plt.figure(figsize=(7.0, 6.5))
-    gs = fig.add_gridspec(2, 2, hspace=0.45, wspace=0.35)
-    axes = [fig.add_subplot(gs[i // 2, i % 2]) for i in range(4)]
-    panels = ["a", "b", "c", "d"]
+    struct_path = os.path.join(ROOT, "data", "syntracker_validation", "syn2b_structural_raw", "syn2b_structural_pairs_raw.tsv")
+    skani_dir = os.path.join(ROOT, "data", "syntracker_validation", "skani")
+    samples_dir = os.path.join(ROOT, "data", "syntracker_validation", "samples")
 
-    all_handles = []
-    for ax, (title, config), panel in zip(axes, configs.items(), panels):
-        samples, labels, mus = generate_samples(ref, **config, rng=rng)
-        tags = [[t[1] for t in digest_multi(s, include_cjepi=False)] for s in samples]
-        results = []
-        n = len(samples)
-        for i in range(n):
-            for j in range(i + 1, n):
-                pop = popani_proxy(mus[i], mus[j], rng)
-                syn = synteny_from_tags(tags[i], tags[j])
-                results.append((pop, syn, labels[i] and labels[j]))
+    struct = pd.read_csv(struct_path, sep="\t")
+    struct = struct[struct["status"] == "ok"].copy()
+    struct["pair"] = [_norm_pair(a, b) for a, b in zip(struct["genome_A"], struct["genome_B"])]
+    struct = struct[struct["is_self"] != 1].copy()
 
-        same_x = [r[0] for r in results if r[2]]
-        same_y = [r[1] for r in results if r[2]]
-        diff_x = [r[0] for r in results if not r[2]]
-        diff_y = [r[1] for r in results if not r[2]]
+    frames = []
+    for sp in species:
+        ska = _load_syntracker_skani(os.path.join(skani_dir, f"skani_{sp}.tsv"))
+        sp_struct = struct[struct["cohort"] == sp].copy()
+        merged = pd.merge(sp_struct, ska, on="pair", how="inner")
+        merged["species"] = sp
+        if sp == "Helicobacter_pylori":
+            meta = pd.read_csv(os.path.join(samples_dir, "samples_Helicobacter_pylori.tsv"), sep="\t")
+            iso_to_host = dict(zip(meta["isolate"].astype(str), meta["host"].astype(str)))
+            merged["host"] = merged["pair"].apply(
+                lambda p: iso_to_host.get(p.split("__")[0]) or iso_to_host.get(p.split("__")[1], "unknown")
+            )
+        frames.append(merged)
+    df = pd.concat(frames, ignore_index=True)
+    df["species_label"] = df["species"].map(labels)
 
-        ax.scatter(diff_x, diff_y, c="gray", s=30, alpha=0.5, edgecolors="none", label="Different strain")
-        ax.scatter(same_x, same_y, c="red", s=30, alpha=0.6, edgecolors="none", label="Same strain")
-        ax.set_xlabel("popANI")
-        ax.set_ylabel("Syn2b synteny score")
-        ax.set_title(f"{panel}  {title}")
-        ax.set_xlim(0.9994, 1.00005)
-        ax.set_ylim(0.70, 1.01)
-        ax.ticklabel_format(axis="x", style="plain")
-        ax.grid(True, alpha=0.2)
+    fig = plt.figure(figsize=(7.5, 6.0))
+    gs = fig.add_gridspec(2, 2, hspace=0.45, wspace=0.40)
 
-    handles = [
-        Line2D([0], [0], marker="o", color="w", markerfacecolor="red", markersize=7, label="Same strain"),
-        Line2D([0], [0], marker="o", color="w", markerfacecolor="gray", markersize=7, label="Different strain"),
-    ]
-    fig.legend(handles=handles, loc="lower center", ncol=2, fontsize=9,
-               bbox_to_anchor=(0.5, -0.01), frameon=False)
-    plt.tight_layout(rect=[0, 0.03, 1, 1])
-    save(fig, "fig4_popani_synteny.png")
+    # (a) ANI vs breakpoints
+    ax = fig.add_subplot(gs[0, 0])
+    for sp in species:
+        sub = df[df["species"] == sp]
+        ax.scatter(sub["ani_skani"], sub["syn2b_breakpoints"],
+                   c=colors[sp], s=15, alpha=0.5, edgecolors="none", label=labels[sp])
+    ax.set_xlabel("skani ANI (%)")
+    ax.set_ylabel("Syn2b breakpoints")
+    ax.set_title("a  ANI vs breakpoint count")
+    ax.legend(loc="upper left", frameon=False, fontsize=6)
+
+    # (b) ANI vs raw inverted fraction
+    ax = fig.add_subplot(gs[0, 1])
+    for sp in species:
+        sub = df[df["species"] == sp]
+        ax.scatter(sub["ani_skani"], sub["syn2b_raw_inverted_fraction"],
+                   c=colors[sp], s=15, alpha=0.5, edgecolors="none", label=labels[sp])
+    ax.set_xlabel("skani ANI (%)")
+    ax.set_ylabel("Syn2b raw inverted fraction")
+    ax.set_title("b  ANI vs inverted fraction")
+    ax.legend(loc="upper left", frameon=False, fontsize=6)
+
+    # (c) Breakpoint distribution by cohort
+    ax = fig.add_subplot(gs[1, 0])
+    bp_data = [df[df["species"] == sp]["syn2b_breakpoints"].values for sp in species]
+    bp_labels = [labels[sp] for sp in species]
+    bplot = ax.boxplot(bp_data, labels=bp_labels, patch_artist=True, showfliers=False)
+    for patch, sp in zip(bplot["boxes"], species):
+        patch.set_facecolor(colors[sp])
+        patch.set_alpha(0.5)
+    for sp in species:
+        y = df[df["species"] == sp]["syn2b_breakpoints"].values
+        x = np.random.normal(species.index(sp) + 1, 0.04, size=len(y))
+        ax.scatter(x, y, c=colors[sp], s=8, alpha=0.4, edgecolors="none")
+    ax.set_ylabel("Syn2b breakpoints")
+    ax.set_title("c  Breakpoint distribution by cohort")
+    ax.tick_params(axis="x", rotation=15)
+
+    # (d) H. pylori: structural signal by host
+    ax = fig.add_subplot(gs[1, 1])
+    hdf = df[df["species"] == "Helicobacter_pylori"].copy()
+    host_palette = plt.cm.tab10(np.linspace(0, 1, hdf["host"].nunique()))
+    for i, host in enumerate(sorted(hdf["host"].unique())):
+        sub = hdf[hdf["host"] == host]
+        ax.scatter(sub["ani_skani"], sub["syn2b_breakpoints"],
+                   c=[host_palette[i]], s=15, alpha=0.6, edgecolors="none", label=f"Host {host}")
+    ax.set_xlabel("skani ANI (%)")
+    ax.set_ylabel("Syn2b breakpoints")
+    ax.set_title("d  H. pylori: participant structure")
+    ax.legend(loc="upper left", frameon=False, fontsize=5, title="Participant")
+
+    plt.tight_layout()
+    save(fig, "fig4_syntracker_cohorts.png")
 
 
 # ---------------------------------------------------------------------------
@@ -457,45 +462,77 @@ def fig4_popani_synteny():
 def fig5_runtime_scaling():
     bench = pd.read_csv(os.path.join(ROOT, "results", "efficiency_v8", "syn2b_struct_benchmark.tsv"), sep="\t")
     summary = bench.groupby("n_genomes").agg({"struct_wall_s": "mean", "n_pairs": "first"}).reset_index()
-    summary["per_pair_ms"] = summary["struct_wall_s"] / summary["n_pairs"] * 1000
+    summary["n_unique_pairs"] = summary["n_genomes"] * (summary["n_genomes"] - 1) / 2
+    summary["per_pair_ms_unique"] = summary["struct_wall_s"] / summary["n_unique_pairs"] * 1000
 
-    fig, axes = plt.subplots(1, 3, figsize=(7.5, 2.6))
+    fig = plt.figure(figsize=(9.0, 2.8))
+    gs = fig.add_gridspec(1, 3, wspace=0.45)
 
-    # (a) Digestion time
-    ax = axes[0]
+    # (a) Digestion time - measured by timing Syn2b digest on E. coli K-12
+    ax = fig.add_subplot(gs[0, 0])
     enzymes = ["BcgI", "AlfI", "BplI", "CjePI", "All 4"]
-    tag_counts = np.array([2877, 1939, 383, 9284, 14483])
-    total = 0.17
-    times = total * tag_counts / tag_counts[-1]
-    bars = ax.bar(enzymes, times * 1000, color="steelblue", ec="black", lw=0.6)
-    ax.set_ylabel("Time (ms)")
-    ax.set_title("a  Single-genome digestion\n(E. coli K-12, 4.6 Mb)")
-    ax.set_ylim(0, 250)
-    for bar, t in zip(bars, times * 1000):
-        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 5,
-                f"{t:.1f}", ha="center", va="bottom", fontsize=7)
+    fasta = os.path.join(ROOT, "data", "ecoli_k12_MG1655.fasta")
+    measured_times = {}
+    if os.path.exists(fasta):
+        syn2b_bin = os.path.join(os.path.dirname(ROOT), "Syn2b", "target", "release", "Syn2b")
+        if os.path.exists(syn2b_bin):
+            import tempfile
+            import time
+            import subprocess
+            for enzyme in enzymes:
+                with tempfile.NamedTemporaryFile(suffix=".tgt", delete=False) as tmp:
+                    tmp_path = tmp.name
+                enzyme_arg = enzyme.replace("All 4", "BcgI,AlfI,BplI,CjePI")
+                cmd = [syn2b_bin, "digest", "-i", fasta, "-o", tmp_path, "-e", enzyme_arg]
+                try:
+                    start = time.time()
+                    subprocess.run(cmd, check=True, capture_output=True)
+                    elapsed = time.time() - start
+                    measured_times[enzyme] = elapsed * 1000
+                except Exception:
+                    measured_times[enzyme] = np.nan
+                finally:
+                    if os.path.exists(tmp_path):
+                        os.remove(tmp_path)
+    if len(measured_times) == len(enzymes) and all(not np.isnan(v) for v in measured_times.values()):
+        times = [measured_times[e] for e in enzymes]
+        bars = ax.bar(enzymes, times, color="steelblue", ec="black", lw=0.6)
+        ax.set_ylabel("Time (ms)")
+        ax.set_title("a  Single-genome digestion")
+        ax.set_ylim(0, max(times) * 1.2)
+        for bar, t in zip(bars, times):
+            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + max(times) * 0.02,
+                    f"{t:.1f}", ha="center", va="bottom", fontsize=7)
+    else:
+        ax.text(0.5, 0.5, "Syn2b binary or reference\nnot available for timing",
+                ha="center", va="center", transform=ax.transAxes)
+        ax.set_title("a  Single-genome digestion (timing unavailable)")
 
     # (b) Per-pair time vs number of genomes
-    ax = axes[1]
-    ax.plot(summary["n_genomes"], summary["per_pair_ms"], marker="o", color="darkred", lw=2, markersize=8)
+    # Exclude n_genomes=2 because startup overhead dominates with only one unique pair.
+    ax = fig.add_subplot(gs[0, 1])
+    b_summary = summary[summary["n_genomes"] >= 5].copy()
+    ax.plot(b_summary["n_genomes"], b_summary["per_pair_ms_unique"], marker="o", color="darkred", lw=2, markersize=8)
     ax.set_xlabel("Number of genomes")
-    ax.set_ylabel("Per-pair time (ms)")
+    ax.set_ylabel("ms per unique pair")
     ax.set_title("b  Amortized pairwise cost")
     ax.set_xlim(0, 25)
-    ax.set_ylim(0, 160)
-    for _, row in summary.iterrows():
-        offset = 6 if row["n_genomes"] == 2 else 4
-        ax.text(row["n_genomes"], row["per_pair_ms"] + offset, f"{row['per_pair_ms']:.1f}",
+    ax.set_ylim(0, 50)
+    for _, row in b_summary.iterrows():
+        ax.text(row["n_genomes"], row["per_pair_ms_unique"] + 2, f"{row['per_pair_ms_unique']:.1f}",
                 ha="center", fontsize=7)
+    ax.annotate("n=2 excluded: startup dominates",
+                xy=(0.05, 0.95), xycoords="axes fraction",
+                ha="left", va="top", fontsize=6, color="gray")
 
-    # (c) Total time vs pairs
-    ax = axes[2]
-    ax.scatter(summary["n_pairs"], summary["struct_wall_s"], color="darkgreen", s=60, zorder=3)
-    ax.plot(summary["n_pairs"], summary["struct_wall_s"], color="darkgreen", lw=2)
-    ax.set_xlabel("Number of pairs")
+    # (c) Total time vs unique pairs
+    ax = fig.add_subplot(gs[0, 2])
+    ax.scatter(summary["n_unique_pairs"], summary["struct_wall_s"], color="darkgreen", s=60, zorder=3)
+    ax.plot(summary["n_unique_pairs"], summary["struct_wall_s"], color="darkgreen", lw=2)
+    ax.set_xlabel("Number of unique pairs")
     ax.set_ylabel("Total wall time (s)")
     ax.set_title("c  Total runtime scaling")
-    ax.set_xlim(0, 550)
+    ax.set_xlim(0, 250)
     ax.set_ylim(0, 5)
 
     save(fig, "fig5_runtime_scaling.png")
@@ -513,7 +550,7 @@ def main():
     print("Generating Figure 3...")
     fig3_gtdb_validation()
     print("Generating Figure 4...")
-    fig4_popani_synteny()
+    fig4_syntracker_cohorts()
     print("Generating Figure 5...")
     fig5_runtime_scaling()
     print("Done.")
