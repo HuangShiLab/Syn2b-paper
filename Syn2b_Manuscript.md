@@ -315,12 +315,18 @@ assemblies.
 ### 6. popANI versus Syn2b synteny recapitulates species-specific evolutionary modes
 
 We reproduced the SynTracker popANI–synteny patterns for four evolutionary
-regimes using in-silico simulations (Figure 4):
+regimes using in-silico simulations (Figure 4). The Syn2b synteny score used in
+this panel is a heuristic composite of local adjacency Jaccard and rescaled
+Kendall tau (equal weights); it is intended only to illustrate the four
+qualitative regimes and is robust to the exact weighting. The panels show
+pairwise clouds rather than a binary classifier: the diagnostic feature is the
+correlation (or dissociation) between popANI and synteny, not perfect same-
+strain separation.
 
 - ***S. rimosus*-like** (low SNPs, no SV): high popANI and high synteny.
-- ***H. pylori*-like** (no SNPs, high SV): high popANI but variable synteny.
-- ***N. gonorrhoeae*-like** (medium SNPs, medium SV): both vary, synteny adds
-  resolution.
+- ***H. pylori*-like** (low SNPs, high SV): high popANI but wide synteny range.
+- ***N. gonorrhoeae*-like** (medium SNPs, medium SV): both vary; synteny adds
+  resolution beyond popANI.
 - ***E. coli* hypermutator-like** (high SNPs, low SV): popANI varies widely,
   synteny remains high.
 
@@ -447,10 +453,14 @@ tag-covered length whose orientation relative to the reference is inverted.
 Reported as majority-frame (`inverted_fraction`) and fixed-reference
 (`raw_inverted_fraction`).
 
-**Syn2b synteny score.** A composite measure of local and global tag-order
-conservation, computed as a weighted combination of adjacency Jaccard and
-Kendall tau: synteny = 0.7 × adjacency_Jaccard + 0.3 × (τ + 1)/2. This score
-ranges from 0 to 1 and is used for popANI–synteny comparisons (Figure 4).
+**Syn2b synteny score.** A heuristic composite of local and global tag-order
+conservation used for the popANI–synteny regime illustrations in Figure 4:
+
+    synteny = 0.5 × adjacency_Jaccard + 0.5 × (τ + 1)/2
+
+where τ is Kendall tau of shared tag positions. The score ranges from 0 to 1.
+The qualitative regime patterns in Figure 4 are unchanged if adjacency or Kendall
+tau is used alone or if the weights are varied (Supplementary Figure 4).
 
 ### GTDB-R207 validation
 
@@ -554,11 +564,12 @@ invariant to assembly fragmentation, whereas transition counts acquire a bias
 that grows with the number of fragments K.
 
 **Figure 2. Sensitivity to structural variation and insensitivity to SNPs.**
+Simulations on *E. coli* K-12 with 1% SNPs plus a single structural variant.
 (a) Breakpoint counts across enzymes for control and four SV types. (b)
 Global order disruption measured by Kendall tau. (c) Mash proxy distance is
 unchanged by structural variation. (d) 10-kb insertion and deletion sensitivity.
-(e) Tag density drives inversion breakpoint signal. (f) Local adjacency
-Jaccard.
+(e) Tag density (bars, left axis) drives the inversion breakpoint signal
+(line, right axis). (f) Local adjacency Jaccard.
 
 **Figure 3. GTDB-R207 validation.** (a) Syn2b `raw_inverted_fraction` vs
  dnadiff across 43,312 held-out pairs with complete metrics. (b) Agreement by
@@ -569,10 +580,16 @@ Jaccard.
  on assembly fragmentation (max contigs per pair), illustrating the
  fragmentation invariance of length-weighted ratios.
 
-**Figure 4. popANI versus Syn2b synteny.** (a–d) Simulated species: (a) *S.
-rimosus*-like, (b) *H. pylori*-like, (c) *N. gonorrhoeae*-like, (d) *E. coli*
-hypermutator-like. (e) Simulated *H. pylori* clinical-like isolates based on the
-26695 reference (n = 2,926 pairs).
+**Figure 4. popANI versus Syn2b synteny across simulated evolutionary regimes.**
+Each panel shows 435 pairwise comparisons (30 isolates: 15 same-strain, 15
+different-strain) simulated from *E. coli* K-12 under parameter regimes that
+mimic four species. The panels visualize the popANI–synteny relationship
+(diagonal/vertical/horizontal clouds), not a binary strain classifier. Same-
+strain pairs (red) provide a reference cloud at high synteny; different-strain
+pairs (gray) reveal the regime-specific dissociation between SNP similarity and
+structural conservation: (a) *S. rimosus*-like (low SNPs, no SV), (b) *H.
+pylori*-like (low SNPs, high SV), (c) *N. gonorrhoeae*-like (medium SNPs,
+medium SV), (d) *E. coli* hypermutator-like (high SNPs, low SV).
 
 **Figure 5. Runtime and scaling.** (a) Estimated single-genome digestion time
 per enzyme on *E. coli* K-12 (4.6 Mb), scaled from the measured full-panel time
@@ -622,6 +639,7 @@ Supplementary Table 4: Runtime comparison with alignment-based methods.
 Supplementary Figure 1: Tag spacing distributions.
 Supplementary Figure 2: Closed-genome inversion validation.
 Supplementary Figure 3: Sensitivity analysis with varying SV sizes.
+Supplementary Figure 4: Robustness of popANI–synteny regimes to synteny-score weighting.
 
 ---
 
