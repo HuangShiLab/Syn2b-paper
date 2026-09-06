@@ -1,7 +1,7 @@
 # Strain2b-paper
 
 Repository for the **Strain2b (Syn2b)** method paper: rapid, alignment-free
-structural-variation detection between microbial strains via Type IIB
+structural-variation detection between microbial strains via ordered
 restriction-enzyme tag adjacency.
 
 > **Companion repository:** The application paper **Syn2bANI** (fast ANI +
@@ -15,9 +15,9 @@ restriction-enzyme tag adjacency.
 
 Syn2b turns microbial genomes into ordered restriction-enzyme tags and reports
 length-weighted structural metrics that are robust to assembly fragmentation; on
-43,334 GTDB-R207 pairs its inverted aligned fraction agrees with dnadiff at
-r = 0.9355 (95% CI 0.934–0.937), and at ≥97% ANIm the agreement rises to
-r = 0.996 (95% CI 0.996–0.996).
+43,312 GTDB-R207 held-out pairs its fixed-reference inverted aligned fraction
+agrees with dnadiff at Pearson r = 0.9355 (95% CI 0.934–0.937), and at ≥97% ANIm
+the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 
 ---
 
@@ -27,21 +27,22 @@ r = 0.996 (95% CI 0.996–0.996).
 .
 ├── README.md                      # This file
 ├── Syn2b_Manuscript.md            # Full manuscript draft
+├── PRE_REVIEW.md                  # Pre-review checklist and revisions
+├── REVIEW_2.md                    # Second internal review with concrete fixes
 ├── data/                          # Simulation and validation inputs
-│   ├── enzyme_comparison.csv
-│   ├── multi_enzyme_results.csv
+│   ├── enzyme_comparison.csv      # Legacy Python-prototype single-enzyme scans (illustrative)
+│   ├── multi_enzyme_results.csv   # Legacy Python-prototype multi-enzyme scans (illustrative)
 │   ├── phase1_results_100gen.csv
-│   ├── real_data_h_pylori.csv
+│   ├── real_data_h_pylori.csv     # Simulated H. pylori isolates (renamed in manuscript)
 │   └── syntracker_validation/     # SynTracker validation raw data
 ├── figures/                       # Main and supplementary figures
 ├── results/                       # Real-data analysis outputs
-│   ├── gtdb50k/                   # GTDB-R207 50k-pair structural validation
+│   ├── gtdb50k/                   # GTDB-R207 43k-pair structural validation
 │   ├── closed_inversions/         # Closed-genome inversion / junction validation
 │   └── efficiency_v8/             # Speed benchmarks
 ├── scripts/                       # Reproduction scripts
-│   ├── simulate_rearrangement.py
-│   ├── enzyme_comparison.py
-│   ├── compare_with_syntracker.py
+│   ├── simulate_rearrangement.py  # Legacy Python prototype (illustrative)
+│   ├── enzyme_comparison.py       # Legacy Python prototype (illustrative)
 │   ├── gtdb50k/                   # GTDB-R207 runners
 │   └── syntracker_validation/     # SynTracker validation runners
 └── report/                        # Generated reports (if present)
@@ -61,14 +62,14 @@ term linear in the number of fragments K, while a statistic defined as
 both numerator and denominator are preserved.
 
 Syn2b's `raw_inverted_fraction` uses the fixed-reference length ratio. On the
-GTDB-R207 held-out set:
+GTDB-R207 held-out set (four-enzyme panel **BcgI+AlfI+AloI+FalI**):
 
-| dataset | n | Pearson r vs dnadiff | slope | intercept |
-|---|---:|---:|---:|---:|
-| held_out_50k (80–100% ANIm) | 43,312 | **0.9355** | 1.004 | −0.002 |
-| high_ani ≥97% ANIm | 3,826 | **0.9960** | 1.006 | −0.004 |
-| 95–97% ANIm | 610 | **0.9872** | 1.019 | −0.010 |
-| 99.5–100% ANIm | 1,551 | **0.9974** | 1.004 | −0.002 |
+| dataset | n | Pearson r vs dnadiff | slope | intercept | SD(err) |
+|---|---:|---:|---:|---:|---:|
+| held_out_50k (80–100% ANIm) | 43,312 | **0.9355** | 1.004 | −0.002 | 0.0555 |
+| high_ani ≥97% ANIm | 3,826 | **0.9960** | 1.006 | −0.004 | 0.0135 |
+| 95–97% ANIm | 610 | **0.9872** | 1.019 | −0.010 | 0.0214 |
+| 99.5–100% ANIm | 1,551 | **0.9974** | 1.004 | −0.002 | 0.0122 |
 
 The full error model is in `results/gtdb50k/inverted_fraction_comparison_report.md`.
 
@@ -87,58 +88,56 @@ controlled.
 
 ### 3. Enzyme panel optimization
 
-The final panel combines three Type IIB enzymes (BcgI, AlfI, BplI) with the
-Type IIG enzyme CjePI. The rationale is density-driven: structural sensitivity
-scales with the number of landmarks per kilobase.
+The production panel used for all GTDB-R207 validation is **BcgI+AlfI+AloI+FalI**.
+It was chosen by scanning the 16 implemented Type IIB/IIG enzymes for a
+combination that yields high tag density without excessive motif overlap.
 
-In *E. coli* K-12 (4.54 Mb):
+In *E. coli* K-12 (NC_000913.3, 4,641,652 bp):
 
-| enzyme | tag density | inversion Δbreakpoints | indel Δbreakpoints |
-|---|---:|---:|---:|
-| BcgI | 0.63 / kb | +646 | +5 |
-| AlfI | 0.43 / kb | +484 | +4 |
-| BplI | 0.08 / kb | +64 | +3 |
-| CjePI | 2.04 / kb | +2,018 | +23 |
-| **all four** | **3.19 / kb** | **+3,201** | **+29** |
+| enzyme | tag count | density (/kb) |
+|---|---:|---:|
+| BcgI | 2,935 | 0.632 |
+| AlfI | 2,023 | 0.436 |
+| AloI | 523 | 0.113 |
+| FalI | 735 | 0.158 |
+| **BcgI+AlfI+AloI+FalI** | **6,216** | **1.339** |
 
-BcgI and AlfI provide the standard Type IIB backbone; BplI adds a sparser,
-longer-tag arm; CjePI contributes a 3.3× denser Type IIG layer that is
-essential for detecting 10-kb indels. The combined panel is not simply the sum
-of the four: shared recognition-space constraints keep the total below 3.3
-tags/kb while boosting both inversion and indel signals.
-
-On the GTDB-R207 held-out set the panel's accuracy is substantially higher than
-BcgI alone:
-
-| landmark set | median shared tags | Pearson r vs dnadiff | MAE |
-|---|---:|---:|---:|
-| BcgI only | 142 | 0.8303 | 0.0576 |
-| **4-enzyme panel** | **314** | **0.9355** | **0.0370** |
-
-We also tested FracMinHash sketches as non-enzyme landmarks. At comparable
-density (fmh750, median 254 shared tags) FracMinHash reaches r = 0.9305, very
-close to the enzyme panel; at higher density (fmh250, median 761 shared tags)
-it reaches r = 0.9510 and MAE = 0.0323. The enzyme panel is therefore not the
-absolute optimal density choice, but it offers deterministic, biologically
-interpretable landmarks and avoids the extra computational and memory cost of
-the densest FracMinHash sketches. The full comparison is in
+The Rust implementation also supports FracMinHash landmarks. At comparable
+density (fmh750, median ~254 shared tags per pair) FracMinHash reaches
+r = 0.9305, very close to the enzyme panel; at higher density (fmh250, median
+~761 shared tags) it reaches r = 0.9510 and MAE = 0.0323. The enzyme panel is
+therefore a deterministic, biologically interpretable default rather than the
+absolute optimal density choice. The full comparison is in
 `results/gtdb50k/inverted_fraction_truth_*.tsv` and
 `results/gtdb50k/inverted_fraction_truth_bcgI.log`.
 
-### 4. popANI–synteny dissociation is recapitulated
+> **Note on legacy prototype data.** `data/enzyme_comparison.csv` and
+> `data/multi_enzyme_results.csv` come from an early Python in-silico prototype
+> that used a different panel (BcgI+AlfI+BplI+CjePI) and a breakpoint metric that
+> counted internal junctions inside inverted segments. Those files are kept for
+> reproducibility but are **not** the quantitative validation of the Rust tool;
+> the GTDB-R207 results above are.
 
-Simulated evolutionary regimes reproduce the classic SynTracker patterns:
+### 4. SV detection resolution
 
-- ***S. rimosus*-like**: high popANI, high synteny (clonal)
-- ***H. pylori*-like**: high popANI, low synteny (recombinogenic)
-- ***N. gonorrhoeae*-like**: both metrics vary, synteny resolves recent rearrangement
-- ***E. coli* hypermutator-like**: low popANI, high synteny (point-mutation driven)
+Because additional landmarks improve the junction channel more than the
+orientation channel, the main practical argument for the four-enzyme panel is
+event-size resolution. On simulated *E. coli* K-12 tests the Rust implementation
+reports:
+
+- 0 junctions under up to 5% substitutions (no structural variation).
+- Exactly 2 junctions per simple inversion.
+- Exactly 3 junctions per simple translocation.
+
+The 95% detection event-size limit is approximately **8 kb for BcgI alone** and
+**~4 kb for the four-enzyme panel** (`src/synteny/scoring.rs`, *Resolution
+limit*).
 
 ### 5. Runtime scales linearly and avoids pairwise alignment
 
-Digestion of a 4.6-Mbp genome takes ~0.17 s; pairwise metric computation takes
-<1 s after fixed costs are amortized. Full benchmarks are in
-`results/efficiency_v8/syn2b_struct_benchmark.tsv`.
+Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes ~45 ms;
+pairwise metric computation is <25 ms per unique pair once fixed costs are
+amortized. Full benchmarks are in `results/efficiency_v8/syn2b_struct_benchmark.tsv`.
 
 ---
 
@@ -147,49 +146,54 @@ Digestion of a 4.6-Mbp genome takes ~0.17 s; pairwise metric computation takes
 1. **Mathematical**: length-weighted structural ratios are invariant to
    assembly fragmentation; transition-count metrics are not. This is a general
    property of any observation process that splits genomes into segments.
-2. **Empirical**: on a 43k-pair GTDB-R207 held-out set, Syn2b's
+2. **Empirical**: on a 43k-pair GTDB-R207 held-out set, Syn2b's fixed-reference
    `raw_inverted_fraction` agrees with dnadiff (r = 0.94 overall, 0.996 at
    ≥97% ANIm) and is unaffected by contig count.
-3. **Practical**: multi-enzyme Type IIB/IIG digestion yields tag densities high
-   enough to detect 10-kb indels and small inversions, while the alignment-free
+3. **Practical**: a multi-enzyme Type IIB/IIG panel yields tag densities high
+   enough to detect ~4-kb indels and small inversions, while the alignment-free
    design makes large strain surveys feasible.
 
 ---
 
 ## Reproduction
 
-### Simulations
-
-```bash
-python3 scripts/simulate_rearrangement.py --input genome.fasta --csv results.csv --png results.png
-python3 scripts/enzyme_comparison.py --input genome.fasta --csv comparison.csv
-python3 scripts/figure3_simulation.py --input genome.fasta --png figure3.png
-python3 scripts/compare_with_syntracker.py --input genome.fasta --output-png comparison.png
-```
-
 ### GTDB-R207 structural validation
 
 The SLURM runners are in `scripts/gtdb50k/`:
 
 ```bash
-# Compute Syn2b inverted fractions on the held-out set
+# Compute Syn2b inverted fractions on the held-out set with the four-enzyme panel
+python3 scripts/run_syn2b_inverted_fraction.py \
+    --enzymes BcgI,AlfI,AloI,FalI \
+    --pairs data/gtdb50k_heldout_pairs.tsv \
+    --genome-dir /path/to/gtdb-r207/genomes \
+    --syn2b /path/to/syn2b \
+    --out results/gtdb50k/syn2b_inverted_fraction_50k.tsv
+
+# Single-enzyme BcgI comparison
 sbatch scripts/gtdb50k/s12_syn2b_bcgI_invfrac.slurm
 
 # Compare to dnadiff reference estimate
-python3 scripts/compare_inverted_fractions.py results/gtdb50k
+python3 scripts/gtdb50k/validate_inverted_fraction_truth.py results/gtdb50k
 ```
 
-The full correlation report is reproduced by `scripts/sv_reanalysis.py` in the
-Syn2bANI-paper repository.
+### Simulations (Rust implementation)
+
+```bash
+# Digest and compare two genomes with the production panel
+syn2b digest --enzymes BcgI,AlfI,AloI,FalI --input genome_A.fasta --output A.tgt
+syn2b digest --enzymes BcgI,AlfI,AloI,FalI --input genome_B.fasta --output B.tgt
+syn2b synteny A.tgt B.tgt --raw-inverted-fraction
+```
 
 ---
 
 ## Reference genomes and data
 
-- *E. coli* K-12 MG1655 (NC_000913.3): 4,543,028 bp, used for all in-silico
-  digestion and simulation benchmarks.
-- GTDB-R207 representative genomes: used for the 43,334-pair held-out
-  structural validation.
+- *E. coli* K-12 MG1655 (NC_000913.3): 4,641,652 bp, used for in-silico
+digestion benchmarks.
+- GTDB-R207 representative genomes: used for the 43,334-pair held-out structural
+validation.
 
 ---
 
