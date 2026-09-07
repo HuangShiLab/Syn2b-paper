@@ -625,8 +625,8 @@ Supplementary Note 2: Error model and per-pair standard errors for
 Supplementary Table 1: GTDB-R207 per-pair structural metrics
 (`results/gtdb50k/inverted_fraction_truth_four.tsv`).
 Supplementary Table 2: Runtime comparison with alignment-based methods.
-Supplementary Figure 1: Tag spacing distributions for the production panel.
-Supplementary Figure 2: Closed-genome inversion validation.
+Supplementary Figure 1: Tag spacing distribution for the production four-enzyme panel in *E. coli* K-12. Inter-tag distances were extracted from the TGT output of `syn2b digest` (n = 6,215 intervals). Median spacing is 1,533 bp and mean spacing is 2,980 bp.
+Supplementary Figure 2: Closed-genome inversion validation on 100 complete-genome pairs selected for high expected structural divergence. (a) Number of junctions reported by Syn2b versus dnadiff. (b) Fraction of dnadiff junctions that match a Syn2b junction. (c) Median distance between matched Syn2b and dnadiff junction positions. The low recovery and coarse position resolution reflect that many dnadiff inversions fall in regions without a nearby restriction-enzyme landmark.
 Supplementary Figure 3: Sensitivity of Syn2b junction counts and raw inverted fraction to SV size. Controlled *E. coli* K-12 variants carrying a single inversion, insertion, deletion, or translocation on a 1% SNP background were analysed with the four-enzyme panel. Inversions yield two junctions irrespective of size, while the inverted fraction increases with inverted segment length. Insertions and deletions produce zero junctions unless a landmark straddles the breakpoint; translocation of a 500-kb segment yields three junctions.
 
 ---
