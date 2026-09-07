@@ -45,9 +45,11 @@ os.makedirs(OUTDIR, exist_ok=True)
 
 
 def save(fig, name):
-    path = os.path.join(OUTDIR, name)
-    fig.savefig(path, dpi=300)
-    print(f"Saved {path}")
+    base = os.path.splitext(name)[0]
+    for ext in (".png", ".pdf"):
+        path = os.path.join(OUTDIR, base + ext)
+        fig.savefig(path, dpi=300)
+        print(f"Saved {path}")
     plt.close(fig)
 
 
