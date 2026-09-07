@@ -619,15 +619,46 @@ excluded from the amortized scaling curve in Figure 5b.
 
 ## Supplementary Information
 
-Supplementary Note 1: Mathematical derivation of the fragmentation principle.
-Supplementary Note 2: Error model and per-pair standard errors for
-`raw_inverted_fraction`.
-Supplementary Table 1: GTDB-R207 per-pair structural metrics
-(`results/gtdb50k/inverted_fraction_truth_four.tsv`).
-Supplementary Table 2: Runtime comparison with alignment-based methods.
-Supplementary Figure 1: Tag spacing distribution for the production four-enzyme panel in *E. coli* K-12. Inter-tag distances were extracted from the TGT output of `syn2b digest` (n = 6,215 intervals). Median spacing is 1,533 bp and mean spacing is 2,980 bp.
-Supplementary Figure 2: Closed-genome inversion validation on 100 complete-genome pairs selected for high expected structural divergence. (a) Number of junctions reported by Syn2b versus dnadiff. (b) Fraction of dnadiff junctions that match a Syn2b junction. (c) Median distance between matched Syn2b and dnadiff junction positions. The low recovery and coarse position resolution reflect that many dnadiff inversions fall in regions without a nearby restriction-enzyme landmark.
-Supplementary Figure 3: Sensitivity of Syn2b junction counts and raw inverted fraction to SV size. Controlled *E. coli* K-12 variants carrying a single inversion, insertion, deletion, or translocation on a 1% SNP background were analysed with the four-enzyme panel. Inversions yield two junctions irrespective of size, while the inverted fraction increases with inverted segment length. Insertions and deletions produce zero junctions unless a landmark straddles the breakpoint; translocation of a 500-kb segment yields three junctions.
+### Supplementary Notes
+
+- **Supplementary Note 1:** Mathematical derivation of the fragmentation principle
+  (`supplementary/Supplementary_Note_1.md`).
+- **Supplementary Note 2:** Error model and per-pair standard errors for
+  `raw_inverted_fraction` (`supplementary/Supplementary_Note_2.md`).
+
+### Supplementary Tables
+
+- **Supplementary Table 1:** GTDB-R207 per-pair structural metrics
+  (`results/gtdb50k/inverted_fraction_truth_four.tsv`).
+- **Supplementary Table 2:** Runtime comparison with alignment-based methods
+  (to be added from HPC head-to-head logs).
+- **Supplementary Table 3:** Parameters for the controlled SV simulations
+  (`supplementary/Supplementary_Table_3.tsv`).
+
+### Supplementary Figures
+
+- **Supplementary Figure 1:** Tag spacing distribution for the production
+  four-enzyme panel in *E. coli* K-12. Inter-tag distances were extracted from
+  the TGT output of `syn2b digest` (n = 6,215 intervals). Median spacing is
+  1,533 bp and mean spacing is 2,980 bp
+  (`figures/supplementary/fig1_tag_spacing.png`).
+- **Supplementary Figure 2:** Closed-genome inversion validation on 100
+  complete-genome pairs selected for high expected structural divergence.
+  (a) Number of junctions reported by Syn2b versus dnadiff. (b) Fraction of
+  dnadiff junctions that match a Syn2b junction. (c) Median distance between
+  matched Syn2b and dnadiff junction positions. The low recovery and coarse
+  position resolution reflect that many dnadiff inversions fall in regions
+  without a nearby restriction-enzyme landmark
+  (`figures/supplementary/fig2_closed_genome_validation.png`).
+- **Supplementary Figure 3:** Sensitivity of Syn2b junction counts and raw
+  inverted fraction to SV size. Controlled *E. coli* K-12 variants carrying a
+  single inversion, insertion, deletion, or translocation on a 1% SNP
+  background were analysed with the four-enzyme panel. Inversions yield two
+  junctions irrespective of size, while the inverted fraction increases with
+  inverted segment length. Insertions and deletions produce zero junctions
+  unless a landmark straddles the breakpoint; translocation of a 500-kb segment
+  yields three junctions
+  (`figures/supplementary/fig3_sv_size_sensitivity.png`).
 
 ---
 
