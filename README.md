@@ -45,10 +45,17 @@ the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 ├── scripts/                       # Reproduction and figure-generation scripts
 │   ├── generate_figure2_rust.py   # Figure 2: controlled SVs with Rust Syn2b
 │   ├── generate_manuscript_figures.py  # Figures 1, 3, 4, 5
+│   ├── generate_supplementary_figure1.py
+│   ├── generate_supplementary_figure2.py
+│   ├── generate_supplementary_figure3.py
 │   ├── simulate_rearrangement.py  # Legacy Python prototype (illustrative)
 │   ├── enzyme_comparison.py       # Legacy Python prototype (illustrative)
 │   ├── gtdb50k/                   # GTDB-R207 runners
 │   └── syntracker_validation/     # SynTracker validation runners
+├── supplementary/                 # Supplementary notes and tables
+│   ├── Supplementary_Note_1.md
+│   ├── Supplementary_Note_2.md
+│   └── Supplementary_Table_3.tsv
 ```
 
 ---
