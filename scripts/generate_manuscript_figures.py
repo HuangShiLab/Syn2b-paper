@@ -40,7 +40,7 @@ plt.rcParams.update({
 })
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUTDIR = os.path.join(ROOT, "figures")
+OUTDIR = os.path.join(ROOT, "figures", "main")
 os.makedirs(OUTDIR, exist_ok=True)
 
 
@@ -73,8 +73,8 @@ def fig1_algorithm():
                 arrowprops=dict(arrowstyle="->", color="red", lw=1))
     ax.annotate("", xy=(0.65, 0.45), xytext=(0.65, 0.35),
                 arrowprops=dict(arrowstyle="->", color="red", lw=1))
-    ax.text(0.35, 0.26, "27–32 bp tag", ha="center", fontsize=7)
-    ax.text(0.65, 0.26, "27–32 bp tag", ha="center", fontsize=7)
+    ax.text(0.28, 0.22, "27–32 bp tag", ha="center", fontsize=7)
+    ax.text(0.72, 0.22, "27–32 bp tag", ha="center", fontsize=7)
 
     # (b) Inversion flips tag order/orientation
     ax = axes[1]
@@ -545,8 +545,10 @@ def fig5_runtime_scaling():
 def main():
     print("Generating Figure 1...")
     fig1_algorithm()
-    print("Generating Figure 2...")
-    fig2_sv_sensitivity()
+    # Figure 2 is generated separately by scripts/generate_figure2_rust.py
+    # because it must use the Rust Syn2b implementation on controlled SVs.
+    # print("Generating Figure 2...")
+    # fig2_sv_sensitivity()
     print("Generating Figure 3...")
     fig3_gtdb_validation()
     print("Generating Figure 4...")

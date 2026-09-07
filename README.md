@@ -35,17 +35,20 @@ the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 │   ├── phase1_results_100gen.csv
 │   ├── real_data_h_pylori.csv     # Simulated H. pylori isolates (renamed in manuscript)
 │   └── syntracker_validation/     # SynTracker validation raw data
-├── figures/                       # Main and supplementary figures
+├── figures/                       # Manuscript figures
+│   ├── main/                      # Production main-text figures
+│   └── others/                    # Legacy/exploratory figures kept for reference
 ├── results/                       # Real-data analysis outputs
 │   ├── gtdb50k/                   # GTDB-R207 43k-pair structural validation
 │   ├── closed_inversions/         # Closed-genome inversion / junction validation
 │   └── efficiency_v8/             # Speed benchmarks
-├── scripts/                       # Reproduction scripts
+├── scripts/                       # Reproduction and figure-generation scripts
+│   ├── generate_figure2_rust.py   # Figure 2: controlled SVs with Rust Syn2b
+│   ├── generate_manuscript_figures.py  # Figures 1, 3, 4, 5
 │   ├── simulate_rearrangement.py  # Legacy Python prototype (illustrative)
 │   ├── enzyme_comparison.py       # Legacy Python prototype (illustrative)
 │   ├── gtdb50k/                   # GTDB-R207 runners
 │   └── syntracker_validation/     # SynTracker validation runners
-└── report/                        # Generated reports (if present)
 ```
 
 ---
