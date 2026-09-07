@@ -1,0 +1,13 @@
+label,breakpoints,scj_distance,raw_inverted_fraction,observable_fraction,shared_tags
+SNP control,0,0,0.0,1.0,6216
+inversion 10 kb,2,4,0.0021,1.0,5704
+inversion 50 kb,2,4,0.01104,1.0,5704
+inversion 100 kb,2,4,0.02262,1.0,5704
+inversion 500 kb,2,4,0.11625,1.0,5703
+translocation 500 kb,3,6,0.0,1.0,5704
+insertion 10 kb,0,0,0.0,1.0,5690
+insertion 50 kb,0,0,0.0,1.0,5639
+insertion 100 kb,0,0,0.0,1.0,5585
+deletion 10 kb,0,0,0.0,1.0,5690
+deletion 50 kb,0,0,0.0,1.0,5639
+deletion 100 kb,0,0,0.0,1.0,5585

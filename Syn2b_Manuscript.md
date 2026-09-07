@@ -627,7 +627,7 @@ Supplementary Table 1: GTDB-R207 per-pair structural metrics
 Supplementary Table 2: Runtime comparison with alignment-based methods.
 Supplementary Figure 1: Tag spacing distributions for the production panel.
 Supplementary Figure 2: Closed-genome inversion validation.
-Supplementary Figure 3: Sensitivity analysis with varying SV sizes.
+Supplementary Figure 3: Sensitivity of Syn2b junction counts and raw inverted fraction to SV size. Controlled *E. coli* K-12 variants carrying a single inversion, insertion, deletion, or translocation on a 1% SNP background were analysed with the four-enzyme panel. Inversions yield two junctions irrespective of size, while the inverted fraction increases with inverted segment length. Insertions and deletions produce zero junctions unless a landmark straddles the breakpoint; translocation of a 500-kb segment yields three junctions.
 
 ---
 
