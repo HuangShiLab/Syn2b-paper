@@ -544,14 +544,17 @@ assembly fragmentation, whereas transition counts acquire a bias that grows with
 the number of fragments K.
 
 **Figure 2. Sensitivity to structural variation and insensitivity to SNPs.**
-Controlled *E. coli* K-12 genomes generated with the Rust Syn2b implementation.
-Substitutions outside recognition sites produce zero junctions; a single
-inversion produces two junctions; a single translocation produces three
-junctions; a 10-kb insertion or deletion is recovered when landmark density
-places tags on both sides of the event. Mash distance remains at the SNP-only
-value under all structural variants, confirming that k-mer methods cannot
-distinguish SV from point mutation. Quantitative validation on real genomes is
-shown in Figure 3.
+Controlled *E. coli* K-12 genomes generated with the Rust Syn2b implementation
+and the production four-enzyme panel (BcgI, AlfI, AloI, FalI). The SNP-only
+control carries 1% random substitutions outside recognition sites and produces
+zero junctions; a single 100-kb or 500-kb inversion produces two junctions; a
+single 500-kb translocation produces three junctions. The length-weighted raw
+inverted fraction scales with inverted segment size. Small insertions and
+deletions are not shown here because breakpoint counts depend on whether tags
+straddle the breakpoint (Supplementary Figure 3). Mash distance (k=21) reports
+no additional signal under any structural variant, confirming that k-mer methods
+cannot distinguish SV from point mutation. Quantitative validation on real
+isolates is shown in Figure 3.
 
 **Figure 3. GTDB-R207 validation.** (a) Syn2b `raw_inverted_fraction` vs
  dnadiff across 43,312 held-out pairs with complete metrics. (b) Agreement by

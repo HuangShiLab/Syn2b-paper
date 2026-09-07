@@ -1,0 +1,5 @@
+label,breakpoints,scj_distance,raw_inverted_fraction,observable_fraction,shared_tags,mash_distance
+control (1% SNPs),0,0,0.0,1.0,6216,-0.0
+inversion 100 kb,2,4,0.02262,1.0,5704,4.1692655523301597e-07
+inversion 500 kb,2,4,0.11625,1.0,5703,4.1692655523301597e-07
+translocation 500 kb,3,6,0.0,1.0,5704,6.045446960326591e-07
