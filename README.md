@@ -48,6 +48,8 @@ the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 │   ├── generate_supplementary_figure1.py
 │   ├── generate_supplementary_figure2.py
 │   ├── generate_supplementary_figure3.py
+│   ├── build_supplementary_table2.py  # Runtime scaling table (HPC data)
+│   ├── build_supplementary_table4.py  # Head-to-head runtime table (HPC data)
 │   ├── simulate_rearrangement.py  # Legacy Python prototype (illustrative)
 │   ├── enzyme_comparison.py       # Legacy Python prototype (illustrative)
 │   ├── gtdb50k/                   # GTDB-R207 runners
@@ -55,7 +57,9 @@ the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 ├── supplementary/                 # Supplementary notes and tables
 │   ├── Supplementary_Note_1.md
 │   ├── Supplementary_Note_2.md
-│   └── Supplementary_Table_3.tsv
+│   ├── Supplementary_Table_2.tsv
+│   ├── Supplementary_Table_3.tsv
+│   └── Supplementary_Table_4.tsv
 ```
 
 ---

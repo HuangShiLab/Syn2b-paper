@@ -350,17 +350,20 @@ Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes approximatel
 to 47 ms (All 4) (Figure 5a). Pairwise structural comparison scales sub-linearly
 per unique pair as the fixed per-run cost is amortized: 39.8 ms/pair for 5
 genomes, 23.2 ms/pair for 10 genomes, 22.0 ms/pair for 15 genomes, and 18.9
-ms/pair for 22 genomes (Table 4). The n = 2 case is dominated by startup
+ms/pair for 22 genomes (Figure 5b). The n = 2 case is dominated by startup
 overhead and is excluded from the amortized curve; the 22-genome estimate uses
 the 231 unique unordered pairs rather than the 484 directional self-plus-
 reciprocal comparisons recorded in the raw benchmark.
 
 Memory footprint is dominated by the genome sequence and tag index; the 22-genome
-benchmark peaked at ~2.3 GB RSS, well within standard laptop limits. Because
-Syn2b avoids pairwise alignment and BLAST database construction, it is expected
-to be orders of magnitude faster than alignment-based methods such as
-SynTracker; a direct head-to-head comparison is provided in Supplementary Table
-4.
+benchmark peaked at ~2.3 GB RSS, well within standard laptop limits. On the
+same 22-genome panel (484 ordered pairs), Syn2b completed structural comparison
+in 4.4 s, versus 1,844 s for the skani+dnadiff workflow — a ~420-fold speedup
+(Supplementary Table 4). Supplementary Table 2 gives the scaling across panel
+sizes. SynTracker itself was not timed because its DECIPHER R dependency is not
+available on our HPC, but its BLAST database construction and all-versus-all
+DECIPHER alignment are at least as expensive as the nucmer-based dnadiff stage
+benchmarked here.
 
 ---
 
@@ -372,13 +375,16 @@ merely speed but a principled answer to the fragmentation problem: report
 length-weighted ratios, not transition counts, when working with draft
 assemblies.
 
-**Comparison to SynTracker.** SynTracker pioneered microsynteny for strain
-comparison but requires BLAST databases and all-versus-all DECIPHER alignments.
-Syn2b achieves the same biological goal through Type IIB tag adjacency, without
-pairwise alignment or a pre-built database, and is therefore expected to be
-orders of magnitude faster for large panels (Supplementary Table 4). The GTDB
-validation shows that the orientation ratio alone matches dnadiff at r = 0.94
-overall and r = 0.996 at ANIm ≥ 97%.
+**Comparison to microsynteny and alignment-based workflows.** SynTracker
+pioneered microsynteny for strain comparison but requires BLAST databases and
+all-versus-all DECIPHER alignments. Alignment-based SV callers such as dnadiff
+provide ground truth but require a pairwise nucmer alignment per genome pair
+(~3.8 s per pair on our benchmark; Supplementary Table 4). Syn2b achieves the
+same structural signal through Type IIB tag adjacency, without pairwise
+alignment or a pre-built database, and is therefore orders of magnitude faster
+for large panels (~9 ms per pair). The GTDB validation shows that the
+orientation ratio alone matches dnadiff at r = 0.94 overall and r = 0.996 at
+ANIm ≥ 97%.
 
 **Comparison to alignment-based SV callers.** dnadiff and minimap2 provide
 ground-truth structural information but are slow and require pairwise alignment.
@@ -630,10 +636,37 @@ excluded from the amortized scaling curve in Figure 5b.
 
 - **Supplementary Table 1:** GTDB-R207 per-pair structural metrics
   (`results/gtdb50k/inverted_fraction_truth_four.tsv`).
-- **Supplementary Table 2:** Runtime comparison with alignment-based methods
-  (to be added from HPC head-to-head logs).
+- **Supplementary Table 2:** Runtime scaling of Syn2b structural comparison,
+  skani, dnadiff, and skani+dnadiff across panel sizes
+  (`supplementary/Supplementary_Table_2.tsv`).
 - **Supplementary Table 3:** Parameters for the controlled SV simulations
   (`supplementary/Supplementary_Table_3.tsv`).
+- **Supplementary Table 4:** Head-to-head runtime on the 22-genome panel
+  (484 ordered pairs) (`supplementary/Supplementary_Table_4.tsv`).
+
+**Supplementary Table 2.** Runtime scaling across panel sizes. Wall times are
+means of three replicates on the HPC (16 cores for skani/dnadiff). Per-pair
+times use the n² ordered pairs recorded in the benchmark.
+
+| n genomes | n pairs | Syn2b (ms/pair) | skani (ms/pair) | dnadiff (s/pair) | skani+dnadiff (s/pair) | Syn2b speedup vs skani+dnadiff |
+|---|---:|---:|---:|---:|---:|---:|
+| 2 | 4 | 128.9 | 41.9 | 4.91 | 4.95 | 38x |
+| 5 | 25 | 15.9 | 5.9 | 1.62 | 1.62 | 102x |
+| 10 | 100 | 10.4 | 3.0 | 2.62 | 2.63 | 251x |
+| 15 | 225 | 10.3 | 2.3 | 7.01 | 7.02 | 684x |
+| 22 | 484 | 9.0 | 1.1 | 3.81 | 3.81 | 423x |
+
+**Supplementary Table 4.** Head-to-head runtime on the 22-genome panel
+(484 ordered pairs, mean of three replicates). SynTracker was not timed because
+its DECIPHER R dependency is unavailable on the HPC; dnadiff (MUMmer) is the
+alignment-based SV representative.
+
+| tool | wall time (s) | per pair (s) | reports ANI | reports SV |
+|---|---:|---:|---|---|
+| Syn2b | 4.4 | 0.009 | no | yes (inverted fraction, junctions) |
+| skani | 0.5 | 0.001 | yes | no |
+| dnadiff (MUMmer) | 1,843.9 | 3.810 | no | yes (alignment-based truth) |
+| skani + dnadiff | 1,844.5 | 3.811 | yes | yes |
 
 ### Supplementary Figures
 
