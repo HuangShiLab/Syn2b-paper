@@ -4,6 +4,7 @@
 Uses HPC benchmark results:
   - results/efficiency_v8/syn2b_struct_benchmark.tsv  (Syn2b structural comparison)
   - results/efficiency_v8/sv_benchmark.tsv            (skani and dnadiff)
+  - results/efficiency_v8/syntracker_benchmark.tsv    (SynTracker, 16 cores)
 """
 from pathlib import Path
 
@@ -13,6 +14,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 SYN2B_TSV = ROOT / "results" / "efficiency_v8" / "syn2b_struct_benchmark.tsv"
 SV_TSV = ROOT / "results" / "efficiency_v8" / "sv_benchmark.tsv"
+SYNT_TRACKER_TSV = ROOT / "results" / "efficiency_v8" / "syntracker_benchmark.tsv"
 OUT_TSV = ROOT / "supplementary" / "Supplementary_Table_2.tsv"
 
 
@@ -32,10 +34,18 @@ def load_sv():
     return merged
 
 
+def load_syntracker():
+    df = pd.read_csv(SYNT_TRACKER_TSV, sep="\t")
+    return df[df["status"] == "ok"][["n_genomes", "n_pairs", "rep", "syntracker_wall_s"]]
+
+
 def main():
     syn2b = load_syn2b()
     sv = load_sv()
-    df = syn2b.merge(sv, on=["n_genomes", "n_pairs", "rep"])
+    st = load_syntracker()
+    df = syn2b.merge(sv, on=["n_genomes", "n_pairs", "rep"]).merge(
+        st, on=["n_genomes", "n_pairs", "rep"], how="left"
+    )
 
     rows = []
     for n, g in df.groupby("n_genomes"):
@@ -52,6 +62,12 @@ def main():
             "skani_dnadiff_wall_s_mean": g["skani_dnadiff_wall_s"].mean(),
             "skani_dnadiff_s_per_pair": g["skani_dnadiff_wall_s"].mean() / n_pairs,
         }
+        if g["syntracker_wall_s"].notna().any():
+            row["syntracker_wall_s_mean"] = g["syntracker_wall_s"].mean()
+            row["syntracker_s_per_pair"] = g["syntracker_wall_s"].mean() / n_pairs
+        else:
+            row["syntracker_wall_s_mean"] = None
+            row["syntracker_s_per_pair"] = None
         rows.append(row)
 
     out = pd.DataFrame(rows).sort_values("n_genomes")
@@ -61,13 +77,18 @@ def main():
 
     # print markdown snippet for manuscript
     print("\nMarkdown table:")
-    print("| n genomes | n pairs | Syn2b (ms/pair) | skani (ms/pair) | dnadiff (s/pair) | skani+dnadiff (s/pair) | Syn2b speedup vs skani+dnadiff |")
-    print("|---|---:|---:|---:|---:|---:|---:|")
+    print("| n genomes | n pairs | Syn2b (ms/pair) | skani (ms/pair) | dnadiff (s/pair) | skani+dnadiff (s/pair) | SynTracker (s/pair) | Syn2b speedup vs skani+dnadiff | Syn2b speedup vs SynTracker |")
+    print("|---|---:|---:|---:|---:|---:|---:|---:|---:|")
     for _, r in out.iterrows():
         speedup = r["skani_dnadiff_wall_s_mean"] / r["syn2b_wall_s_mean"]
+        st_pp = f"{r['syntracker_s_per_pair']:.1f}" if pd.notna(r["syntracker_s_per_pair"]) else "n.d."
+        if pd.notna(r["syntracker_s_per_pair"]) and r["syntracker_s_per_pair"] > 0:
+            st_speedup = f"{r['syntracker_wall_s_mean'] / r['syn2b_wall_s_mean']:,.0f}x"
+        else:
+            st_speedup = "n.d."
         print(f"| {int(r['n_genomes'])} | {int(r['n_pairs'])} | {r['syn2b_ms_per_pair']:.1f} | "
               f"{r['skani_ms_per_pair']:.1f} | {r['dnadiff_s_per_pair']:.2f} | "
-              f"{r['skani_dnadiff_s_per_pair']:.2f} | {speedup:,.0f}x |")
+              f"{r['skani_dnadiff_s_per_pair']:.2f} | {st_pp} | {speedup:,.0f}x | {st_speedup} |")
 
 
 if __name__ == "__main__":

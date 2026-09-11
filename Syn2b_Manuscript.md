@@ -360,10 +360,10 @@ benchmark peaked at ~2.3 GB RSS, well within standard laptop limits. On the
 same 22-genome panel (484 ordered pairs), Syn2b completed structural comparison
 in 4.4 s, versus 1,844 s for the skani+dnadiff workflow — a ~420-fold speedup
 (Supplementary Table 4). Supplementary Table 2 gives the scaling across panel
-sizes. SynTracker itself was not timed because its DECIPHER R dependency is not
-available on our HPC, but its BLAST database construction and all-versus-all
-DECIPHER alignment are at least as expensive as the nucmer-based dnadiff stage
-benchmarked here.
+sizes. SynTracker, the microsynteny alternative, required 65,162 s (18.1 h) on
+the same 22-genome panel even with 16 cores — ~15,000-fold slower than Syn2b —
+consistent with its BLAST database construction and all-versus-all DECIPHER
+alignment being at least as expensive as the nucmer-based dnadiff stage.
 
 ---
 
@@ -377,7 +377,10 @@ assemblies.
 
 **Comparison to microsynteny and alignment-based workflows.** SynTracker
 pioneered microsynteny for strain comparison but requires BLAST databases and
-all-versus-all DECIPHER alignments. Alignment-based SV callers such as dnadiff
+all-versus-all DECIPHER alignments; on our 22-genome benchmark panel it needed
+18.1 h on 16 cores (135 s per pair; Supplementary Table 4), about 15,000 times
+slower than Syn2b for a comparable structural read-out. Alignment-based SV
+callers such as dnadiff
 provide ground truth but require a pairwise nucmer alignment per genome pair
 (~3.8 s per pair on our benchmark; Supplementary Table 4). Syn2b achieves the
 same structural signal through Type IIB tag adjacency, without pairwise
@@ -637,7 +640,7 @@ excluded from the amortized scaling curve in Figure 5b.
 - **Supplementary Table 1:** GTDB-R207 per-pair structural metrics
   (`results/gtdb50k/inverted_fraction_truth_four.tsv`).
 - **Supplementary Table 2:** Runtime scaling of Syn2b structural comparison,
-  skani, dnadiff, and skani+dnadiff across panel sizes
+  skani, dnadiff, skani+dnadiff, and SynTracker across panel sizes
   (`supplementary/Supplementary_Table_2.tsv`).
 - **Supplementary Table 3:** Parameters for the controlled SV simulations
   (`supplementary/Supplementary_Table_3.tsv`).
@@ -645,27 +648,26 @@ excluded from the amortized scaling curve in Figure 5b.
   (484 ordered pairs) (`supplementary/Supplementary_Table_4.tsv`).
 
 **Supplementary Table 2.** Runtime scaling across panel sizes. Wall times are
-means of three replicates on the HPC (16 cores for skani/dnadiff). Per-pair
-times use the n² ordered pairs recorded in the benchmark.
+means of three replicates on the HPC (16 cores for skani/dnadiff/SynTracker).
+Per-pair times use the n² ordered pairs recorded in the benchmark.
 
-| n genomes | n pairs | Syn2b (ms/pair) | skani (ms/pair) | dnadiff (s/pair) | skani+dnadiff (s/pair) | Syn2b speedup vs skani+dnadiff |
-|---|---:|---:|---:|---:|---:|---:|
-| 2 | 4 | 128.9 | 41.9 | 4.91 | 4.95 | 38x |
-| 5 | 25 | 15.9 | 5.9 | 1.62 | 1.62 | 102x |
-| 10 | 100 | 10.4 | 3.0 | 2.62 | 2.63 | 251x |
-| 15 | 225 | 10.3 | 2.3 | 7.01 | 7.02 | 684x |
-| 22 | 484 | 9.0 | 1.1 | 3.81 | 3.81 | 423x |
+| n genomes | n pairs | Syn2b (ms/pair) | skani (ms/pair) | dnadiff (s/pair) | skani+dnadiff (s/pair) | SynTracker (s/pair) | Syn2b speedup vs skani+dnadiff | Syn2b speedup vs SynTracker |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 2 | 4 | 128.9 | 41.9 | 4.91 | 4.95 | 1,116.8 | 38x | 8,663x |
+| 5 | 25 | 15.9 | 5.9 | 1.62 | 1.62 | 748.4 | 102x | 46,971x |
+| 10 | 100 | 10.4 | 3.0 | 2.62 | 2.63 | 388.4 | 251x | 37,171x |
+| 15 | 225 | 10.3 | 2.3 | 7.01 | 7.02 | n.d. | 684x | n.d. |
+| 22 | 484 | 9.0 | 1.1 | 3.81 | 3.81 | 134.6 | 423x | 14,947x |
 
 **Supplementary Table 4.** Head-to-head runtime on the 22-genome panel
-(484 ordered pairs, mean of three replicates). SynTracker was not timed because
-its DECIPHER R dependency is unavailable on the HPC; dnadiff (MUMmer) is the
-alignment-based SV representative.
+(484 ordered pairs, mean of three replicates; SynTracker single run).
 
 | tool | wall time (s) | per pair (s) | reports ANI | reports SV |
 |---|---:|---:|---|---|
 | Syn2b | 4.4 | 0.009 | no | yes (inverted fraction, junctions) |
 | skani | 0.5 | 0.001 | yes | no |
 | dnadiff (MUMmer) | 1,843.9 | 3.810 | no | yes (alignment-based truth) |
+| SynTracker (16 cores) | 65,162.0 | 134.632 | no | yes (gene synteny) |
 | skani + dnadiff | 1,844.5 | 3.811 | yes | yes |
 
 ### Supplementary Figures
