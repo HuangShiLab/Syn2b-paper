@@ -346,8 +346,8 @@ tags.
 ### 7. Runtime benchmarking
 
 Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes approximately
-45 ms on a single core; individual enzymes range from approximately 30 ms (AlfI)
-to 47 ms (All 4) (Figure 5a). Pairwise structural comparison scales sub-linearly
+45 ms on a single core; individual enzymes range from approximately 30 ms (BplI)
+to 44 ms (All 4) (Figure 5a). Pairwise structural comparison scales sub-linearly
 per unique pair as the fixed per-run cost is amortized: 39.8 ms/pair for 5
 genomes, 23.2 ms/pair for 10 genomes, 22.0 ms/pair for 15 genomes, and 18.9
 ms/pair for 22 genomes (Figure 5b). The n = 2 case is dominated by startup

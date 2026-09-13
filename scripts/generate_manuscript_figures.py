@@ -58,7 +58,7 @@ def save(fig, name):
 # ---------------------------------------------------------------------------
 
 def fig1_algorithm():
-    fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.3))
+    fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.3), layout="constrained")
 
     # (a) Type IIB enzyme cut
     ax = axes[0]
@@ -119,113 +119,18 @@ def fig1_algorithm():
     ax.text(0.5, 0.58, "Draft assembly: ratio still 0.4", ha="center", fontsize=8)
     ax.text(0.5, 0.26, "Transition count: inflated by K−1", ha="center", fontsize=8, color="darkred")
 
-    plt.tight_layout()
     save(fig, "fig1_algorithm_schematic.png")
 
 
 # ---------------------------------------------------------------------------
 # Figure 2: SV sensitivity
 # ---------------------------------------------------------------------------
-
-def fig2_sv_sensitivity():
-    df = pd.read_csv(os.path.join(ROOT, "data", "enzyme_comparison.csv"))
-
-    enzymes = ["BcgI", "AlfI", "BplI", "CjePI"]
-    sv_types = ["control", "inversion_500kb", "translocation_500kb", "insertion_10kb", "deletion_10kb"]
-    labels = ["Control", "Inv\n500 kb", "Tra\n500 kb", "Ins\n10 kb", "Del\n10 kb"]
-
-    fig = plt.figure(figsize=(10.0, 5.5))
-    gs = fig.add_gridspec(2, 3, hspace=0.55, wspace=0.55)
-
-    colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]
-    x = np.arange(len(sv_types))
-
-    # (a) Breakpoint count
-    ax = fig.add_subplot(gs[0, 0])
-    width = 0.2
-    for i, enzyme in enumerate(enzymes):
-        sub = df[df["enzyme"] == enzyme].set_index("sv_type").loc[sv_types]
-        ax.bar(x + i * width, sub["breakpoints"], width, label=enzyme, color=colors[i])
-    ax.set_xticks(x + width * 1.5)
-    ax.set_xticklabels(labels, fontsize=7)
-    ax.set_ylabel("Breakpoint count")
-    ax.set_title("a  Breakpoints")
-    ax.legend(loc="upper left", frameon=False)
-    ax.set_ylim(0, 3500)
-
-    # (b) Kendall tau
-    ax = fig.add_subplot(gs[0, 1])
-    for i, enzyme in enumerate(enzymes):
-        sub = df[df["enzyme"] == enzyme].set_index("sv_type").loc[sv_types]
-        ax.plot(x, sub["kendall_tau"], marker="o", label=enzyme, color=colors[i], lw=1.2)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels, fontsize=7)
-    ax.set_ylabel("Kendall tau")
-    ax.set_title("b  Global order")
-    ax.set_ylim(0.75, 1.02)
-    ax.axhline(1.0, color="gray", ls="--", lw=0.6)
-
-    # (c) Mash proxy distance
-    ax = fig.add_subplot(gs[0, 2])
-    mash_vals = [df[(df["enzyme"] == e) & (df["sv_type"] == "control")]["mash"].values[0] for e in enzymes]
-    inv_mash = [df[(df["enzyme"] == e) & (df["sv_type"] == "inversion_500kb")]["mash"].values[0] for e in enzymes]
-    xpos = np.arange(len(enzymes))
-    ax.bar(xpos - 0.2, mash_vals, 0.35, label="Control", color="lightgray", ec="black", lw=0.6)
-    ax.bar(xpos + 0.2, inv_mash, 0.35, label="500-kb inversion", color="steelblue", ec="black", lw=0.6)
-    ax.set_xticks(xpos)
-    ax.set_xticklabels(enzymes)
-    ax.set_ylabel("Mash proxy distance")
-    ax.set_title("c  Mash is blind to SV")
-    ax.legend(loc="upper right", frameon=False)
-
-    # (d) 10-kb indel breakpoint counts
-    ax = fig.add_subplot(gs[1, 0])
-    ins_bp = [df[(df["enzyme"] == e) & (df["sv_type"] == "insertion_10kb")]["breakpoints"].values[0] for e in enzymes]
-    del_bp = [df[(df["enzyme"] == e) & (df["sv_type"] == "deletion_10kb")]["breakpoints"].values[0] for e in enzymes]
-    xpos = np.arange(len(enzymes))
-    width = 0.35
-    ax.bar(xpos - width / 2, ins_bp, width, label="10-kb insertion", color="#9467bd", ec="black", lw=0.6)
-    ax.bar(xpos + width / 2, del_bp, width, label="10-kb deletion", color="#8c564b", ec="black", lw=0.6)
-    ax.set_xticks(xpos)
-    ax.set_xticklabels(enzymes)
-    ax.set_ylabel("Breakpoint count")
-    ax.set_title("d  10-kb indel sensitivity")
-    ax.legend(loc="upper left", frameon=False)
-
-    # (e) Multi-enzyme synergy
-    ax = fig.add_subplot(gs[1, 1])
-    enzymes_all = ["BcgI", "AlfI", "BplI", "CjePI", "All 4"]
-    tag_counts = [2877, 1939, 383, 9284, 14483]
-    inv_bp = [646, 484, 64, 2018, 3201]
-
-    xpos = np.arange(len(enzymes_all))
-    ax2 = ax.twinx()
-    ax2.spines["right"].set_position(("outward", 25))
-    bars = ax.bar(xpos, tag_counts, color="lightblue", ec="black", lw=0.6)
-    line = ax2.plot(xpos, inv_bp, color="darkred", marker="o", lw=1.8, markersize=7)
-    ax.set_xticks(xpos)
-    ax.set_xticklabels(enzymes_all, fontsize=8)
-    ax.set_ylabel("Tag count", color="steelblue")
-    ax2.set_ylabel("Inversion Δbreakpoints", color="darkred")
-    ax.set_title("e  Tag density vs inversion signal")
-    ax.tick_params(axis="y", labelcolor="steelblue")
-    ax2.tick_params(axis="y", labelcolor="darkred")
-    ax2.set_ylim(0, 3500)
-
-    # (f) Adjacency Jaccard
-    ax = fig.add_subplot(gs[1, 2])
-    for i, enzyme in enumerate(enzymes):
-        sub = df[df["enzyme"] == enzyme].set_index("sv_type").loc[sv_types]
-        ax.plot(x, sub["adj_jaccard"], marker="s", label=enzyme, color=colors[i], lw=1.2)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels, fontsize=7)
-    ax.set_ylabel("Adjacency Jaccard")
-    ax.set_title("f  Local adjacency")
-    ax.set_ylim(0.75, 1.02)
-    ax.axhline(1.0, color="gray", ls="--", lw=0.6)
-
-    save(fig, "fig2_sv_sensitivity.png")
-
+# Figure 2 is generated by scripts/generate_figure2_rust.py, which runs the
+# Rust Syn2b implementation on controlled *E. coli* K-12 variants carrying a
+# 1% SNP background. Do not re-add a Python-prototype version here: the legacy
+# data/enzyme_comparison.csv simulation contained no SNPs and its breakpoint
+# counts counted every adjacency inside rearranged segments, so it is kept
+# only as illustrative legacy data (see README).
 
 # ---------------------------------------------------------------------------
 # Figure 3: GTDB validation
@@ -247,8 +152,8 @@ def fig3_gtdb_validation():
     df = df.merge(contig_df.rename(columns={"accession_short": "r_acc", "contig_count": "r_contigs"}), on="r_acc", how="left")
     df["max_contigs"] = df[["q_contigs", "r_contigs"]].max(axis=1)
 
-    fig = plt.figure(figsize=(7.5, 5.5))
-    gs = fig.add_gridspec(2, 2, hspace=0.45, wspace=0.35)
+    fig = plt.figure(figsize=(7.5, 5.5), layout="constrained")
+    gs = fig.add_gridspec(2, 2)
 
     # (a) Scatter with density coloring
     ax = fig.add_subplot(gs[0, 0])
@@ -399,8 +304,8 @@ def fig4_syntracker_cohorts():
     df = pd.concat(frames, ignore_index=True)
     df["species_label"] = df["species"].map(labels)
 
-    fig = plt.figure(figsize=(7.5, 6.0))
-    gs = fig.add_gridspec(2, 2, hspace=0.45, wspace=0.40)
+    fig = plt.figure(figsize=(7.5, 6.0), layout="constrained")
+    gs = fig.add_gridspec(2, 2)
 
     # (a) ANI vs breakpoints
     ax = fig.add_subplot(gs[0, 0])
@@ -453,7 +358,6 @@ def fig4_syntracker_cohorts():
     ax.set_title("d  H. pylori: participant structure")
     ax.legend(loc="upper left", frameon=False, fontsize=5, title="Participant")
 
-    plt.tight_layout()
     save(fig, "fig4_syntracker_cohorts.png")
 
 
@@ -467,8 +371,8 @@ def fig5_runtime_scaling():
     summary["n_unique_pairs"] = summary["n_genomes"] * (summary["n_genomes"] - 1) / 2
     summary["per_pair_ms_unique"] = summary["struct_wall_s"] / summary["n_unique_pairs"] * 1000
 
-    fig = plt.figure(figsize=(9.0, 2.8))
-    gs = fig.add_gridspec(1, 3, wspace=0.45)
+    fig = plt.figure(figsize=(9.0, 2.8), layout="constrained")
+    gs = fig.add_gridspec(1, 3)
 
     # (a) Digestion time - measured by timing Syn2b digest on E. coli K-12
     ax = fig.add_subplot(gs[0, 0])

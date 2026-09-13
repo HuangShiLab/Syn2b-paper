@@ -294,7 +294,7 @@ def main():
         ax.text(i, r["mash_distance"] * 1.05, f"{r['mash_distance']:.2e}",
                 ha="center", va="bottom", fontsize=8, rotation=30)
 
-    fig.suptitle("Figure 2 | Syn2b structural metrics on controlled *E. coli* K-12 variants (Rust)",
+    fig.suptitle("Figure 2 | Syn2b structural metrics on controlled E. coli K-12 variants (Rust)",
                  fontsize=13)
 
     out_png = Path(args.out_png)
