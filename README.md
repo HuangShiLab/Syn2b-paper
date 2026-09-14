@@ -1,7 +1,7 @@
-# Strain2b-paper
+# Syn2b-paper
 
-Repository for the **Strain2b (Syn2b)** method paper: rapid, alignment-free
-structural-variation detection between microbial strains via ordered
+Repository for the **Syn2b** method paper: rapid, alignment-free
+structural-variation comparison between microbial strains via ordered
 restriction-enzyme tag adjacency.
 
 > **Companion repository:** The application paper **Syn2bANI** (fast ANI +
@@ -17,7 +17,9 @@ Syn2b turns microbial genomes into ordered restriction-enzyme tags and reports
 length-weighted structural metrics that are robust to assembly fragmentation; on
 43,312 GTDB-R207 held-out pairs its fixed-reference inverted aligned fraction
 agrees with dnadiff at Pearson r = 0.9355 (95% CI 0.934–0.937), and at ≥97% ANIm
-the agreement rises to r = 0.996 (95% CI 0.996–0.996).
+the agreement rises to r = 0.996. A genome-wide survey further shows that 34% of
+GTDB-R207 pairs with ANIm ≥ 97% carry ≥2 alignment-visible inversion events —
+rearrangements that ANI ranking cannot see.
 
 ---
 
@@ -29,26 +31,29 @@ the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 ├── Syn2b_Manuscript.md            # Full manuscript draft
 ├── PRE_REVIEW.md                  # Pre-review checklist and revisions
 ├── REVIEW_2.md                    # Second internal review with concrete fixes
+├── REVIEW_3_NOVELTY.md            # Nature Methods-style review (novelty/impact/writing)
 ├── MOCK_REVIEW.md                 # Mock referee report (text, figures, data passes)
 ├── data/                          # Simulation and validation inputs
 │   ├── enzyme_comparison.csv      # Legacy Python-prototype single-enzyme scans (illustrative)
 │   ├── multi_enzyme_results.csv   # Legacy Python-prototype multi-enzyme scans (illustrative)
 │   ├── phase1_results_100gen.csv
 │   ├── simulated_h_pylori.csv     # Simulated H. pylori isolates
-│   ├── gtdb_metadata/             # Trimmed GTDB-R207 accession -> contig_count tables
+│   ├── gtdb_metadata/             # GTDB-R207 accession -> contig_count / taxonomy tables
 │   └── syntracker_validation/     # SynTracker validation raw data
 ├── figures/                       # Manuscript figures
-│   ├── main/                      # Production main-text figures
+│   ├── main/                      # Production main-text figures (Figures 1-6)
 │   ├── supplementary/             # Production supplementary figures
 │   └── others/                    # Legacy/exploratory figures kept for reference
 ├── results/                       # Real-data analysis outputs
 │   ├── gtdb50k/                   # GTDB-R207 43k-pair structural validation
+│   ├── discordance/               # Genome-wide ANI-rearrangement discordance (Figure 5)
 │   ├── closed_inversions/         # Closed-genome inversion / junction validation
 │   ├── metric_validation/         # Cohort and high-ANI metric summaries
 │   └── efficiency_v8/             # Speed benchmarks (incl. digest_timing.tsv)
 ├── scripts/                       # Reproduction and figure-generation scripts
 │   ├── generate_figure2_rust.py   # Figure 2 + Table 2 source + SNP sweep (Rust Syn2b)
-│   ├── generate_manuscript_figures.py  # Figures 1, 3, 4, 5
+│   ├── generate_manuscript_figures.py  # Figures 1, 3, 4, 6
+│   ├── analyze_ani_synteny_discordance.py  # Figure 5 + discordance statistics
 │   ├── generate_supplementary_figure1.py
 │   ├── generate_supplementary_figure2.py
 │   ├── generate_supplementary_figure3.py
@@ -67,7 +72,7 @@ the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 │   ├── Supplementary_Table_2.tsv
 │   ├── Supplementary_Table_3.tsv
 │   ├── Supplementary_Table_4.tsv
-│   └── Supplementary_Table_5.tsv
+│   ├── Supplementary_Table_5.tsv
 ├── others/                        # Archived pre-revision material
 │   └── archive/
 ```
@@ -159,9 +164,23 @@ limit*).
 
 ### 5. Runtime scales linearly and avoids pairwise alignment
 
-Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes ~45 ms;
+Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes ~42 ms;
 pairwise metric computation is <25 ms per unique pair once fixed costs are
 amortized. Full benchmarks are in `results/efficiency_v8/syn2b_struct_benchmark.tsv`.
+
+### 6. Genome-wide ANI–rearrangement discordance (Figure 5)
+
+Merging the held-out set with the ANIm-verified high-ANI sample (47,748 pairs
+with per-pair ANIm and dnadiff inversion-event counts) shows that rearrangement
+is common at strain-level ANI: 45% of pairs with ANIm ≥ 97% carry ≥1 dnadiff
+inversion and 34% (1,295 pairs) carry ≥2; at ANIm ≥ 99% 29% still carry ≥1.
+Syn2b's junction count ranks these pairs by rearrangement burden with AUC 0.80
+and no contig-count dependence, enabling fast genome-search screening. Full
+statistics in `results/discordance/discordance_summary.md`; reproduction:
+
+```bash
+python3 scripts/analyze_ani_synteny_discordance.py
+```
 
 ---
 

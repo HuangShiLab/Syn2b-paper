@@ -483,7 +483,7 @@ def fig5_runtime_scaling():
     ax.set_xlim(0, 250)
     ax.set_ylim(0, 5)
 
-    save(fig, "fig5_runtime_scaling.png")
+    save(fig, "fig6_runtime_scaling.png")
 
 
 # ---------------------------------------------------------------------------
