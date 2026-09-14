@@ -12,7 +12,7 @@
 ## Isolate generation
 
 77 simulated isolates were generated from the 26695 reference using
-`scripts/real_data_h_pylori.py` with the parameters below. The design mirrors
+`scripts/simulated_h_pylori.py` with the parameters below. The design mirrors
 the patient-stratified structure reported in the SynTracker cohort
 (Enav *et al.*, *Nat. Biotechnol.* 2024).
 
@@ -49,5 +49,5 @@ using the multi-enzyme panel (BcgI+AlfI+BplI+CjePI).
 
 ## Output file
 
-The full pairwise table is available as `data/real_data_h_pylori.csv` in the
+The full pairwise table is available as `data/simulated_h_pylori.csv` in the
 Syn2b-paper repository.

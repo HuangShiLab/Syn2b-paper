@@ -140,10 +140,11 @@ def fig3_gtdb_validation():
     df = pd.read_csv(os.path.join(ROOT, "results", "gtdb50k", "inverted_fraction_truth_four.tsv"), sep="\t")
     df = df.dropna(subset=["dnadiff_inverted_fraction", "syn2b_raw_inverted_fraction"])
 
-    # Attach real contig counts from GTDB metadata
-    contig_meta_path = os.path.join(os.path.dirname(ROOT), "Syn2bANI-paper", "data", "gtdb_metadata")
-    bac = pd.read_csv(os.path.join(contig_meta_path, "bac120_metadata_r207.tsv"), sep="\t", usecols=["accession", "contig_count"])
-    ar = pd.read_csv(os.path.join(contig_meta_path, "ar53_metadata_r207.tsv"), sep="\t", usecols=["accession", "contig_count"])
+    # Attach real contig counts from GTDB metadata (trimmed accession+contig_count
+    # tables archived in this repository under data/gtdb_metadata/)
+    contig_meta_path = os.path.join(ROOT, "data", "gtdb_metadata")
+    bac = pd.read_csv(os.path.join(contig_meta_path, "bac120_contig_count_r207.tsv"), sep="\t")
+    ar = pd.read_csv(os.path.join(contig_meta_path, "ar53_contig_count_r207.tsv"), sep="\t")
     meta = pd.concat([bac, ar], ignore_index=True)
     meta["accession_short"] = meta["accession"].str.replace(r"^(GB_|RS_)", "", regex=True)
     contig_df = meta[["accession_short", "contig_count"]].drop_duplicates("accession_short")
@@ -190,7 +191,8 @@ def fig3_gtdb_validation():
     ax.set_xticks(xpos)
     ax.set_xticklabels(band_labels, fontsize=7)
     ax.set_ylabel("Pearson r")
-    ax.set_title("b  Agreement improves at lower divergence")
+    ax.set_xlabel("Predicted ANI band (%)")
+    ax.set_title("b  Agreement improves at lower divergence (y-axis 0.85–1.0)")
     ax.set_ylim(0.85, 1.0)
     ax.axhline(1.0, color="gray", ls="--", lw=0.6)
 
@@ -297,9 +299,9 @@ def fig4_syntracker_cohorts():
         if sp == "Helicobacter_pylori":
             meta = pd.read_csv(os.path.join(samples_dir, "samples_Helicobacter_pylori.tsv"), sep="\t")
             iso_to_host = dict(zip(meta["isolate"].astype(str), meta["host"].astype(str)))
-            merged["host"] = merged["pair"].apply(
-                lambda p: iso_to_host.get(p.split("__")[0]) or iso_to_host.get(p.split("__")[1], "unknown")
-            )
+            merged["host_a"] = merged["pair"].apply(lambda p: iso_to_host.get(p.split("__")[0]))
+            merged["host_b"] = merged["pair"].apply(lambda p: iso_to_host.get(p.split("__")[1]))
+            merged["same_host"] = (merged["host_a"] == merged["host_b"]).astype(int)
         frames.append(merged)
     df = pd.concat(frames, ignore_index=True)
     df["species_label"] = df["species"].map(labels)
@@ -317,6 +319,16 @@ def fig4_syntracker_cohorts():
     ax.set_ylabel("Syn2b breakpoints")
     ax.set_title("a  ANI vs breakpoint count")
     ax.legend(loc="upper left", frameon=False, fontsize=6)
+    # inset zoom for the near-clonal, near-zero-breakpoint clusters (E. coli, N. gonorrhoeae)
+    axins = ax.inset_axes([0.55, 0.50, 0.42, 0.45])
+    for sp in species:
+        sub = df[df["species"] == sp]
+        axins.scatter(sub["ani_skani"], sub["syn2b_breakpoints"],
+                      c=colors[sp], s=6, alpha=0.5, edgecolors="none")
+    axins.set_ylim(-0.5, 3.5)
+    axins.set_xlim(99.5, 100.02)
+    axins.tick_params(labelsize=6)
+    axins.set_title("zoom: ≤3 breakpoints", fontsize=6)
 
     # (b) ANI vs raw inverted fraction
     ax = fig.add_subplot(gs[0, 1])
@@ -327,7 +339,7 @@ def fig4_syntracker_cohorts():
     ax.set_xlabel("skani ANI (%)")
     ax.set_ylabel("Syn2b raw inverted fraction")
     ax.set_title("b  ANI vs inverted fraction")
-    ax.legend(loc="upper left", frameon=False, fontsize=6)
+    ax.legend(loc="lower right", frameon=False, fontsize=6)
 
     # (c) Breakpoint distribution by cohort
     ax = fig.add_subplot(gs[1, 0])
@@ -345,18 +357,35 @@ def fig4_syntracker_cohorts():
     ax.set_title("c  Breakpoint distribution by cohort")
     ax.tick_params(axis="x", rotation=15)
 
-    # (d) H. pylori: structural signal by host
+    # (d) H. pylori: within-host vs between-host structure
     ax = fig.add_subplot(gs[1, 1])
     hdf = df[df["species"] == "Helicobacter_pylori"].copy()
-    host_palette = plt.cm.tab10(np.linspace(0, 1, hdf["host"].nunique()))
-    for i, host in enumerate(sorted(hdf["host"].unique())):
-        sub = hdf[hdf["host"] == host]
-        ax.scatter(sub["ani_skani"], sub["syn2b_breakpoints"],
-                   c=[host_palette[i]], s=15, alpha=0.6, edgecolors="none", label=f"Host {host}")
+    bet = hdf[hdf["same_host"] == 0]
+    wit = hdf[hdf["same_host"] == 1]
+    ax.scatter(bet["ani_skani"], bet["syn2b_breakpoints"],
+               c="lightgray", s=8, alpha=0.4, edgecolors="none",
+               label=f"Between-host (n={len(bet)})", zorder=2)
+    host_palette = plt.cm.tab10(np.linspace(0, 1, max(wit["host_a"].nunique(), 1)))
+    for i, host in enumerate(sorted(wit["host_a"].dropna().unique())):
+        sub = wit[wit["host_a"] == host]
+        rng_j = np.random.default_rng(100 + i)
+        xj = sub["ani_skani"] + rng_j.normal(0, 0.05, size=len(sub))
+        yj = sub["syn2b_breakpoints"] + rng_j.normal(0, 0.2, size=len(sub))
+        ax.scatter(xj, yj, c=[host_palette[i]], s=18, alpha=0.8, edgecolors="none",
+                   label=f"Host {host} (n={len(sub)})", zorder=3)
+    # statistics from the permutation test (scripts/test_within_host.py)
+    stat_path = os.path.join(ROOT, "results", "metric_validation", "h_pylori_host_permutation.tsv")
+    stat_txt = "within- vs between-host:\nmedian 0 vs 8 breakpoints"
+    if os.path.exists(stat_path):
+        st = pd.read_csv(stat_path, sep="\t")
+        row = st[st["metric"] == "syn2b_breakpoints"].iloc[0]
+        stat_txt += f"\npermutation p < 1e-4 (10,000)\nCliff's delta = {row['cliffs_delta']:.2f}"
+    ax.text(0.97, 0.72, stat_txt, transform=ax.transAxes, fontsize=6.5,
+            ha="right", va="top", bbox=dict(boxstyle="round", facecolor="white", alpha=0.85))
     ax.set_xlabel("skani ANI (%)")
     ax.set_ylabel("Syn2b breakpoints")
-    ax.set_title("d  H. pylori: participant structure")
-    ax.legend(loc="upper left", frameon=False, fontsize=5, title="Participant")
+    ax.set_title("d  H. pylori: within-host pairs are structurally closer")
+    ax.legend(loc="upper left", frameon=False, fontsize=5.5, title="Participant")
 
     save(fig, "fig4_syntracker_cohorts.png")
 
@@ -375,31 +404,40 @@ def fig5_runtime_scaling():
     gs = fig.add_gridspec(1, 3)
 
     # (a) Digestion time - measured by timing Syn2b digest on E. coli K-12
+    # Production panel BcgI+AlfI+AloI+FalI; timings archived to digest_timing.tsv.
     ax = fig.add_subplot(gs[0, 0])
-    enzymes = ["BcgI", "AlfI", "BplI", "CjePI", "All 4"]
+    enzymes = ["BcgI", "AlfI", "AloI", "FalI", "4-enzyme\npanel"]
     fasta = os.path.join(ROOT, "data", "ecoli_k12_MG1655.fasta")
     measured_times = {}
+    timing_tsv = os.path.join(ROOT, "results", "efficiency_v8", "digest_timing.tsv")
     if os.path.exists(fasta):
         syn2b_bin = os.path.join(os.path.dirname(ROOT), "Syn2b", "target", "release", "Syn2b")
         if os.path.exists(syn2b_bin):
             import tempfile
             import time
             import subprocess
+            timing_rows = []
             for enzyme in enzymes:
                 with tempfile.NamedTemporaryFile(suffix=".tgt", delete=False) as tmp:
                     tmp_path = tmp.name
-                enzyme_arg = enzyme.replace("All 4", "BcgI,AlfI,BplI,CjePI")
+                enzyme_arg = enzyme.replace("4-enzyme\npanel", "BcgI,AlfI,AloI,FalI")
                 cmd = [syn2b_bin, "digest", "-i", fasta, "-o", tmp_path, "-e", enzyme_arg]
                 try:
                     start = time.time()
                     subprocess.run(cmd, check=True, capture_output=True)
                     elapsed = time.time() - start
                     measured_times[enzyme] = elapsed * 1000
+                    timing_rows.append((enzyme, enzyme_arg, f"{elapsed * 1000:.1f}"))
                 except Exception:
                     measured_times[enzyme] = np.nan
                 finally:
                     if os.path.exists(tmp_path):
                         os.remove(tmp_path)
+            os.makedirs(os.path.dirname(timing_tsv), exist_ok=True)
+            with open(timing_tsv, "w") as fh:
+                fh.write("enzyme_arg\tenzymes\twall_ms\n")
+                for name, arg, ms in timing_rows:
+                    fh.write(f"{name}\t{arg}\t{ms}\n")
     if len(measured_times) == len(enzymes) and all(not np.isnan(v) for v in measured_times.values()):
         times = [measured_times[e] for e in enzymes]
         bars = ax.bar(enzymes, times, color="steelblue", ec="black", lw=0.6)
@@ -425,8 +463,12 @@ def fig5_runtime_scaling():
     ax.set_xlim(0, 25)
     ax.set_ylim(0, 50)
     for _, row in b_summary.iterrows():
-        ax.text(row["n_genomes"], row["per_pair_ms_unique"] + 2, f"{row['per_pair_ms_unique']:.1f}",
-                ha="center", fontsize=7)
+        if row["n_genomes"] == 10:
+            ax.text(row["n_genomes"] + 0.7, row["per_pair_ms_unique"] + 2.5,
+                    f"{row['per_pair_ms_unique']:.1f}", ha="left", fontsize=7)
+        else:
+            ax.text(row["n_genomes"], row["per_pair_ms_unique"] + 2.5,
+                    f"{row['per_pair_ms_unique']:.1f}", ha="center", fontsize=7)
     ax.annotate("n=2 excluded: startup dominates",
                 xy=(0.05, 0.95), xycoords="axes fraction",
                 ha="left", va="top", fontsize=6, color="gray")

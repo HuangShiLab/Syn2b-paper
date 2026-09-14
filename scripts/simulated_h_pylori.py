@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-real_data_h_pylori.py
+simulated_h_pylori.py
 
-Use real H. pylori 26695 genome as reference to simulate 77 clinical isolates
+Use the H. pylori 26695 genome as a reference to simulate 77 clinical isolates
 (SynTracker dataset) and run Syn2b vs popANI analysis.
 """
 
@@ -163,8 +163,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", default="/Users/shihuang/Documents/kimi/workspace/real_species_data/H_pylori_ref.fasta")
     parser.add_argument("--n-isolates", type=int, default=77)
-    parser.add_argument("--csv", default="/Users/shihuang/Documents/kimi/workspace/real_data_h_pylori.csv")
-    parser.add_argument("--png", default="/Users/shihuang/Documents/kimi/workspace/real_data_h_pylori.png")
+    parser.add_argument("--csv", default="data/simulated_h_pylori.csv")
+    parser.add_argument("--png", default="figures/others/simulated_h_pylori.png")
     args = parser.parse_args()
     
     if not os.path.isfile(args.input):

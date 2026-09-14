@@ -63,9 +63,6 @@ def main():
     ax.set_title("c  Junction position error")
     ax.legend(loc="upper right")
 
-    fig.suptitle("Supplementary Figure 2 | Closed-genome inversion validation (n = "
-                 f"{len(df)} pairs)", fontsize=12)
-
     out_png = Path(args.out_png)
     out_pdf = Path(args.out_pdf)
     out_png.parent.mkdir(parents=True, exist_ok=True)

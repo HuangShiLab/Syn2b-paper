@@ -252,8 +252,6 @@ def main():
             ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.05,
                     str(b), ha="center", va="bottom", fontsize=8, color="steelblue")
 
-    fig.suptitle("Supplementary Figure 3 | Syn2b structural metrics across SV sizes (Rust)", fontsize=13)
-
     out_png = Path(args.out_png)
     out_pdf = Path(args.out_pdf)
     out_png.parent.mkdir(parents=True, exist_ok=True)

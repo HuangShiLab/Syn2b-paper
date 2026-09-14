@@ -27,11 +27,14 @@ residual discrepancy of approximately 2 percentage points.
 
 | set | \(n\) | observed SD(err) | model SD(err) | SD(\(z\)) | within \(\pm 2\) SE |
 |---|---:|---:|---:|---:|---:|
-| held_out_50k | 43,312 | 0.0555 | 0.0546 | 1.006 | 95.3% |
-| high_ani_all | 6,922 | 0.0848 | 0.0874 | 0.763 | 97.9% |
+| held_out_50k | 43,312 | 0.0555 | 0.0546 | 1.076 | 94.7% |
+| high_ani_all (independent prediction target) | 6,922 | 0.0848 | 0.0874 | 0.763 | 97.9% |
 
 The model was fitted only on held_out_50k, yet it predicts the aggregate spread
-of the independent high-ANI sample without re-fitting.
+of the independent high-ANI sample without re-fitting. (The high_ani_all row is
+used here solely as a prediction target for the error model, not as an estimate
+of high-ANI accuracy; accuracy results are reported on the ANIm-verified subset
+in the main text.)
 
 ## Per-pair SE table
 
@@ -39,11 +42,11 @@ of the independent high-ANI sample without re-fitting.
 |---|---:|---:|
 | 50 | 0.0891 | 95% |
 | 100 | 0.0647 | 90% |
-| 250 | 0.0417 | 73% |
-| 500 | 0.0300 | 51% |
-| 1,000 | 0.0228 | 30% |
-| 2,000 | 0.0182 | 14% |
-| 5,000 | 0.0153 | 5% |
+| 250 | 0.0439 | 78% |
+| 500 | 0.0342 | 64% |
+| 1,000 | 0.0282 | 47% |
+| 2,000 | 0.0247 | 31% |
+| 5,000 | 0.0223 | 15% |
 
 At high shared-tag counts the 0.0205 floor dominates; at low counts the sampling
 term dominates. Because `shared_tags` is emitted for every pair, each Syn2b

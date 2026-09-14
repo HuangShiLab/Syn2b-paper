@@ -1,0 +1,9 @@
+enzyme_arm,condition,junctions,scj_distance,raw_inverted_fraction,shared_tags
+BcgI,snp_1pct,0,0,0.0,2040
+BcgI+AlfI+AloI+FalI,snp_1pct,0,0,0.0,4256
+BcgI,inv_100kb,2,4,0.02095,2768
+BcgI+AlfI+AloI+FalI,inv_100kb,2,4,0.02262,5704
+BcgI,inv_500kb,2,4,0.11633,2768
+BcgI+AlfI+AloI+FalI,inv_500kb,2,4,0.11625,5703
+BcgI,tra_500kb,3,6,0.0,2768
+BcgI+AlfI+AloI+FalI,tra_500kb,3,6,0.0,5704

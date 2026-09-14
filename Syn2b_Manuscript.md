@@ -22,7 +22,8 @@ bias that grows with the number of contigs. In the strain-level regime (ANIm ≥
 the alignment-based truth at Pearson r = 0.996, slope = 1.006 and SD(error) =
 0.0135; across all 43,312 held-out pairs from GTDB-R207 the correlation is r =
 0.94. A multi-enzyme panel (BcgI+AlfI+AloI+FalI) yields ~1.34 tags/kb in *E.
-coli* K-12 and supports ~4-kb event-size resolution; combined with the
+coli* K-12 and detects inversion events down to ~4 kb (10/10 controlled
+replicates; Supplementary Figure 4); combined with the
 fragmentation-invariant ratio, this enables structural comparison of draft
 assemblies at a fraction of the cost of alignment-based methods. Syn2b is
 available at https://github.com/HuangShiLab/Syn2b.
@@ -49,7 +50,7 @@ frequent rearrangements¹³⁻¹⁵. Detecting only one mode gives an incomplete
 picture.
 
 SynTracker¹⁶ addressed this gap by introducing microsynteny analysis, comparing
-the order of sequence blocks via BLAST and DECIPHER pairwise alignments. Its
+the order of sequence blocks via BLAST²⁴ and DECIPHER¹⁹ pairwise alignments. Its
 Average Pairwise Synteny Score (APSS) identified structural-variation-driven
 diversity in *H. pylori*, *S. rimosus*, and human gut metagenomes. However,
 SynTracker's reliance on BLAST database construction and all-versus-all
@@ -66,7 +67,7 @@ disrupt global order.
 Syn2b is the methodological foundation for a companion tool, **Syn2bANI**, which
 uses the same tag framework for rapid ANI estimation and genome search. The
 present paper establishes the structural-variation channel: the fragmentation
-principle, the optimal landmark panel, and the calibrated error model. Syn2bANI
+principle, the production landmark panel, and the calibrated error model. Syn2bANI
 then applies these results to large-scale ANI+SV search; its structural columns
 are chosen from the set validated here.
 
@@ -128,7 +129,8 @@ version is the validated metric.
 **Implementation.** Syn2b is implemented in Rust. Digestion uses anchor-based
 search rather than sliding-window scans and runs in O(N) time per genome.
 Pairwise metric computation is O(M log M) in the number of shared tags M. On a
-single core, digesting *E. coli* K-12 with all four enzymes takes approximately 45 ms.
+single core, digesting *E. coli* K-12 with all four enzymes takes approximately
+42 ms (measured; Figure 5a).
 
 ### 2. A fragmentation principle for structural metrics
 
@@ -166,31 +168,39 @@ insertion/deletion. The quantitative validation on real genomes is given in
 Figure 3; the tests here establish that the reported metrics behave as expected
 on controlled inputs.
 
-**SNP-only controls.** Substitutions from 0.5% to 5% outside recognition sites
-leave tag patterns unchanged and produce **zero structural junctions** in the
-Rust implementation (`scj_distance = 0`, `junctions = 0`). This confirms that
-SNPs do not create spurious structural signal.
+**SNP-only controls.** Substitutions outside recognition sites leave tag
+adjacency unchanged. Measured across a 0.5–5% substitution sweep on *E. coli*
+K-12 (one replicate per rate), the Rust implementation reports zero structural
+junctions at every rate (`scj_distance = 0`, `junctions = 0`;
+`results/snp_sweep_metrics.csv`). SNP load instead reduces the number of shared
+tags (6,216 at 0.5% substitutions; 1,227 at 5%), which the error model accounts
+for as reduced landmark sampling (Supplementary Note 2).
 
 **Inversions.** A single inversion produces exactly **two junctions** in the
 Rust implementation, corresponding to the two breakpoint boundaries, regardless
-of inversion size (400 kb or 500 kb). The length-weighted inverted fraction
+of inversion size (100 kb or 500 kb). The length-weighted inverted fraction
 directly reports the inverted segment and is insensitive to where contig
-boundaries fall.
+boundaries fall. In a detection-size benchmark with ten random positions per
+size, the four-enzyme panel recovers both junctions of a 4-kb inversion in
+10/10 replicates (8/10 at 2 kb), whereas BcgI alone reaches 90% detection only
+at 8 kb (Supplementary Figure 4).
 
 **Translocations.** A single translocation produces exactly **three junctions**,
 corresponding to the two breakpoint boundaries plus the relocated block. The
 global order disruption is also captured by a drop in Kendall tau of matching
 tag positions.
 
-**Indels.** A 10-kb insertion or deletion is detectable once the landmark
-density is high enough to place landmarks inside and outside the event. The
-four-enzyme panel's ~4-kb effective resolution limit (Supplementary Note 2)
-makes 10-kb indels reliably recoverable, whereas BcgI alone (~8-kb limit) is
-less consistent.
+**Indels.** A 10-kb insertion or deletion is detectable through tag loss:
+controlled insertions and deletions of 10–100 kb produce no junctions (no
+landmark straddles the breakpoint in these replicates) but remove 526–631 shared
+tags relative to the 6,216-tag SNP-only control, with the loss growing with
+event size (Supplementary Figure 3).
 
-**Mash is blind to SV.** In all structural-variant conditions, Mash distance
-remains at the SNP-only value, confirming that k-mer-based methods cannot
-distinguish structural variation from point mutations.
+**Mash is blind to SV.** The 1% SNP background alone gives a Mash distance of
+≈1.0 × 10⁻² (k = 21); adding any structural variant changes the distance by
+only ~5 × 10⁻⁷ — five orders of magnitude below the SNP signal (Figure 2d) —
+confirming that k-mer-based methods cannot distinguish structural variation
+from point mutations¹⁸.
 
 ### 4. Enzyme panel optimization
 
@@ -202,11 +212,11 @@ more than they improve the already-saturated orientation-channel correlation.
 
 **Single-enzyme densities.** In *E. coli* K-12 (NC_000913.3, 4,641,652 bp),
 BcgI yields 2,935 tags (0.63/kb), AlfI 2,023 (0.44/kb), AloI 523 (0.11/kb),
-and FalI 735 (0.16/kb).
+and FalI 735 (0.16/kb) (Table 1; tag spacing distribution in Supplementary
+Figure 1).
 
 **Multi-enzyme density.** Combining all four yields 6,216 tags (1.34/kb), a
-2.1× increase over BcgI alone. The total is below the naive sum because
-recognition motifs occupy overlapping sequence space.
+2.1× increase over BcgI alone.
 
 **Why this combination?** BcgI and AlfI provide well-characterized 32-bp Type
 IIB tags and together contribute the majority of landmarks. AloI and FalI add
@@ -216,10 +226,12 @@ diverse prokaryotic genomes while using enzymes with experimentally validated
 recognition specificities. In practice, recognition sites can be affected by
 DNA methylation and by sequence polymorphism within the motif; however, because
 Syn2b reports length-weighted ratios over many landmarks, the metric is robust
-to the occasional missing or extra site (Supplementary Note 2).
+to the occasional missing or extra site, which enters the error model as
+reduced landmark sampling (Supplementary Note 2).
 
-**Validation on GTDB-R207.** On the 43,334 held-out pairs, the four-enzyme panel
-substantially outperforms BcgI alone:
+**Validation on GTDB-R207.** On the 43,312 held-out pairs with complete metrics
+(41,485 for the BcgI arm), the four-enzyme panel substantially outperforms BcgI
+alone (Table 2):
 
 | landmark set | median shared tags | Pearson r vs dnadiff (95% CI) | MAE |
 |---|---:|---:|---:|
@@ -230,8 +242,9 @@ substantially outperforms BcgI alone:
 itself matters or simply the landmark density, we replaced enzyme sites with
 FracMinHash sketches at scales 250, 750, 2,000, and 6,000. At comparable density
 to the enzyme panel (fmh750, median 254 shared tags), FracMinHash reaches
-r = 0.9305 and MAE = 0.0399, statistically indistinguishable from the enzyme
-panel. At higher density (fmh250, median 761 shared tags) it reaches r = 0.9510
+r = 0.9305 and MAE = 0.0399, close to the enzyme panel (0.9355/0.0370); the
+small difference is within the range expected from landmark sampling and is not
+biologically meaningful. At higher density (fmh250, median 761 shared tags) it reaches r = 0.9510
 and MAE = 0.0323. The enzyme panel is therefore a high-performing,
 biologically motivated default rather than the absolute optimal density choice.
 We retain enzyme landmarks because they are deterministic, interpretable, and
@@ -242,7 +255,7 @@ method generalizes to any set of ordered landmarks.
 
 We applied Syn2b to the 43,334 held-out pairs from GTDB-R207 used in the
 companion Syn2bANI study and compared structural metrics to alignment-based
-estimates from dnadiff and minimap2.
+estimates from dnadiff and minimap2 (per-pair metrics in Supplementary Table 1).
 
 **Length-weighted inverted fraction is the validated metric.**
 `raw_inverted_fraction` correlates with dnadiff's inverted aligned fraction at
@@ -258,9 +271,11 @@ set (Figure 3a). Agreement improves monotonically as divergence decreases:
 | 92–95 | 8,644 | 0.9752 | 1.010 | 0.0326 | 809 |
 | 95–97 | 652 | 0.9862 | 1.017 | 0.0275 | 1,162 |
 
-The held-out set contains only two pairs at ≥97% ANIm, so the strain-level
-regime is evaluated on an independent high-ANI sample selected for that purpose.
-There, agreement is close to one-to-one:
+The held-out set contains only two pairs at ≥97% ANIm (both included in the
+pooled count below), so the strain-level regime is evaluated on an independent
+high-ANI sample selected for that purpose. Figure 3b shows the same trend with
+pairs binned by the four-enzyme model's predicted ANI rather than ANIm. There,
+agreement is close to one-to-one:
 
 | ANIm band | n | Pearson r | slope | SD(err) | median shared tags |
 |---|---:|---:|---:|---:|---:|
@@ -289,18 +304,23 @@ without re-fitting.
 true inverted fraction is below 0.5. On the held-out set it correlates with
 dnadiff at only r = 0.177, because many pairs carry large inversions. The
 fixed-reference `raw_inverted_fraction` removes the saturation and is the
-validated metric (r = 0.9355). Among the 3,099 held-out pairs where dnadiff
-reports an inverted fraction > 0.5, the fixed-reference version still agrees at
-r = 0.6826, whereas the majority-frame version anticorrelates at r = −0.7438
-because it flips to the opposite frame (Figure 3c).
+validated metric (r = 0.9355). Nearly half of the held-out pairs (21,035 of
+43,312, 48.6%) have a dnadiff inverted fraction > 0.5; in this saturated subset
+the fixed-reference version still agrees at r = 0.8724, whereas the
+majority-frame version anticorrelates at r = −0.8964 because it flips to the
+opposite frame (Figure 3c).
 
 **Closed-genome validation.** On 100 closed (complete) genome pairs selected for
 high expected structural divergence, Syn2b detected a median of 4 inversions per
-pair that were also found by dnadiff (median distance between predicted and true
-junctions = 21.8 kb), while dnadiff reported 31 additional inversions that fell
-outside Syn2b's landmark coverage. These numbers are consistent with the
-sampling model: closed genomes remove the fragmentation bias, and the remaining
-discrepancies reflect landmark density rather than algorithmic error.
+pair with a dnadiff counterpart (median of per-pair median junction distances =
+21.8 kb), while dnadiff reported a median of 31 additional inversions per pair
+outside Syn2b's landmark coverage. Pooling across pairs, 13.6% of dnadiff
+inversion boundaries had a matched Syn2b junction, and 40.4% of matched
+junctions lay within 5 kb of each other (p90 distance = 314.8 kb;
+Supplementary Figure 2). These numbers are consistent with the sampling
+model — closed genomes remove the fragmentation bias, and the remaining
+discrepancies reflect landmark density and the ambiguity of one-to-one matching
+between two sets of predicted events rather than algorithmic error.
 
 **Transition-count metrics are confounded by fragmentation.** After correcting
 Syn2bANI's breakpoint_count implementation so that both query-side and
@@ -323,31 +343,36 @@ fractions, this comparison asks whether Syn2b's fast structural signal adds
 information beyond a state-of-the-art ANI estimator.
 
 **Species occupy distinct structural regimes.** *S. rimosus* pairs cluster at
-very high ANI (>99.5%) yet span the widest breakpoint range (median
+very high ANI (>99.9%) yet span the widest breakpoint range (median
 `breakpoint_count` = 10), showing that clonal sequence similarity does not
-guarantee structural identity. *E. coli* hypermutator pairs sit at lower ANI
-(94.5–96.5%) with low breakpoint counts (median = 0), consistent with a
-population driven primarily by point mutation. *H. pylori* and *N. gonorrhoeae*
-occupy an intermediate regime in which ANI and breakpoints vary together but
-with substantial scatter (Figure 4a–c).
+guarantee structural identity. *E. coli* hypermutator pairs are near-clonal
+(ANI 99.93–100.00%, median 99.99) and carry essentially no structural signal
+(median `breakpoint_count` = 0, maximum 3), consistent with a population driven
+primarily by point mutation. *H. pylori* spans the broadest ANI range
+(94.6–100%) and *N. gonorrhoeae* sits at 99.6–100%; in both, ANI and
+breakpoints vary together but with substantial scatter (Figure 4a–c).
 
 **Within-host *H. pylori* structure.** Among the 2,926 *H. pylori* pairs, 476
-were recovered from the same participant. Within-patient pairs showed very low
-structural disruption (median `breakpoint_count` = 0, median SCJ distance =
-11 bp, median `observable_fraction` = 0.995), whereas cross-patient pairs showed
-substantially more signal (median `breakpoint_count` = 8, median SCJ distance =
-37 bp, median `observable_fraction` = 0.978). Same-host pairs tend to have both
-high ANI and low breakpoint counts, whereas between-host pairs show greater
-structural divergence even when ANI is similar (Figure 4d). This pattern mirrors
-the participant-level signal reported by SynTracker and demonstrates that Syn2b
-captures epidemiologically relevant structure using only restriction-enzyme
-tags.
+were recovered from the same participant. Within-participant pairs showed very
+low structural disruption (median `breakpoint_count` = 0, median
+`observable_fraction` = 0.995), whereas cross-participant pairs showed
+substantially more signal (median `breakpoint_count` = 8, median
+`observable_fraction` = 0.978). A label-permutation test (10,000 permutations)
+confirms the difference (median difference −8 breakpoints, p < 1e-4, Cliff's
+delta = −0.92; Mann–Whitney p = 4e-226; Supplementary Table 5). Same-host pairs
+tend to have both high ANI and low breakpoint counts, whereas between-host pairs
+show greater structural divergence even when ANI is similar (Figure 4d). This
+pattern mirrors the participant-level signal reported by SynTracker and
+demonstrates that Syn2b captures epidemiologically relevant structure using
+only restriction-enzyme tags.
 
 ### 7. Runtime benchmarking
 
-Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes approximately
-45 ms on a single core; individual enzymes range from approximately 30 ms (BplI)
-to 44 ms (All 4) (Figure 5a). Pairwise structural comparison scales sub-linearly
+Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes
+approximately 42 ms on a single core (measured on *E. coli* K-12, including
+process startup; timings archived in the repository), with individual
+production-panel enzymes ranging from approximately 31 ms (FalI) to 46 ms
+(BcgI) (Figure 5a). Pairwise structural comparison scales sub-linearly
 per unique pair as the fixed per-run cost is amortized: 39.8 ms/pair for 5
 genomes, 23.2 ms/pair for 10 genomes, 22.0 ms/pair for 15 genomes, and 18.9
 ms/pair for 22 genomes (Figure 5b). The n = 2 case is dominated by startup
@@ -355,8 +380,8 @@ overhead and is excluded from the amortized curve; the 22-genome estimate uses
 the 231 unique unordered pairs rather than the 484 directional self-plus-
 reciprocal comparisons recorded in the raw benchmark.
 
-Memory footprint is dominated by the genome sequence and tag index; the 22-genome
-benchmark peaked at ~2.3 GB RSS, well within standard laptop limits. On the
+Memory footprint is dominated by the genome sequence and tag index and remained
+well within standard laptop limits for all panel sizes tested. On the
 same 22-genome panel (484 ordered pairs), Syn2b completed structural comparison
 in 4.4 s, versus 1,844 s for the skani+dnadiff workflow — a ~420-fold speedup
 (Supplementary Table 4). Supplementary Table 2 gives the scaling across panel
@@ -385,20 +410,23 @@ provide ground truth but require a pairwise nucmer alignment per genome pair
 (~3.8 s per pair on our benchmark; Supplementary Table 4). Syn2b achieves the
 same structural signal through Type IIB tag adjacency, without pairwise
 alignment or a pre-built database, and is therefore orders of magnitude faster
-for large panels (~9 ms per pair). The GTDB validation shows that the
+for large panels (~19 ms per unique pair). The GTDB validation shows that the
 orientation ratio alone matches dnadiff at r = 0.94 overall and r = 0.996 at
 ANIm ≥ 97%.
 
 **Comparison to alignment-based SV callers.** dnadiff and minimap2 provide
 ground-truth structural information but are slow and require pairwise alignment.
 Syn2b approximates their length-weighted orientation signal at a small fraction
-of the cost, making library-scale surveys practical. Transition-count metrics
+of the cost, making structural prescreening of large genome collections
+practical before committing selected pairs to alignment-based validation.
+Transition-count metrics
 from both Syn2b and dnadiff are confounded by fragmentation at the
 inter-species ANI range, which is why we emphasize ratios for draft genomes.
 
 **Enzyme selection.** Tag density is the primary determinant of sensitivity.
-The BcgI+AlfI+AloI+FalI panel raises landmark density enough to detect ~4-kb
-events, while BcgI alone is limited to ~8-kb events. For very closely related
+In a controlled detection-size benchmark, the BcgI+AlfI+AloI+FalI panel
+recovered both junctions of 4-kb inversions in 10/10 replicates, whereas BcgI
+alone required 8 kb for comparable detection (Supplementary Figure 4). For very closely related
 strains, even single Type IIB enzymes suffice because shared landmark counts are
 high; for divergent pairs or small SV detection, dense panels are preferable.
 
@@ -420,9 +448,13 @@ different GC contents.
 
 ### In-silico genome simulation
 
-Simulations used *E. coli* K-12 MG1655 (NC_000913.3, 4,543,028 bp). Point
+Simulations used *E. coli* K-12 MG1655 (NC_000913.3, 4,641,652 bp). Point
 mutations, inversions, translocations, insertions, and deletions were
-introduced with a custom Python script (seed=42).
+introduced with custom Python scripts (`scripts/generate_figure2_rust.py`,
+`scripts/generate_supplementary_figure3.py`, and
+`scripts/measure_detection_size.py`; seed = 42). All metrics reported for
+simulated genomes are measured by running the Rust Syn2b binary; no value is
+hardcoded.
 
 ### Type IIB enzyme digestion
 
@@ -440,17 +472,32 @@ strand offset 7=GGA, offset 16=GTTC.
 
 ### Syn2b metrics
 
-**Mash proxy.** 21-mer canonical k-mer Jaccard with stride=10, converted to
-Mash distance.
+**Mash proxy.** 21-mer canonical k-mer Jaccard enumerated at every position,
+converted to Mash distance¹⁸.
 
 **Adjacency Jaccard.** Jaccard similarity of adjacent tag-pair sets.
 
-**Breakpoint count.** Adjacent pairs present in one genome but not the other.
+**Breakpoint / junction count.** Adjacent tag pairs present in one genome but
+not the other. This is a transition count and inherits a fragmentation-dependent
+term (Supplementary Note 1).
+
+**SCJ distance.** Single-cut-or-join distance between the two genomes' tag
+adjacency orders: the minimum number of adjacency cuts and joins that
+transforms one tag order into the other.
 
 **Length-weighted inverted fraction.** For shared tags, the fraction of
 tag-covered length whose orientation relative to the reference is inverted.
 Reported as majority-frame (`inverted_fraction`) and fixed-reference
 (`raw_inverted_fraction`).
+
+**Observable fraction.** The fraction of reference landmark adjacencies
+observable in both genomes; adjacencies falling on fragment (contig)
+boundaries are unobservable rather than absent (Supplementary Note 1).
+
+**Synteny blocks; Kendall tau.** Contiguous runs of conserved tag adjacency,
+and the rank correlation of shared-tag positions, respectively.
+`Synteny_blocks` is used only as an assembly-quality statistic because most
+blocks originate at contig starts (Results, GTDB-R207 validation).
 
 ### GTDB-R207 validation
 
@@ -458,9 +505,15 @@ Pairs were drawn from the GTDB-R207 representative genome set. A total of
 43,334 pairs were designated as a held-out validation set independent of the
 training data used for the companion Syn2bANI tool; 43,312 of these pairs had
 complete Syn2b and dnadiff structural metrics and were used for the broad-band
-correlation analyses. A separate high-ANI sample was selected to cover the
-strain-level regime (ANIm ≥ 95%). For each pair, ANIm was computed with
-minimap2 (`-cx asm20`) and dnadiff (MUMmer 4.0) was run with default
+correlation analyses (per-pair metrics in Supplementary Table 1). To cover the
+strain-level regime, additional candidate pairs were sampled from GTDB-R207
+genomes enriched for close relatives (candidate strata of the companion
+Syn2bANI benchmark, initially ranked by predicted ANI) and retained only if
+their alignment-based ANIm was ≥ 95%. This ANIm-verified sample contributed
+4,436 pairs with complete metrics (3,826 at ≥ 97% ANIm); candidates that failed
+ANIm verification are excluded from all headline results. For each pair, ANIm
+was computed with minimap2²² (`-cx asm20`) and dnadiff (MUMmer 4.0²³) was run
+with default
 parameters; the `.1coords` output was used to derive the inverted aligned
 fraction, and the `.report` output was used for breakpoint and structural-event
 counts. Syn2b was run with the BcgI+AlfI+AloI+FalI multi-enzyme panel,
@@ -469,6 +522,11 @@ and Spearman correlations, linear regressions, and partial correlations
 (controlling for contig count) were computed in Python with scipy and
 statsmodels. Confidence intervals for Pearson correlations were obtained by
 Fisher z-transformation.
+
+### skani ANI for cohort analysis
+
+skani²¹ `dist` was run with default parameters on the four SynTracker cohort
+assembly sets to obtain the ANI values used in Figure 4.
 
 ### Software availability
 
@@ -482,7 +540,9 @@ All analysis scripts, summary data, and figure source files are available in the
 Syn2b-paper repository (https://github.com/HuangShiLab/Syn2b-paper). Raw GTDB-R207
 genomes were downloaded from the GTDB release R207 (ref. 20). The *E. coli* K-12
 MG1655 reference genome (NC_000913.3) and the *H. pylori* 26695 reference genome
-(NC_000915.1) were obtained from NCBI RefSeq. Simulated isolate parameters are
+(NC_000915.1) were obtained from NCBI RefSeq. The four SynTracker cohort isolate
+sets and their participant metadata are included in the repository
+(`data/syntracker_validation/`). Simulated isolate parameters are
 described in Supplementary Table 3.
 
 ---
@@ -541,50 +601,67 @@ described in Supplementary Table 3.
 20. Parks, D. H., et al. GTDB: an ongoing census of bacterial and archaeal
     diversity through a phylogenetically consistent, rank normalized and complete
     genome-based taxonomy. *Nucleic Acids Res.* **50**, D785–D794 (2022).
+21. Shaw, J. & Yu, Y. W. Fast and robust metagenomic sequence comparison
+    through sparse chaining with skani. *Nat. Methods* **20**, 1661–1665 (2023).
+22. Li, H. Minimap2: pairwise alignment for nucleotide sequences.
+    *Bioinformatics* **34**, 3094–3100 (2018).
+23. Marçais, G., Delcher, A. L., Phillippy, A. M., Coston, R., Salzberg, S. L.
+    & Zimin, A. MUMmer4: a fast and versatile genome alignment system. *PLoS
+    Comput. Biol.* **14**, e1005944 (2018).
+24. Altschul, S. F., et al. Gapped BLAST and PSI-BLAST: a new generation of
+    protein database search programs. *Nucleic Acids Res.* **25**, 3389–3402
+    (1997).
 
 ---
 
 ## Figures and Tables
 
-**Figure 1. Syn2b algorithm.** (a) Type IIB enzyme recognition produces 27–32
-bp tags flanking the motif. (b) An inversion reverses the order and orientation
-of tags inside the affected segment. (c) Length-weighted ratios are invariant to
+**Figure 1. Syn2b algorithm.** (a) Type IIB/IIG enzyme recognition produces 27–32
+bp tags flanking the motif. (b) An inversion reverses the order of tags inside
+the affected segment (tag orientation is flipped accordingly; strand marks
+omitted for clarity). (c) Length-weighted ratios are invariant to
 assembly fragmentation, whereas transition counts acquire a bias that grows with
 the number of fragments K.
 
 **Figure 2. Sensitivity to structural variation and insensitivity to SNPs.**
-Controlled *E. coli* K-12 genomes generated with the Rust Syn2b implementation
-and the production four-enzyme panel (BcgI, AlfI, AloI, FalI). The SNP-only
-control carries 1% random substitutions outside recognition sites and produces
-zero junctions; a single 100-kb or 500-kb inversion produces two junctions; a
-single 500-kb translocation produces three junctions. The length-weighted raw
-inverted fraction scales with inverted segment size. Small insertions and
-deletions are not shown here because breakpoint counts depend on whether tags
-straddle the breakpoint (Supplementary Figure 3). Mash distance (k=21) reports
-no additional signal under any structural variant, confirming that k-mer methods
-cannot distinguish SV from point mutation. Quantitative validation on real
-isolates is shown in Figure 3.
+Controlled *E. coli* K-12 genomes analysed with the Rust Syn2b implementation
+and the production four-enzyme panel (BcgI, AlfI, AloI, FalI); every value is
+measured by running the tool, none is hardcoded. The SNP-only control (1%
+random substitutions outside recognition sites) is compared against the
+unmutated reference and produces zero junctions; a single 100-kb or 500-kb
+inversion produces two junctions; a single 500-kb translocation produces three.
+The length-weighted raw inverted fraction scales with inverted segment size.
+Small insertions and deletions are not shown here because junction counts
+depend on whether tags straddle the breakpoint (Supplementary Figure 3). Mash
+distance (k=21) reports the 1% SNP background at ≈1e-2, whereas every
+structural variant adds only ~1e-7, confirming that k-mer methods cannot
+distinguish SV from point mutation. Single-enzyme versus panel metrics are
+compared in Table 2.
 
 **Figure 3. GTDB-R207 validation.** (a) Syn2b `raw_inverted_fraction` vs
  dnadiff across 43,312 held-out pairs with complete metrics. (b) Agreement by
- identity band, improving monotonically as divergence decreases. (c)
- Majority-frame `inverted_fraction` saturates at 0.5, whereas the
- fixed-reference `raw_inverted_fraction` removes the saturation. (d) Residuals
- of Syn2b `raw_inverted_fraction` against dnadiff show no systematic dependence
- on assembly fragmentation (max contigs per pair), illustrating the
- fragmentation invariance of length-weighted ratios.
+ predicted-ANI band (four-enzyme model), improving monotonically as divergence
+ decreases; the y-axis is truncated at 0.85 for readability. (c)
+ Majority-frame `inverted_fraction` saturates at 0.5; the fixed-reference
+ `raw_inverted_fraction` shown in panel a is not subject to this saturation.
+ (d) Residuals of Syn2b `raw_inverted_fraction` against dnadiff show no
+ systematic dependence on assembly fragmentation (max contigs per pair),
+ illustrating the fragmentation invariance of length-weighted ratios.
 
 **Figure 4. SynTracker cohorts reveal ANI–synteny decoupling.** Pairwise
 comparisons of four published SynTracker cohorts (n = 3,435 pairs) using skani
-ANI and Syn2b structural metrics. (a) ANI versus breakpoint count. (b) ANI
+ANI and Syn2b structural metrics. (a) ANI versus breakpoint count; the inset
+zooms into the near-clonal, near-zero-breakpoint clusters. (b) ANI
 versus raw inverted fraction. (c) Breakpoint distributions differ markedly by
 species, with *S. rimosus* showing the highest structural divergence despite
-near-clonal ANI. (d) Within-host *H. pylori* pairs (same participant) are
-structurally more similar than between-host pairs, demonstrating that Syn2b
+near-clonal ANI. (d) Within-participant *H. pylori* pairs (n = 476) are
+structurally more similar than between-participant pairs (n = 2,450;
+permutation p < 1e-4, Cliff's delta = −0.92), demonstrating that Syn2b
 captures epidemiologically relevant structure beyond ANI.
 
 **Figure 5. Runtime and scaling.** (a) Measured single-genome digestion time
-per enzyme on *E. coli* K-12 (4.6 Mb) using the Rust Syn2b binary. (b)
+per enzyme of the production panel on *E. coli* K-12 (4.6 Mb) using the Rust
+Syn2b binary (timings archived in the repository). (b)
 Amortized per-pair comparison time on unique pairs C(n,2); the n = 2 point is
 excluded because startup overhead dominates. (c) Total wall time scales linearly
 with the number of unique pairs.
@@ -604,8 +681,23 @@ The production panel is BcgI+AlfI+AloI+FalI.
 
 **Table 2. SV detection metrics across enzymes and SV types.**
 
-**Table 3. GTDB-R207 validation: correlation of Syn2b metrics with dnadiff by
-ANI band.**
+Controlled *E. coli* K-12 variants on a 1% SNP background (seed 42), measured
+with the Rust implementation. Source: `results/table2_sv_metrics.csv`.
+
+| SV condition | enzyme arm | junctions | SCJ distance | raw inverted fraction | shared tags |
+|---|---|---:|---:|---:|---:|
+| SNP 1% (vs reference) | BcgI | 0 | 0 | 0.000 | 2,040 |
+| SNP 1% (vs reference) | 4-enzyme panel | 0 | 0 | 0.000 | 4,256 |
+| Inversion 100 kb | BcgI | 2 | 4 | 0.021 | 2,768 |
+| Inversion 100 kb | 4-enzyme panel | 2 | 4 | 0.023 | 5,704 |
+| Inversion 500 kb | BcgI | 2 | 4 | 0.116 | 2,768 |
+| Inversion 500 kb | 4-enzyme panel | 2 | 4 | 0.116 | 5,703 |
+| Translocation 500 kb | BcgI | 3 | 6 | 0.000 | 2,768 |
+| Translocation 500 kb | 4-enzyme panel | 3 | 6 | 0.000 | 5,704 |
+
+Junction and SCJ counts are identical across arms; the panel's 2.1-fold higher
+tag density roughly doubles the shared-tag count, which improves stability at
+higher divergence (error model in Supplementary Note 2).
 
 **Table 4. Runtime and scaling of Syn2b structural comparison.**
 
@@ -646,6 +738,9 @@ excluded from the amortized scaling curve in Figure 5b.
   (`supplementary/Supplementary_Table_3.tsv`).
 - **Supplementary Table 4:** Head-to-head runtime on the 22-genome panel
   (484 ordered pairs) (`supplementary/Supplementary_Table_4.tsv`).
+- **Supplementary Table 5:** Within-host versus between-host *H. pylori*
+  structural divergence: permutation test statistics
+  (`supplementary/Supplementary_Table_5.tsv`).
 
 **Supplementary Table 2.** Runtime scaling across panel sizes. Wall times are
 means of three replicates on the HPC (16 cores for skani/dnadiff/SynTracker).
@@ -672,10 +767,13 @@ Per-pair times use the n² ordered pairs recorded in the benchmark.
 
 ### Supplementary Figures
 
-- **Supplementary Figure 1:** Tag spacing distribution for the production
-  four-enzyme panel in *E. coli* K-12. Inter-tag distances were extracted from
-  the TGT output of `syn2b digest` (n = 6,215 intervals). Median spacing is
-  1,533 bp and mean spacing is 2,980 bp
+- **Supplementary Figure 1:** Inter-tag distance distribution for the
+  production four-enzyme panel in *E. coli* K-12. Distances were extracted
+  from the TGT output of `syn2b digest` as recorded between consecutive tags
+  in the TGT path (n = 6,215 recorded intervals; median 1,533 bp, mean 2,980
+  bp). Because the TGT path links the two tags flanking each cut site, the
+  recorded intervals are not a partition of the genome and overestimate the
+  average landmark spacing (genome length / 6,216 tags ≈ 747 bp)
   (`figures/supplementary/fig1_tag_spacing.png`).
 - **Supplementary Figure 2:** Closed-genome inversion validation on 100
   complete-genome pairs selected for high expected structural divergence.
@@ -694,6 +792,12 @@ Per-pair times use the n² ordered pairs recorded in the benchmark.
   unless a landmark straddles the breakpoint; translocation of a 500-kb segment
   yields three junctions
   (`figures/supplementary/fig3_sv_size_sensitivity.png`).
+- **Supplementary Figure 4:** Inversion detection-size resolution. Fraction of
+  replicates (10 random positions per size) in which both junctions of an
+  inverted segment are recovered, for the production four-enzyme panel and for
+  BcgI alone, on *E. coli* K-12 with a 1% SNP background. The panel recovers
+  4-kb inversions in 10/10 replicates; BcgI alone requires ~8 kb for comparable
+  detection (`figures/supplementary/fig4_detection_size.png`).
 
 ---
 

@@ -29,25 +29,32 @@ the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 ├── Syn2b_Manuscript.md            # Full manuscript draft
 ├── PRE_REVIEW.md                  # Pre-review checklist and revisions
 ├── REVIEW_2.md                    # Second internal review with concrete fixes
+├── MOCK_REVIEW.md                 # Mock referee report (text, figures, data passes)
 ├── data/                          # Simulation and validation inputs
 │   ├── enzyme_comparison.csv      # Legacy Python-prototype single-enzyme scans (illustrative)
 │   ├── multi_enzyme_results.csv   # Legacy Python-prototype multi-enzyme scans (illustrative)
 │   ├── phase1_results_100gen.csv
-│   ├── real_data_h_pylori.csv     # Simulated H. pylori isolates (renamed in manuscript)
+│   ├── simulated_h_pylori.csv     # Simulated H. pylori isolates
+│   ├── gtdb_metadata/             # Trimmed GTDB-R207 accession -> contig_count tables
 │   └── syntracker_validation/     # SynTracker validation raw data
 ├── figures/                       # Manuscript figures
 │   ├── main/                      # Production main-text figures
+│   ├── supplementary/             # Production supplementary figures
 │   └── others/                    # Legacy/exploratory figures kept for reference
 ├── results/                       # Real-data analysis outputs
 │   ├── gtdb50k/                   # GTDB-R207 43k-pair structural validation
 │   ├── closed_inversions/         # Closed-genome inversion / junction validation
-│   └── efficiency_v8/             # Speed benchmarks
+│   ├── metric_validation/         # Cohort and high-ANI metric summaries
+│   └── efficiency_v8/             # Speed benchmarks (incl. digest_timing.tsv)
 ├── scripts/                       # Reproduction and figure-generation scripts
-│   ├── generate_figure2_rust.py   # Figure 2: controlled SVs with Rust Syn2b
+│   ├── generate_figure2_rust.py   # Figure 2 + Table 2 source + SNP sweep (Rust Syn2b)
 │   ├── generate_manuscript_figures.py  # Figures 1, 3, 4, 5
 │   ├── generate_supplementary_figure1.py
 │   ├── generate_supplementary_figure2.py
 │   ├── generate_supplementary_figure3.py
+│   ├── generate_supplementary_figure4.py
+│   ├── measure_detection_size.py  # Detection-size benchmark (Suppl. Figure 4 source)
+│   ├── test_within_host.py        # Within-host permutation test (Suppl. Table 5)
 │   ├── build_supplementary_table2.py  # Runtime scaling table (HPC data)
 │   ├── build_supplementary_table4.py  # Head-to-head runtime table (HPC data)
 │   ├── simulate_rearrangement.py  # Legacy Python prototype (illustrative)
@@ -59,7 +66,10 @@ the agreement rises to r = 0.996 (95% CI 0.996–0.996).
 │   ├── Supplementary_Note_2.md
 │   ├── Supplementary_Table_2.tsv
 │   ├── Supplementary_Table_3.tsv
-│   └── Supplementary_Table_4.tsv
+│   ├── Supplementary_Table_4.tsv
+│   └── Supplementary_Table_5.tsv
+├── others/                        # Archived pre-revision material
+│   └── archive/
 ```
 
 ---

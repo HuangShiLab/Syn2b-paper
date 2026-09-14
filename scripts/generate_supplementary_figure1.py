@@ -84,9 +84,6 @@ def main():
     ax.set_title("b  Cumulative spacing distribution")
     ax.set_ylim(0, 1)
 
-    fig.suptitle("Supplementary Figure 1 | Tag spacing distribution for BcgI+AlfI+AloI+FalI in *E. coli* K-12",
-                 fontsize=12)
-
     out_png = Path(args.out_png)
     out_pdf = Path(args.out_pdf)
     out_png.parent.mkdir(parents=True, exist_ok=True)
