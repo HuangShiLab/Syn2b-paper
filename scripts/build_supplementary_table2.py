@@ -5,7 +5,12 @@ Uses HPC benchmark results:
   - results/efficiency_v8/syn2b_struct_benchmark.tsv  (Syn2b structural comparison)
   - results/efficiency_v8/sv_benchmark.tsv            (skani and dnadiff)
   - results/efficiency_v8/syntracker_benchmark.tsv    (SynTracker, 16 cores)
+
+Per-pair times are reported per UNIQUE unordered pair C(n,2) throughout, matching
+the convention used in the manuscript (the raw benchmarks record n^2 ordered
+self-plus-reciprocal comparisons).
 """
+from math import comb
 from pathlib import Path
 
 import pandas as pd
@@ -49,25 +54,27 @@ def main():
 
     rows = []
     for n, g in df.groupby("n_genomes"):
-        n_pairs = int(g["n_pairs"].iloc[0])
+        n_ordered = int(g["n_pairs"].iloc[0])
+        n_unique = comb(n, 2)
         row = {
             "n_genomes": n,
-            "n_pairs": n_pairs,
+            "n_pairs_ordered": n_ordered,
+            "n_unique_pairs": n_unique,
             "syn2b_wall_s_mean": g["syn2b_wall_s"].mean(),
-            "syn2b_ms_per_pair": g["syn2b_wall_s"].mean() / n_pairs * 1000,
+            "syn2b_ms_per_unique_pair": g["syn2b_wall_s"].mean() / n_unique * 1000,
             "skani_wall_s_mean": g["skani_wall_s"].mean(),
-            "skani_ms_per_pair": g["skani_wall_s"].mean() / n_pairs * 1000,
+            "skani_ms_per_unique_pair": g["skani_wall_s"].mean() / n_unique * 1000,
             "dnadiff_wall_s_mean": g["dnadiff_wall_s"].mean(),
-            "dnadiff_s_per_pair": g["dnadiff_wall_s"].mean() / n_pairs,
+            "dnadiff_s_per_unique_pair": g["dnadiff_wall_s"].mean() / n_unique,
             "skani_dnadiff_wall_s_mean": g["skani_dnadiff_wall_s"].mean(),
-            "skani_dnadiff_s_per_pair": g["skani_dnadiff_wall_s"].mean() / n_pairs,
+            "skani_dnadiff_s_per_unique_pair": g["skani_dnadiff_wall_s"].mean() / n_unique,
         }
         if g["syntracker_wall_s"].notna().any():
             row["syntracker_wall_s_mean"] = g["syntracker_wall_s"].mean()
-            row["syntracker_s_per_pair"] = g["syntracker_wall_s"].mean() / n_pairs
+            row["syntracker_s_per_unique_pair"] = g["syntracker_wall_s"].mean() / n_unique
         else:
             row["syntracker_wall_s_mean"] = None
-            row["syntracker_s_per_pair"] = None
+            row["syntracker_s_per_unique_pair"] = None
         rows.append(row)
 
     out = pd.DataFrame(rows).sort_values("n_genomes")
@@ -77,18 +84,19 @@ def main():
 
     # print markdown snippet for manuscript
     print("\nMarkdown table:")
-    print("| n genomes | n pairs | Syn2b (ms/pair) | skani (ms/pair) | dnadiff (s/pair) | skani+dnadiff (s/pair) | SynTracker (s/pair) | Syn2b speedup vs skani+dnadiff | Syn2b speedup vs SynTracker |")
+    print("| n genomes | n unique pairs | Syn2b (ms/pair) | skani (ms/pair) | dnadiff (s/pair) | skani+dnadiff (s/pair) | SynTracker (s/pair) | Syn2b speedup vs skani+dnadiff | Syn2b speedup vs SynTracker |")
     print("|---|---:|---:|---:|---:|---:|---:|---:|---:|")
     for _, r in out.iterrows():
         speedup = r["skani_dnadiff_wall_s_mean"] / r["syn2b_wall_s_mean"]
-        st_pp = f"{r['syntracker_s_per_pair']:.1f}" if pd.notna(r["syntracker_s_per_pair"]) else "n.d."
-        if pd.notna(r["syntracker_s_per_pair"]) and r["syntracker_s_per_pair"] > 0:
+        if pd.notna(r["syntracker_s_per_unique_pair"]):
+            st_pp = f"{r['syntracker_s_per_unique_pair']:.1f}"
             st_speedup = f"{r['syntracker_wall_s_mean'] / r['syn2b_wall_s_mean']:,.0f}x"
         else:
+            st_pp = "n.d."
             st_speedup = "n.d."
-        print(f"| {int(r['n_genomes'])} | {int(r['n_pairs'])} | {r['syn2b_ms_per_pair']:.1f} | "
-              f"{r['skani_ms_per_pair']:.1f} | {r['dnadiff_s_per_pair']:.2f} | "
-              f"{r['skani_dnadiff_s_per_pair']:.2f} | {st_pp} | {speedup:,.0f}x | {st_speedup} |")
+        print(f"| {int(r['n_genomes'])} | {int(r['n_unique_pairs'])} | {r['syn2b_ms_per_unique_pair']:.1f} | "
+              f"{r['skani_ms_per_unique_pair']:.1f} | {r['dnadiff_s_per_unique_pair']:.2f} | "
+              f"{r['skani_dnadiff_s_per_unique_pair']:.2f} | {st_pp} | {speedup:,.0f}x | {st_speedup} |")
 
 
 if __name__ == "__main__":

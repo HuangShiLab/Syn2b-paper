@@ -1,5 +1,18 @@
 # SV comparison, re-analysed with confounders controlled
 
+> **Status (2026-09-16): superseded in part.** All `breakpoint_count` and
+> `synteny_blocks` statistics below were computed with the Syn2bANI chain-based
+> counter as of the 2026-09-02 `c974f5f` fix. Two further defects in that
+> counter were identified on 2026-09-16 (paralogous chains counted as adjacency
+> evidence; chain breaks with reference-consecutive neighbours counted as
+> rearrangements), inflating counts by one to two orders of magnitude and fixed
+> in Syn2bANI v0.1.1. The `breakpoint_count`/`synteny_blocks` rows and the
+> contig-count analysis of `synteny_blocks` are therefore **withdrawn pending
+> recomputation** on the HPC-held genomes (open item). The dnadiff-side
+> fragmentation statistics (dnadiff breakpoints vs contig count) and the
+> Syn2b-tool junction statistics used by the manuscript are unaffected — they
+> are computed from `results/discordance/` and `inverted_fraction_truth_four.tsv`.
+
 Date: 2026-09-02. Reproduce with `python3 scripts/sv_reanalysis.py results/gtdb50k`
 (writes `sv_reanalysis_metrics.tsv`). n = 43,334 pairs.
 

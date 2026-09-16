@@ -267,8 +267,8 @@ def main():
     ax.set_yticklabels(ylabels)
     n_q = int(((all_df.anim_ani >= 97) & (all_df.inv_events >= DISCORDANT_K)).sum())
     n_c = int(((all_df.anim_ani >= 97) & (all_df.inv_events < DISCORDANT_K)).sum())
-    ax.text(0.03, 0.97, f"ANIm ≥ 97%:\n{n_q:,} / {n_q + n_c:,} rearranged",
-            transform=ax.transAxes, color="red", fontsize=8, va="top",
+    ax.text(0.97, 0.97, f"ANIm ≥ 97%:\n{n_q:,} / {n_q + n_c:,} rearranged",
+            transform=ax.transAxes, color="red", fontsize=8, va="top", ha="right",
             bbox=dict(facecolor="white", alpha=0.85, edgecolor="none", pad=1.5))
     ax.set_xlabel("ANIm (%)")
     ax.set_ylabel("dnadiff inversion events")
@@ -291,7 +291,9 @@ def main():
     ax.set_xlabel("ANIm (%)")
     ax.set_ylabel("pairs (%)")
     ax.set_title("(b) Rearranged pairs invisible to ANI ranking", loc="left")
-    ax.legend(fontsize=7.5, frameon=False, loc="upper right")
+    ax.legend(fontsize=7.5, frameon=False, loc="upper center",
+              bbox_to_anchor=(0.5, -0.24), ncol=3, columnspacing=1.2,
+              handletextpad=0.3)
     ax.set_xlim(80, 100)
     ax.set_ylim(0, 100)
 
@@ -314,7 +316,8 @@ def main():
 
     fig.tight_layout(w_pad=1.5)
     for ext in ("png", "pdf"):
-        fig.savefig(FIG / f"fig5_discordance_overview.{ext}", dpi=300)
+        fig.savefig(FIG / f"fig5_discordance_overview.{ext}", dpi=300,
+                    bbox_inches="tight", pad_inches=0.05)
     plt.close(fig)
 
     # ---- summary ------------------------------------------------------------------

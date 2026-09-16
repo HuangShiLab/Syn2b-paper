@@ -14,8 +14,8 @@ restriction-enzyme tag adjacency.
 ## One-sentence summary
 
 Syn2b turns microbial genomes into ordered restriction-enzyme tags and reports
-length-weighted structural metrics that are robust to assembly fragmentation; on
-43,312 GTDB-R207 held-out pairs its fixed-reference inverted aligned fraction
+landmark-ratio structural metrics that are robust to assembly fragmentation; on
+43,312 GTDB-R207 held-out pairs its fixed-reference inverted landmark fraction
 agrees with dnadiff at Pearson r = 0.9355 (95% CI 0.934–0.937), and at ≥97% ANIm
 the agreement rises to r = 0.996. A genome-wide survey further shows that 34% of
 GTDB-R207 pairs with ANIm ≥ 97% carry ≥2 alignment-visible inversion events —
@@ -90,7 +90,7 @@ term linear in the number of fragments K, while a statistic defined as
 `Σ(length with property) / Σ(total length)` is invariant to splitting because
 both numerator and denominator are preserved.
 
-Syn2b's `raw_inverted_fraction` uses the fixed-reference length ratio. On the
+Syn2b's `raw_inverted_fraction` uses the fixed-reference landmark ratio. On the
 GTDB-R207 held-out set (four-enzyme panel **BcgI+AlfI+AloI+FalI**):
 
 | dataset | n | Pearson r vs dnadiff | slope | intercept | SD(err) |
@@ -104,14 +104,26 @@ The full error model is in `results/gtdb50k/inverted_fraction_comparison_report.
 
 ### 2. Transition-count metrics are confounded by assembly fragmentation
 
-On the same held-out set, after correcting for the reference-side contig term:
+On the same held-out set:
 
-| metric | raw r vs dnadiff | partial r (control ANIm + contigs) | interpretation |
-|---|---:|---:|:---|
-| `breakpoint_count` | 0.133 | **0.414** | captures rearrangement signal but inherits a K-dependent term |
-| `synteny_blocks` | 0.494 | 0.443 | **62% of blocks are contig starts**, not SV events |
+| metric | contig-count dependence | interpretation |
+|---|---|---|
+| dnadiff breakpoints | Spearman ρ = 0.28 (partial ρ = 0.34 controlling ANIm) | alignment-reported breakpoints partly measure assembly fragmentation, not rearrangement |
+| Syn2b junction count | ρ = 0.02 (partial ρ = 0.01) | adjacencies are never formed across contig boundaries, so no fragmentation term |
 
-This comparison motivates reporting **length-weighted ratios** for structural
+> **Retraction note (2026-09-16).** An earlier version of this table reported
+> `breakpoint_count` raw/partial correlations of 0.133/0.414 and a
+> `synteny_blocks` contig-start analysis from the companion tool's 43,334-pair
+> run. Those statistics were computed with a Syn2bANI `breakpoint_count`
+> implementation later found to over-count by one to two orders of magnitude
+> (paralogous chains counted as adjacency evidence; chain breaks counted as
+> rearrangements; fixed in Syn2bANI v0.1.1). They are withdrawn pending
+> recomputation on the HPC-held genomes. Syn2b's own junction count was
+> verified against the same controls and is unaffected: 0 for a genome vs a
+> renamed copy of itself, 2 for *E. coli* O157:H7 EDL933 vs Sakai — identical
+> to the fixed Syn2bANI implementation.
+
+This comparison motivates reporting **ratio metrics** for structural
 variation and reserving transition counts for contexts where fragmentation is
 controlled.
 

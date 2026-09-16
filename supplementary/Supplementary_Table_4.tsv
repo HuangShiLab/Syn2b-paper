@@ -1,6 +1,6 @@
 tool	wall_s	per_unique_pair_s	n_unique_pairs	reports_ani	reports_sv
 Syn2b	4.3597	0.0189	231	no	yes (inverted fraction, junctions)
 skani	0.5390	0.0023	231	yes	no
-dnadiff (MUMmer)	1843.9153	7.983	231	no	yes (alignment-based truth)
-SynTracker (16 cores)	65162.0000	282.000	231	no	yes (gene synteny)
-skani + dnadiff	1844.4543	7.984	231	yes	yes
+dnadiff (MUMmer)	1843.9153	7.9823	231	no	yes (alignment-based truth)
+SynTracker (16 cores)	65162.0000	282.0866	231	no	yes (gene synteny)
+skani + dnadiff	1844.4543	7.9847	231	yes	yes
