@@ -114,6 +114,8 @@ def build_variants(ref_seq, ref_id, rng, out_dir):
 
     control_seq = introduce_snps(ref_seq, SNP_RATE, rng)
     add("SNP control", control_seq, "control_snps")
+    # renamed copy of the control genome: measured self-comparison baseline
+    add("SNP control (renamed copy)", control_seq, "control_copy")
 
     # inversions of increasing size, centred on the chromosome
     for size in [10_000, 50_000, 100_000, 500_000]:
@@ -180,16 +182,20 @@ def main():
                 control_id = gid
 
         rows = []
+        control_copy_id = None
         for label, (fasta, gid) in variants.items():
+            if label == "SNP control (renamed copy)":
+                control_copy_id = gid
+
+        for label, (fasta, gid) in variants.items():
+            if label == "SNP control (renamed copy)":
+                continue
             if gid == control_id:
-                metrics = {
-                    "breakpoints": 0,
-                    "scj_distance": 0,
-                    "raw_inverted_fraction": 0.0,
-                    "inverted_fraction": 0.0,
-                    "observable_fraction": 1.0,
-                    "shared_tags": 6216,
-                }
+                # Measured self-comparison via the renamed copy: the
+                # zero-junction baseline and the control genome's own
+                # shared-tag count (nothing is hardcoded).
+                metrics = synteny_pair(syn2b, tgt_dir, tmpdir / "synteny_self",
+                                       control_id, control_copy_id)
             else:
                 syn_out = tmpdir / "synteny_matrix"
                 metrics = synteny_pair(syn2b, tgt_dir, syn_out, control_id, gid)

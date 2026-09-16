@@ -217,7 +217,10 @@ python3 scripts/analyze_ani_synteny_discordance.py
 The SLURM runners are in `scripts/gtdb50k/`:
 
 ```bash
-# Compute Syn2b inverted fractions on the held-out set with the four-enzyme panel
+# Compute Syn2b inverted fractions on the held-out set with the four-enzyme panel.
+# The held-out pair list is the companion Syn2bANI benchmark's held-out split
+# (HPC-side); the committed per-pair table carries the same pairids
+# (cut -f1 results/gtdb50k/inverted_fraction_truth_four.tsv).
 python3 scripts/run_syn2b_inverted_fraction.py \
     --enzymes BcgI,AlfI,AloI,FalI \
     --pairs data/gtdb50k_heldout_pairs.tsv \

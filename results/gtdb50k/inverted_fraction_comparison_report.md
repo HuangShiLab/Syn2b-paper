@@ -156,7 +156,10 @@ does, and adds the error model that says what the residual is made of.
 
 ## Error model for `raw_inverted_fraction`
 
-Regenerate with `python3 scripts/analyze_invfrac_error_model.py results/gtdb50k`.
+Per-pair residuals, z-scores and band statistics regenerate with
+`python3 scripts/gtdb50k/validate_inverted_fraction_truth.py results/gtdb50k`
+from the committed per-pair tables; the variance-component fit
+(1.504 / 0.0205 coefficients) was fitted HPC-side on the same tables.
 
 ### Bias is zero in every divergence band
 

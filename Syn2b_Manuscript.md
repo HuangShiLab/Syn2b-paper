@@ -184,7 +184,7 @@ adjacency unchanged. Measured across a 0.5–5% substitution sweep on *E. coli*
 K-12 (one replicate per rate), the Rust implementation reports zero structural
 junctions at every rate (`scj_distance = 0`, `junctions = 0`;
 `results/snp_sweep_metrics.csv`). SNP load instead reduces the number of shared
-tags (6,216 at 0.5% substitutions; 1,227 at 5%), which the error model accounts
+tags (4,935 at 0.5% substitutions; 1,227 at 5%), which the error model accounts
 for as reduced landmark sampling (Supplementary Note 2).
 
 **Inversions.** A single inversion produces exactly **two junctions** in the
@@ -203,9 +203,9 @@ tag positions.
 
 **Indels.** A 10-kb insertion or deletion is detectable through tag loss:
 controlled insertions and deletions of 10–100 kb produce no junctions (no
-landmark straddles the breakpoint in these replicates) but remove 526–631 shared
-tags relative to the 6,216-tag SNP-only control, with the loss growing with
-event size (Supplementary Figure 3).
+landmark straddles the breakpoint in these replicates) but remove 14–119 shared
+tags relative to the 5,704-tag SNP-only control, with the loss scaling at the
+panel density (~1.3 tags per kb of indel; Supplementary Figure 3).
 
 **Mash is blind to SV.** The 1% SNP background alone gives a Mash distance of
 ≈1.0 × 10⁻² (k = 21); adding any structural variant changes the distance by
@@ -452,7 +452,7 @@ only restriction-enzyme tags.
 Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes
 approximately 42 ms on a single core (measured on *E. coli* K-12, including
 process startup; timings archived in the repository), with individual
-production-panel enzymes ranging from approximately 31 ms (FalI) to 46 ms
+production-panel enzymes ranging from approximately 30 ms (FalI) to 46 ms
 (BcgI) (Figure 6a). Pairwise structural comparison scales sub-linearly
 per unique pair as the fixed per-run cost is amortized: 39.8 ms/pair for 5
 genomes, 23.2 ms/pair for 10 genomes, 22.0 ms/pair for 15 genomes, and 18.9
@@ -621,8 +621,10 @@ Fisher z-transformation.
 
 ### skani ANI for cohort analysis
 
-skani²¹ `dist` was run with default parameters on the four SynTracker cohort
-assembly sets to obtain the ANI values used in Figure 4.
+skani²¹ v0.1.0 `dist` was run with default parameters on the four SynTracker
+cohort assembly sets to obtain the ANI values used in Figure 4. The values sit
+at ≥94.6% ANI, where skani's estimate is stable across versions; re-running
+with the current skani release is queued alongside the HPC recomputation.
 
 ### Genome-wide ANI–rearrangement discordance analysis
 
