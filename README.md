@@ -194,6 +194,14 @@ statistics in `results/discordance/discordance_summary.md`; reproduction:
 python3 scripts/analyze_ani_synteny_discordance.py
 ```
 
+### 7. GTDB-R207 within-species census (in preparation)
+
+All 711,020,841 within-species pairs of GTDB R207 via a few long SLURM jobs
+with in-run disk-space auditing. Plan and pipeline:
+`results/census/job_plan_summary.md`, `scripts/gtdb_census/`
+([README](scripts/gtdb_census/README.md)), strategy in
+`APPLICATION_EXPANSION_PLAN.md`.
+
 ---
 
 ## Main claims of the paper
