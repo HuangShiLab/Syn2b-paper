@@ -1,0 +1,3 @@
+tool	command	n_threads	genome_pair	real_s	machine
+minimap2 2.31	-cx asm5	1	MG1655 vs Sakai O157:H7 (complete)	1.88	Mac Studio (same machine as all local Syn2b timings)
+Syn2b synteny	4-enzyme panel, amortized directory mode	1	22-genome E. coli panel (measured)	0.0189	HPC benchmark

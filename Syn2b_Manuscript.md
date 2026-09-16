@@ -382,14 +382,15 @@ the orientation conventions that affect length-based inverted fractions
 (section 5), they provide a convention-free rearrangement truth.
 
 **Rearrangement is common at strain-level ANI.** Of the 3,828 pairs with
-ANIm ≥ 97%, 45% carry at least one dnadiff inversion and 1,295 (34%) carry two
-or more — pairs that any ANI-based ranking would report as near-identical
-(Figure 5a). The prevalence decays slowly with divergence: at ANIm ≥ 99%, 29%
-of pairs still carry ≥1 inversion (18% ≥2; Figure 5b). Extreme cases include
-two *Streptomyces* assemblies of the same species (ANIm 97.1%) with 129
-dnadiff inversions between them (top cases in Supplementary Table 6). These
-calls are not a by-product of assembly fragmentation: discordant pairs carry
-*fewer* contigs than concordant ones (median 122 vs 177 contigs per pair;
+ANIm ≥ 97%, 45% carry at least one dnadiff inversion (95% CI 43.5–46.7,
+pair bootstrap) and 1,295 (34%, CI 32.4–35.3) carry two or more — pairs that
+any ANI-based ranking would report as near-identical (Figure 5a). The
+prevalence decays slowly with divergence: at ANIm ≥ 99%, 29% of pairs still
+carry ≥1 inversion (CI 27.2–31.0; 18% ≥2, CI 16.8–20.1; Figure 5b). Extreme
+cases include two *Streptomyces* assemblies of the same species (ANIm 97.1%)
+with 129 dnadiff inversions between them (top cases in Supplementary Table 6).
+These calls are not a by-product of assembly fragmentation: discordant pairs
+carry *fewer* contigs than concordant ones (median 122 vs 177 contigs per pair;
 Mann–Whitney p = 1.7 × 10⁻¹⁷), and because dnadiff can only call inversions
 inside aligned segments, fragmented assemblies under-count events — the 45%
 prevalence is therefore conservative.
@@ -401,18 +402,39 @@ Actinobacteriota (1.3×), and depleted in Spirochaetota (0.74×;
 Figure 5c), consistent with known variation in genome rearrangement rates
 across phyla.
 
+**Known-biology collections bracket the discordance range.** Complete-genome
+collections with documented rearrangement phenotypes calibrate the junction
+channel against real biology (Supplementary Figure 5). Among 190 pairs of
+complete *M. tuberculosis* genomes (median skani ANI 99.92%), the median
+junction count is 0 — the structurally hyper-conserved negative control.
+At the other end, *Shigella* — whose chromosomes rearrange through
+IS-element-mediated recombination — shows 84–88% of pairs carrying ≥2
+junctions even at ANI ≥ 99% (median 7–10 junctions; *S. flexneri* reaches 81),
+with *Salmonella* Typhimurium (75% at ≥2, rDNA-mediated inversions) and
+*E. coli* (58%) in between. All these pairs would be ranked near-identical by
+ANI alone; the ordering of the collections matches their known rearrangement
+biology, on complete genomes where the orientation-convention caveat of
+section 5 does not apply.
+
 **Syn2b flags discordant pairs at screening cost.** Syn2b's junction count
 ranks ≥97%-ANIm pairs by rearrangement burden with AUC 0.80 against dnadiff
 inversion counts and shows no dependence on assembly contig number
-(section 5). At a screening threshold of ≥12 junctions it flags 30% of
-discordant pairs at a 4.6% false-positive rate on concordant pairs; flagged
-pairs can then be committed to alignment-based validation. The remaining
-discrepancy is expected from the sampling model: junction counts underestimate
-rearrangements that fall between landmarks, and the ratio metric is blind to
-event multiplicity. For database-scale applications the practical consequence
-is direct: a genome search that reports only ANI will rank 1,295 structurally
-divergent GTDB pairs as top hits, and Syn2b recovers this signal in
-~19 ms per pair without any alignment.
+(section 5); normalizing the count by shared landmarks does not improve the
+ranking (AUC 0.79), consistent with shared-tag counts being nearly constant
+in this regime. At a screening threshold of ≥12 junctions it flags 30% of
+discordant pairs at a 4.6% false-positive rate on concordant pairs (13.1% of
+all ≥97%-ANIm pairs); flagged pairs can then be committed to alignment-based
+validation. The economics of this two-stage workflow follow directly: at
+~19 ms to screen a pair and ~8 s to align it, screening everything and
+aligning only the flagged pairs costs ~1.1 s per pair on average — ~7.5× less
+than aligning every pair — and at the scale of all 711M within-species GTDB
+pairs the difference is 0.21M versus 1.58M core-hours. The remaining
+discrepancy is expected from the sampling model: junction counts
+underestimate rearrangements that fall between landmarks, and the ratio metric
+is blind to event multiplicity. For database-scale applications the practical
+consequence is direct: a genome search that reports only ANI will rank 1,295
+structurally divergent surveyed pairs as top hits, and Syn2b recovers this
+signal in ~19 ms per pair without any alignment.
 
 ### 7. SynTracker cohorts show ANI–synteny decoupling
 
@@ -488,7 +510,10 @@ all-versus-all DECIPHER alignments; on our 22-genome benchmark panel it needed
 15,000 times slower than Syn2b for a comparable structural read-out.
 Alignment-based callers such as dnadiff provide ground truth but require a
 pairwise nucmer alignment per genome pair (~8.0 s per unique pair on our
-benchmark; Supplementary Table 4). Syn2b achieves the same structural signal
+benchmark; Supplementary Table 4); the cheapest alignment alternative,
+minimap2²² (`-cx asm5`, one thread), still needs ~1.9 s per complete-genome
+pair on the same machine as our local Syn2b timings — roughly 100× Syn2b's
+per-pair cost. Syn2b achieves the same structural signal
 through Type IIB tag adjacency, without pairwise alignment or a pre-built
 database, at ~19 ms per unique pair. Other alignment-free approaches — MinHash
 distances (Mash¹⁸) and sparse chaining (skani²¹) — summarize genomes as k-mer
@@ -626,6 +651,20 @@ cohort assembly sets to obtain the ANI values used in Figure 4. The values sit
 at ≥94.6% ANI, where skani's estimate is stable across versions; re-running
 with the current skani release is queued alongside the HPC recomputation.
 
+### Known-biology complete-genome collections
+
+Complete-genome (assembly-level) sets for *S. flexneri* (n = 25), *S. sonnei*
+(n = 15), *S.* Typhimurium (n = 20), *E. coli* (n = 20) and *M. tuberculosis*
+(n = 20) were retrieved from NCBI Assembly with a complete-genome filter
+(`scripts/fetch_vignette_genomes.py`, September 2026). Assemblies sharing an
+identical chromosome sequence identifier with another member of the set are
+retained once. All within-collection pairs were compared with Syn2b
+(BcgI+AlfI+AloI+FalI) and skani v0.1.0 `triangle` for ANI
+(`scripts/analyze_known_biology.py`; per-pair data in
+`results/known_biology/vignette_pairs.tsv`). The minimap2 reference timing
+(`-cx asm5`, one thread, MG1655 vs Sakai O157:H7) is archived in
+`results/efficiency_v8/minimap2_timing.tsv`.
+
 ### Genome-wide ANI–rearrangement discordance analysis
 
 The held-out set and the ANIm-verified high-ANI sample were merged on
@@ -639,7 +678,10 @@ called discordant if ANIm ≥ 97% and it carried ≥2 dnadiff inversion events.
 Phylum-level enrichment was computed against the concordant (ANIm ≥ 97%,
 <2 inversions) background. Syn2b flagging performance was quantified as the
 ROC AUC of the Syn2b junction count for discriminating discordant from
-concordant pairs. Fragmentation dependence of breakpoint-style counts was
+concordant pairs; junction density (count divided by shared landmarks) was
+evaluated as an alternative feature. Prevalence percentages are reported with
+95% bootstrap confidence intervals (10,000 resamples over pairs).
+Fragmentation dependence of breakpoint-style counts was
 assessed by Spearman correlation with the per-pair maximum contig count and by
 partial correlation controlling for ANIm; the contig-count distributions of
 discordant versus concordant pairs were compared with a Mann–Whitney U test.
@@ -868,11 +910,14 @@ excluded from the amortized scaling curve in Figure 6b.
   structural divergence: permutation test statistics
   (`supplementary/Supplementary_Table_5.tsv`).
 - **Supplementary Table 6:** ANI–rearrangement discordance across GTDB-R207:
-  inversion-event rates per ANIm band, top discordant pairs with taxonomy, and
-  Syn2b flagging performance
+  inversion-event rates per ANIm band, top discordant pairs with taxonomy,
+  Syn2b flagging performance, flagging-feature comparison, and prevalence
+  bootstrap CIs
   (`results/discordance/discordance_by_band.tsv`,
-  `results/discordance/discordant_pairs_top.tsv`,
-  `results/discordance/syn2b_flagging.tsv`).
+   `results/discordance/discordant_pairs_top.tsv`,
+   `results/discordance/syn2b_flagging.tsv`,
+   `results/discordance/flagging_features.tsv`,
+   `results/discordance/prevalence_ci.tsv`).
 
 **Supplementary Table 2.** Runtime scaling across panel sizes. Wall times are
 means of three replicates on the HPC (16 cores for skani/dnadiff/SynTracker).
@@ -937,6 +982,14 @@ quantities.
   BcgI alone, on *E. coli* K-12 with a 1% SNP background. The panel recovers
   4-kb inversions in 10/10 replicates; BcgI alone requires ~8 kb for comparable
   detection (`figures/supplementary/fig4_detection_size.png`).
+- **Supplementary Figure 5:** Known-biology calibration of the junction
+  channel on complete genomes. (a) skani ANI versus Syn2b junction count for
+  within-collection pairs of *M. tuberculosis*, *E. coli*, *S.* Typhimurium,
+  *S. sonnei* and *S. flexneri* complete assemblies (n = 975 pairs). (b)
+  Junction-count distributions by collection: the conserved *M. tuberculosis*
+  control sits at a median of 0 junctions at 99.92% median ANI, while 84–88%
+  of ≥99%-ANI *Shigella* pairs carry ≥2 junctions
+  (`figures/supplementary/fig5_known_biology.png`).
 
 ---
 

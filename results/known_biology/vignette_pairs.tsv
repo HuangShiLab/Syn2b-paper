@@ -1,0 +1,976 @@
+collection	genome_A	genome_B	ani	junctions	shared_tags	raw_inverted_fraction
+mycobacterium_tuberculosis	CP200025.1	OZ407451.1	99.91	0.0	7296.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ407528.1	99.85	0.0	7153.0	0.0
+mycobacterium_tuberculosis	CP200025.1	CP200024.1	99.95	0.0	7403.0	0.0
+mycobacterium_tuberculosis	CP200025.1	CP200026.1	99.97	0.0	7431.0	0.0
+mycobacterium_tuberculosis	CP200025.1	CP200027.1	99.94	0.0	7382.0	0.0
+mycobacterium_tuberculosis	CP200025.1	AP046124.1	99.86	0.0	7228.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347302.1	99.92	0.0	7376.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347310.1	99.93	0.0	7383.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347307.1	99.93	0.0	7383.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347304.1	99.88	0.0	7334.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347311.1	99.92	0.0	7374.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347315.1	99.9	0.0	7318.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347323.1	99.94	0.0	7400.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347318.1	99.95	0.0	7343.0	1.0
+mycobacterium_tuberculosis	CP200025.1	OZ347319.1	99.92	0.0	7378.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ347327.1	99.92	0.0	7355.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ407527.1	99.92	0.0	7350.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ416141.1	99.97	0.0	7428.0	0.0
+mycobacterium_tuberculosis	CP200025.1	OZ416142.1	99.89	2.0	7322.0	0.47938
+mycobacterium_tuberculosis	OZ407451.1	OZ407528.1	99.77	0.0	7041.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	CP200024.1	99.93	0.0	7355.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	CP200026.1	99.92	0.0	7311.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	CP200027.1	99.88	0.0	7288.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	AP046124.1	99.78	0.0	7140.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347302.1	99.87	0.0	7292.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347310.1	99.89	0.0	7299.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347307.1	99.89	0.0	7299.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347304.1	99.83	0.0	7243.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347311.1	99.87	0.0	7290.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347315.1	99.84	0.0	7228.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347323.1	99.88	0.0	7269.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347318.1	99.9	0.0	7211.0	1.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347319.1	99.87	0.0	7262.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ347327.1	99.86	0.0	7272.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ407527.1	99.92	0.0	7314.0	0.00027
+mycobacterium_tuberculosis	OZ407451.1	OZ416141.1	99.92	0.0	7305.0	0.0
+mycobacterium_tuberculosis	OZ407451.1	OZ416142.1	99.87	2.0	7270.0	0.47854
+mycobacterium_tuberculosis	OZ407528.1	CP200024.1	99.84	0.0	7139.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	CP200026.1	99.86	0.0	7166.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	CP200027.1	99.8	0.0	7122.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	AP046124.1	99.72	0.0	6973.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347302.1	99.78	0.0	7111.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347310.1	99.83	0.0	7119.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347307.1	99.8	0.0	7118.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347304.1	99.77	0.0	7074.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347311.1	99.78	0.0	7110.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347315.1	99.77	0.0	7056.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347323.1	99.8	0.0	7122.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347318.1	99.83	0.0	7069.0	1.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347319.1	99.78	0.0	7114.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ347327.1	99.78	0.0	7090.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ407527.1	99.78	0.0	7090.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ416141.1	99.86	0.0	7162.0	0.0
+mycobacterium_tuberculosis	OZ407528.1	OZ416142.1	99.77	2.0	7060.0	0.48031
+mycobacterium_tuberculosis	CP200024.1	CP200026.1	99.97	0.0	7418.0	0.0
+mycobacterium_tuberculosis	CP200024.1	CP200027.1	99.94	0.0	7399.0	0.0
+mycobacterium_tuberculosis	CP200024.1	AP046124.1	99.86	0.0	7244.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347302.1	99.92	0.0	7403.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347310.1	99.94	0.0	7410.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347307.1	99.94	0.0	7410.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347304.1	99.88	0.0	7351.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347311.1	99.92	0.0	7401.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347315.1	99.9	0.0	7335.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347323.1	99.93	0.0	7377.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347318.1	99.94	0.0	7319.0	1.0
+mycobacterium_tuberculosis	CP200024.1	OZ347319.1	99.92	0.0	7373.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ347327.1	99.92	0.0	7382.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ407527.1	99.95	0.0	7417.0	0.00013
+mycobacterium_tuberculosis	CP200024.1	OZ416141.1	99.97	0.0	7413.0	0.0
+mycobacterium_tuberculosis	CP200024.1	OZ416142.1	99.92	2.0	7383.0	0.47948
+mycobacterium_tuberculosis	CP200026.1	CP200027.1	99.94	0.0	7398.0	0.0
+mycobacterium_tuberculosis	CP200026.1	AP046124.1	99.87	0.0	7244.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347302.1	99.92	0.0	7393.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347310.1	99.94	0.0	7400.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347307.1	99.94	0.0	7399.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347304.1	99.9	0.0	7350.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347311.1	99.92	0.0	7391.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347315.1	99.9	0.0	7335.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347323.1	99.95	0.0	7403.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347318.1	99.97	0.0	7347.0	1.0
+mycobacterium_tuberculosis	CP200026.1	OZ347319.1	99.93	0.0	7394.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ347327.1	99.92	0.0	7372.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ407527.1	99.93	0.0	7364.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ416141.1	99.98	0.0	7463.0	0.0
+mycobacterium_tuberculosis	CP200026.1	OZ416142.1	99.92	2.0	7338.0	0.47942
+mycobacterium_tuberculosis	CP200027.1	AP046124.1	99.86	0.0	7257.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347302.1	99.92	0.0	7372.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347310.1	99.92	0.0	7379.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347307.1	99.92	0.0	7379.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347304.1	99.92	0.0	7412.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347311.1	99.91	0.0	7370.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347315.1	99.92	0.0	7396.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347323.1	99.92	0.0	7358.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347318.1	99.92	0.0	7301.0	1.0
+mycobacterium_tuberculosis	CP200027.1	OZ347319.1	99.91	0.0	7354.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ347327.1	99.91	0.0	7351.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ407527.1	99.91	0.0	7345.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ416141.1	99.95	0.0	7396.0	0.0
+mycobacterium_tuberculosis	CP200027.1	OZ416142.1	99.88	2.0	7318.0	0.4806
+mycobacterium_tuberculosis	AP046124.1	OZ347302.1	99.87	0.0	7256.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ347310.1	99.87	0.0	7256.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ347307.1	99.88	0.0	7257.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ347304.1	99.92	0.0	7292.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ347311.1	99.87	0.0	7254.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ347315.1	99.92	0.0	7277.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ347323.1	99.86	0.0	7244.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ347318.1	99.88	0.0	7193.0	1.0
+mycobacterium_tuberculosis	AP046124.1	OZ347319.1	99.88	0.0	7249.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ347327.1	99.88	0.0	7232.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ407527.1	99.83	0.0	7194.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ416141.1	99.87	0.0	7244.0	0.0
+mycobacterium_tuberculosis	AP046124.1	OZ416142.1	99.88	2.0	7209.0	0.47829
+mycobacterium_tuberculosis	OZ347302.1	OZ347310.1	99.99	0.0	7505.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ347307.1	99.98	0.0	7499.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ347304.1	99.88	0.0	7363.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ347311.1	100.0	0.0	7516.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ347315.1	99.87	0.0	7349.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ347323.1	99.92	0.0	7373.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ347318.1	99.94	0.0	7322.0	1.0
+mycobacterium_tuberculosis	OZ347302.1	OZ347319.1	99.93	0.0	7379.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ347327.1	99.99	0.0	7479.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ407527.1	99.89	0.0	7350.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ416141.1	99.92	0.0	7390.0	0.0
+mycobacterium_tuberculosis	OZ347302.1	OZ416142.1	99.92	2.0	7358.0	0.48016
+mycobacterium_tuberculosis	OZ347310.1	OZ347307.1	99.98	0.0	7507.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ347304.1	99.88	0.0	7371.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ347311.1	99.99	0.0	7503.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ347315.1	99.9	0.0	7357.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ347323.1	99.94	0.0	7381.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ347318.1	99.94	0.0	7330.0	1.0
+mycobacterium_tuberculosis	OZ347310.1	OZ347319.1	99.94	0.0	7388.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ347327.1	99.99	0.0	7485.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ407527.1	99.92	0.0	7357.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ416141.1	99.94	0.0	7398.0	0.0
+mycobacterium_tuberculosis	OZ347310.1	OZ416142.1	99.94	2.0	7365.0	0.48052
+mycobacterium_tuberculosis	OZ347307.1	OZ347304.1	99.88	0.0	7372.0	0.0
+mycobacterium_tuberculosis	OZ347307.1	OZ347311.1	99.98	0.0	7497.0	0.0
+mycobacterium_tuberculosis	OZ347307.1	OZ347315.1	99.9	0.0	7359.0	0.0
+mycobacterium_tuberculosis	OZ347307.1	OZ347323.1	99.94	0.0	7382.0	0.0
+mycobacterium_tuberculosis	OZ347307.1	OZ347318.1	99.94	0.0	7331.0	1.0
+mycobacterium_tuberculosis	OZ347307.1	OZ347319.1	99.94	0.0	7388.0	0.0
+mycobacterium_tuberculosis	OZ347307.1	OZ347327.1	99.97	0.0	7479.0	0.0
+mycobacterium_tuberculosis	OZ347307.1	OZ407527.1	99.92	0.0	7357.0	0.0
+mycobacterium_tuberculosis	OZ347307.1	OZ416141.1	99.94	0.0	7398.0	0.0
+mycobacterium_tuberculosis	OZ347307.1	OZ416142.1	99.94	2.0	7367.0	0.47998
+mycobacterium_tuberculosis	OZ347304.1	OZ347311.1	99.88	0.0	7361.0	0.0
+mycobacterium_tuberculosis	OZ347304.1	OZ347315.1	99.97	0.0	7477.0	0.0
+mycobacterium_tuberculosis	OZ347304.1	OZ347323.1	99.87	0.0	7343.0	0.0
+mycobacterium_tuberculosis	OZ347304.1	OZ347318.1	99.87	0.0	7292.0	1.0
+mycobacterium_tuberculosis	OZ347304.1	OZ347319.1	99.87	0.0	7361.0	0.0
+mycobacterium_tuberculosis	OZ347304.1	OZ347327.1	99.88	0.0	7343.0	0.0
+mycobacterium_tuberculosis	OZ347304.1	OZ407527.1	99.86	0.0	7301.0	0.0
+mycobacterium_tuberculosis	OZ347304.1	OZ416141.1	99.9	0.0	7352.0	0.0
+mycobacterium_tuberculosis	OZ347304.1	OZ416142.1	99.85	2.0	7316.0	0.4795
+mycobacterium_tuberculosis	OZ347311.1	OZ347315.1	99.87	0.0	7347.0	0.0
+mycobacterium_tuberculosis	OZ347311.1	OZ347323.1	99.92	0.0	7371.0	0.0
+mycobacterium_tuberculosis	OZ347311.1	OZ347318.1	99.94	0.0	7320.0	1.0
+mycobacterium_tuberculosis	OZ347311.1	OZ347319.1	99.93	0.0	7377.0	0.0
+mycobacterium_tuberculosis	OZ347311.1	OZ347327.1	99.99	0.0	7477.0	0.0
+mycobacterium_tuberculosis	OZ347311.1	OZ407527.1	99.89	0.0	7348.0	0.0
+mycobacterium_tuberculosis	OZ347311.1	OZ416141.1	99.92	0.0	7388.0	0.0
+mycobacterium_tuberculosis	OZ347311.1	OZ416142.1	99.92	2.0	7356.0	0.48002
+mycobacterium_tuberculosis	OZ347315.1	OZ347323.1	99.88	0.0	7326.0	0.0
+mycobacterium_tuberculosis	OZ347315.1	OZ347318.1	99.88	0.0	7276.0	1.0
+mycobacterium_tuberculosis	OZ347315.1	OZ347319.1	99.87	0.0	7347.0	0.0
+mycobacterium_tuberculosis	OZ347315.1	OZ347327.1	99.91	0.0	7329.0	0.0
+mycobacterium_tuberculosis	OZ347315.1	OZ407527.1	99.86	0.0	7283.0	0.0
+mycobacterium_tuberculosis	OZ347315.1	OZ416141.1	99.87	0.0	7336.0	0.0
+mycobacterium_tuberculosis	OZ347315.1	OZ416142.1	99.86	2.0	7302.0	0.47932
+mycobacterium_tuberculosis	OZ347323.1	OZ347318.1	99.97	0.0	7364.0	1.0
+mycobacterium_tuberculosis	OZ347323.1	OZ347319.1	99.93	0.0	7385.0	0.0
+mycobacterium_tuberculosis	OZ347323.1	OZ347327.1	99.92	0.0	7354.0	0.0
+mycobacterium_tuberculosis	OZ347323.1	OZ407527.1	99.91	0.0	7324.0	0.0
+mycobacterium_tuberculosis	OZ347323.1	OZ416141.1	99.95	0.0	7404.0	0.0
+mycobacterium_tuberculosis	OZ347323.1	OZ416142.1	99.92	2.0	7336.0	0.48105
+mycobacterium_tuberculosis	OZ347318.1	OZ347319.1	99.93	0.0	7332.0	1.0
+mycobacterium_tuberculosis	OZ347318.1	OZ347327.1	99.94	0.0	7324.0	1.0
+mycobacterium_tuberculosis	OZ347318.1	OZ407527.1	99.92	0.0	7267.0	1.0
+mycobacterium_tuberculosis	OZ347318.1	OZ416141.1	99.97	0.0	7349.0	1.0
+mycobacterium_tuberculosis	OZ347318.1	OZ416142.1	99.92	2.0	7309.0	0.51649
+mycobacterium_tuberculosis	OZ347319.1	OZ347327.1	99.94	0.0	7359.0	0.0
+mycobacterium_tuberculosis	OZ347319.1	OZ407527.1	99.9	0.0	7320.0	0.0
+mycobacterium_tuberculosis	OZ347319.1	OZ416141.1	99.94	0.0	7394.0	0.0
+mycobacterium_tuberculosis	OZ347319.1	OZ416142.1	99.92	2.0	7332.0	0.47831
+mycobacterium_tuberculosis	OZ347327.1	OZ407527.1	99.89	0.0	7329.0	0.0
+mycobacterium_tuberculosis	OZ347327.1	OZ416141.1	99.92	0.0	7370.0	0.0
+mycobacterium_tuberculosis	OZ347327.1	OZ416142.1	99.93	2.0	7359.0	0.47968
+mycobacterium_tuberculosis	OZ407527.1	OZ416141.1	99.93	0.0	7359.0	0.0
+mycobacterium_tuberculosis	OZ407527.1	OZ416142.1	99.91	2.0	7333.0	0.47934
+mycobacterium_tuberculosis	OZ416141.1	OZ416142.1	99.91	2.0	7335.0	0.47948
+escherichia_coli	OZ541724.1	OZ541756.1	100.0	0.0	5859.0	0.0
+escherichia_coli	OZ541724.1	OZ541771.1	98.46	8.0	4126.0	0.0017
+escherichia_coli	OZ541724.1	OZ542013.1	98.48	1.0	3999.0	0.00075
+escherichia_coli	OZ541724.1	OZ542105.1			0.0	
+escherichia_coli	OZ541724.1	OZ542118.1			0.0	
+escherichia_coli	OZ541724.1	OZ542138.1	99.27	3.0	4913.0	0.03521
+escherichia_coli	OZ541724.1	OZ542227.1			0.0	
+escherichia_coli	OZ541724.1	OZ542313.1	99.03	6.0	4725.0	0.00571
+escherichia_coli	OZ541724.1	OZ542592.1	98.51	11.0	4161.0	0.0036
+escherichia_coli	OZ541724.1	OZ542841.1			0.0	
+escherichia_coli	OZ541724.1	OZ542891.1	96.88	6.0	2746.0	0.00182
+escherichia_coli	OZ541724.1	OZ543113.1			0.0	
+escherichia_coli	OZ541724.1	OZ544177.1			0.0	
+escherichia_coli	OZ541724.1	OZ544196.1			0.0	
+escherichia_coli	OZ541724.1	OZ544215.1	97.33	2.0	3159.0	0.00127
+escherichia_coli	OZ541724.1	OZ544309.1	97.34	4.0	3157.0	0.00222
+escherichia_coli	OZ541724.1	OZ544409.1	97.72	12.0	3415.0	0.06032
+escherichia_coli	OZ541724.1	OZ544462.1	98.37	6.0	4020.0	0.00025
+escherichia_coli	OZ541724.1	OZ547193.1	99.08	10.0	4723.0	0.02181
+escherichia_coli	OZ541756.1	OZ541771.1	98.46	8.0	4126.0	0.0017
+escherichia_coli	OZ541756.1	OZ542013.1	98.48	1.0	3999.0	0.00075
+escherichia_coli	OZ541756.1	OZ542105.1			0.0	
+escherichia_coli	OZ541756.1	OZ542118.1			0.0	
+escherichia_coli	OZ541756.1	OZ542138.1	99.27	3.0	4913.0	0.03521
+escherichia_coli	OZ541756.1	OZ542227.1			0.0	
+escherichia_coli	OZ541756.1	OZ542313.1	99.13	6.0	4725.0	0.00571
+escherichia_coli	OZ541756.1	OZ542592.1	98.51	11.0	4161.0	0.0036
+escherichia_coli	OZ541756.1	OZ542841.1			0.0	
+escherichia_coli	OZ541756.1	OZ542891.1	96.91	6.0	2746.0	0.00182
+escherichia_coli	OZ541756.1	OZ543113.1			0.0	
+escherichia_coli	OZ541756.1	OZ544177.1			0.0	
+escherichia_coli	OZ541756.1	OZ544196.1			0.0	
+escherichia_coli	OZ541756.1	OZ544215.1	97.33	2.0	3159.0	0.00127
+escherichia_coli	OZ541756.1	OZ544309.1	97.33	4.0	3157.0	0.00222
+escherichia_coli	OZ541756.1	OZ544409.1	97.72	12.0	3415.0	0.06032
+escherichia_coli	OZ541756.1	OZ544462.1	98.37	6.0	4020.0	0.00025
+escherichia_coli	OZ541756.1	OZ547193.1	99.08	10.0	4723.0	0.02181
+escherichia_coli	OZ541771.1	OZ542013.1	99.08	0.0	4624.0	0.00022
+escherichia_coli	OZ541771.1	OZ542105.1			0.0	
+escherichia_coli	OZ541771.1	OZ542118.1			0.0	
+escherichia_coli	OZ541771.1	OZ542138.1	98.5	15.0	4153.0	0.03756
+escherichia_coli	OZ541771.1	OZ542227.1			0.0	
+escherichia_coli	OZ541771.1	OZ542313.1	98.4	14.0	4142.0	0.00386
+escherichia_coli	OZ541771.1	OZ542592.1	98.66	7.0	4526.0	0.00619
+escherichia_coli	OZ541771.1	OZ542841.1			0.0	
+escherichia_coli	OZ541771.1	OZ542891.1	96.94	8.0	2807.0	0.00107
+escherichia_coli	OZ541771.1	OZ543113.1			0.0	
+escherichia_coli	OZ541771.1	OZ544177.1			0.0	
+escherichia_coli	OZ541771.1	OZ544196.1			0.0	
+escherichia_coli	OZ541771.1	OZ544215.1	97.2	5.0	3168.0	0.00473
+escherichia_coli	OZ541771.1	OZ544309.1	97.21	5.0	3166.0	0.00442
+escherichia_coli	OZ541771.1	OZ544409.1	98.19	10.0	3561.0	0.0601
+escherichia_coli	OZ541771.1	OZ544462.1	98.82	12.0	4438.0	0.00496
+escherichia_coli	OZ541771.1	OZ547193.1	98.51	18.0	4093.0	0.01735
+escherichia_coli	OZ542013.1	OZ542105.1			0.0	
+escherichia_coli	OZ542013.1	OZ542118.1			0.0	
+escherichia_coli	OZ542013.1	OZ542138.1	98.56	4.0	4016.0	0.0381
+escherichia_coli	OZ542013.1	OZ542227.1			0.0	
+escherichia_coli	OZ542013.1	OZ542313.1	98.4	8.0	4003.0	0.0065
+escherichia_coli	OZ542013.1	OZ542592.1	98.8	8.0	4423.0	0.00543
+escherichia_coli	OZ542013.1	OZ542841.1			0.0	
+escherichia_coli	OZ542013.1	OZ542891.1	97.13	3.0	2739.0	0.00037
+escherichia_coli	OZ542013.1	OZ543113.1			0.0	
+escherichia_coli	OZ542013.1	OZ544177.1			0.0	
+escherichia_coli	OZ542013.1	OZ544196.1			0.0	
+escherichia_coli	OZ542013.1	OZ544215.1	97.53	0.0	3026.0	0.00033
+escherichia_coli	OZ542013.1	OZ544309.1	97.53	0.0	3026.0	0.00033
+escherichia_coli	OZ542013.1	OZ544409.1	97.99	15.0	3528.0	0.06179
+escherichia_coli	OZ542013.1	OZ544462.1	98.86	4.0	4356.0	0.00092
+escherichia_coli	OZ542013.1	OZ547193.1	98.41	16.0	3963.0	0.01766
+escherichia_coli	OZ542105.1	OZ542118.1	100.0	0.0	4667.0	0.0
+escherichia_coli	OZ542105.1	OZ542138.1			0.0	
+escherichia_coli	OZ542105.1	OZ542227.1			0.0	
+escherichia_coli	OZ542105.1	OZ542313.1			0.0	
+escherichia_coli	OZ542105.1	OZ542592.1			0.0	
+escherichia_coli	OZ542105.1	OZ542841.1			0.0	
+escherichia_coli	OZ542105.1	OZ542891.1			0.0	
+escherichia_coli	OZ542105.1	OZ543113.1	94.76	0.0	1540.0	0.00065
+escherichia_coli	OZ542105.1	OZ544177.1	94.84	0.0	1579.0	0.00127
+escherichia_coli	OZ542105.1	OZ544196.1	94.84	0.0	1580.0	0.00127
+escherichia_coli	OZ542105.1	OZ544215.1			0.0	
+escherichia_coli	OZ542105.1	OZ544309.1			0.0	
+escherichia_coli	OZ542105.1	OZ544409.1			0.0	
+escherichia_coli	OZ542105.1	OZ544462.1			0.0	
+escherichia_coli	OZ542105.1	OZ547193.1			0.0	
+escherichia_coli	OZ542118.1	OZ542138.1			0.0	
+escherichia_coli	OZ542118.1	OZ542227.1			0.0	
+escherichia_coli	OZ542118.1	OZ542313.1			0.0	
+escherichia_coli	OZ542118.1	OZ542592.1			0.0	
+escherichia_coli	OZ542118.1	OZ542841.1			0.0	
+escherichia_coli	OZ542118.1	OZ542891.1			0.0	
+escherichia_coli	OZ542118.1	OZ543113.1	94.76	0.0	1540.0	0.00065
+escherichia_coli	OZ542118.1	OZ544177.1	94.84	0.0	1579.0	0.00127
+escherichia_coli	OZ542118.1	OZ544196.1	94.84	0.0	1580.0	0.00127
+escherichia_coli	OZ542118.1	OZ544215.1			0.0	
+escherichia_coli	OZ542118.1	OZ544309.1			0.0	
+escherichia_coli	OZ542118.1	OZ544409.1			0.0	
+escherichia_coli	OZ542118.1	OZ544462.1			0.0	
+escherichia_coli	OZ542118.1	OZ547193.1			0.0	
+escherichia_coli	OZ542138.1	OZ542227.1			0.0	
+escherichia_coli	OZ542138.1	OZ542313.1	98.92	14.0	4790.0	0.04071
+escherichia_coli	OZ542138.1	OZ542592.1	98.46	19.0	4171.0	0.04268
+escherichia_coli	OZ542138.1	OZ542841.1			0.0	
+escherichia_coli	OZ542138.1	OZ542891.1	96.98	5.0	2785.0	0.04165
+escherichia_coli	OZ542138.1	OZ543113.1			0.0	
+escherichia_coli	OZ542138.1	OZ544177.1			0.0	
+escherichia_coli	OZ542138.1	OZ544196.1			0.0	
+escherichia_coli	OZ542138.1	OZ544215.1	97.26	10.0	3162.0	0.04396
+escherichia_coli	OZ542138.1	OZ544309.1	97.26	9.0	3161.0	0.04397
+escherichia_coli	OZ542138.1	OZ544409.1	98.16	21.0	3466.0	0.10387
+escherichia_coli	OZ542138.1	OZ544462.1	98.26	15.0	4055.0	0.04365
+escherichia_coli	OZ542138.1	OZ547193.1	98.98	18.0	4780.0	0.05983
+escherichia_coli	OZ542227.1	OZ542313.1			0.0	
+escherichia_coli	OZ542227.1	OZ542592.1			0.0	
+escherichia_coli	OZ542227.1	OZ542841.1		2.0	19.0	0.78947
+escherichia_coli	OZ542227.1	OZ542891.1			0.0	
+escherichia_coli	OZ542227.1	OZ543113.1			0.0	
+escherichia_coli	OZ542227.1	OZ544177.1		2.0	11.0	0.72727
+escherichia_coli	OZ542227.1	OZ544196.1		0.0	4.0	0.25
+escherichia_coli	OZ542227.1	OZ544215.1			0.0	
+escherichia_coli	OZ542227.1	OZ544309.1			0.0	
+escherichia_coli	OZ542227.1	OZ544409.1			0.0	
+escherichia_coli	OZ542227.1	OZ544462.1			0.0	
+escherichia_coli	OZ542227.1	OZ547193.1			0.0	
+escherichia_coli	OZ542313.1	OZ542592.1	98.36	16.0	4152.0	0.00578
+escherichia_coli	OZ542313.1	OZ542841.1			0.0	
+escherichia_coli	OZ542313.1	OZ542891.1	96.93	6.0	2769.0	0.00975
+escherichia_coli	OZ542313.1	OZ543113.1			0.0	
+escherichia_coli	OZ542313.1	OZ544177.1			0.0	
+escherichia_coli	OZ542313.1	OZ544196.1			0.0	
+escherichia_coli	OZ542313.1	OZ544215.1	97.27	10.0	3229.0	0.00496
+escherichia_coli	OZ542313.1	OZ544309.1	97.27	7.0	3179.0	0.00346
+escherichia_coli	OZ542313.1	OZ544409.1	97.99	13.0	3445.0	0.06938
+escherichia_coli	OZ542313.1	OZ544462.1	98.13	16.0	4104.0	0.0134
+escherichia_coli	OZ542313.1	OZ547193.1	99.48	11.0	5381.0	0.04795
+escherichia_coli	OZ542592.1	OZ542841.1			0.0	
+escherichia_coli	OZ542592.1	OZ542891.1	97.12	5.0	2772.0	0.00144
+escherichia_coli	OZ542592.1	OZ543113.1			0.0	
+escherichia_coli	OZ542592.1	OZ544177.1			0.0	
+escherichia_coli	OZ542592.1	OZ544196.1			0.0	
+escherichia_coli	OZ542592.1	OZ544215.1	97.34	8.0	3097.0	0.00549
+escherichia_coli	OZ542592.1	OZ544309.1	97.34	9.0	3096.0	0.00452
+escherichia_coli	OZ542592.1	OZ544409.1	98.18	9.0	3492.0	0.06644
+escherichia_coli	OZ542592.1	OZ544462.1	98.55	8.0	4247.0	0.00542
+escherichia_coli	OZ542592.1	OZ547193.1	98.46	17.0	4068.0	0.01967
+escherichia_coli	OZ542841.1	OZ542891.1			0.0	
+escherichia_coli	OZ542841.1	OZ543113.1			0.0	
+escherichia_coli	OZ542841.1	OZ544177.1		0.0	10.0	0.0
+escherichia_coli	OZ542841.1	OZ544196.1			0.0	
+escherichia_coli	OZ542841.1	OZ544215.1			0.0	
+escherichia_coli	OZ542841.1	OZ544309.1			0.0	
+escherichia_coli	OZ542841.1	OZ544409.1			0.0	
+escherichia_coli	OZ542841.1	OZ544462.1			0.0	
+escherichia_coli	OZ542841.1	OZ547193.1			0.0	
+escherichia_coli	OZ542891.1	OZ543113.1			0.0	
+escherichia_coli	OZ542891.1	OZ544177.1			0.0	
+escherichia_coli	OZ542891.1	OZ544196.1			0.0	
+escherichia_coli	OZ542891.1	OZ544215.1	97.13	19.0	2990.0	0.01773
+escherichia_coli	OZ542891.1	OZ544309.1	97.13	19.0	2989.0	0.01673
+escherichia_coli	OZ542891.1	OZ544409.1	96.95	9.0	2645.0	0.05747
+escherichia_coli	OZ542891.1	OZ544462.1	96.95	7.0	2887.0	0.00727
+escherichia_coli	OZ542891.1	OZ547193.1	97.02	10.0	2710.0	0.01734
+escherichia_coli	OZ543113.1	OZ544177.1	94.62	5.0	1562.0	0.0032
+escherichia_coli	OZ543113.1	OZ544196.1	94.62	5.0	1561.0	0.00256
+escherichia_coli	OZ543113.1	OZ544215.1			0.0	
+escherichia_coli	OZ543113.1	OZ544309.1			0.0	
+escherichia_coli	OZ543113.1	OZ544409.1			0.0	
+escherichia_coli	OZ543113.1	OZ544462.1			0.0	
+escherichia_coli	OZ543113.1	OZ547193.1			0.0	
+escherichia_coli	OZ544177.1	OZ544196.1	99.99	0.0	4658.0	0.0
+escherichia_coli	OZ544177.1	OZ544215.1			0.0	
+escherichia_coli	OZ544177.1	OZ544309.1			0.0	
+escherichia_coli	OZ544177.1	OZ544409.1			0.0	
+escherichia_coli	OZ544177.1	OZ544462.1			0.0	
+escherichia_coli	OZ544177.1	OZ547193.1			0.0	
+escherichia_coli	OZ544196.1	OZ544215.1			0.0	
+escherichia_coli	OZ544196.1	OZ544309.1			0.0	
+escherichia_coli	OZ544196.1	OZ544409.1			0.0	
+escherichia_coli	OZ544196.1	OZ544462.1			0.0	
+escherichia_coli	OZ544196.1	OZ547193.1			0.0	
+escherichia_coli	OZ544215.1	OZ544309.1	100.0	0.0	6611.0	0.00787
+escherichia_coli	OZ544215.1	OZ544409.1	97.53	14.0	3026.0	0.07138
+escherichia_coli	OZ544215.1	OZ544462.1	97.3	15.0	3206.0	0.00873
+escherichia_coli	OZ544215.1	OZ547193.1	97.39	14.0	3202.0	0.0406
+escherichia_coli	OZ544309.1	OZ544409.1	97.53	13.0	3018.0	0.07223
+escherichia_coli	OZ544309.1	OZ544462.1	97.16	19.0	3168.0	0.00979
+escherichia_coli	OZ544309.1	OZ547193.1	97.39	13.0	3156.0	0.0282
+escherichia_coli	OZ544409.1	OZ544462.1	98.04	15.0	3509.0	0.06669
+escherichia_coli	OZ544409.1	OZ547193.1	97.84	19.0	3426.0	0.07326
+escherichia_coli	OZ544462.1	OZ547193.1	98.27	13.0	4062.0	0.03102
+salmonella_typhimurium	CP150844.1	CP185808.1	99.62	12.0	4968.0	0.00221
+salmonella_typhimurium	CP150844.1	CP176561.1	99.66	7.0	4934.0	0.99878
+salmonella_typhimurium	CP150844.1	CP131749.1	99.99	3.0	5382.0	0.99814
+salmonella_typhimurium	CP150844.1	CP131753.1	99.53	10.0	4961.0	0.99839
+salmonella_typhimurium	CP150844.1	CP131757.1	99.99	2.0	5376.0	0.99926
+salmonella_typhimurium	CP150844.1	CP131777.1	99.59	12.0	4949.0	0.99818
+salmonella_typhimurium	CP150844.1	CP159171.1	99.64	8.0	4994.0	0.99479
+salmonella_typhimurium	CP150844.1	CP159176.1	99.64	8.0	4994.0	0.99479
+salmonella_typhimurium	CP150844.1	CP161837.1	99.64	9.0	4992.0	0.99439
+salmonella_typhimurium	CP150844.1	CP161840.1	99.63	8.0	4998.0	0.03982
+salmonella_typhimurium	CP150844.1	CP197140.1	99.48	11.0	4954.0	0.99798
+salmonella_typhimurium	CP150844.1	CP197159.1	99.59	6.0	4972.0	0.99638
+salmonella_typhimurium	CP150844.1	CP197136.1	99.5	9.0	4963.0	0.99799
+salmonella_typhimurium	CP150844.1	CP197146.1	99.62	8.0	4989.0	0.99479
+salmonella_typhimurium	CP150844.1	CP197163.1	99.62	8.0	4997.0	0.9948
+salmonella_typhimurium	CP150844.1	CP197145.1	99.66	7.0	4981.0	0.99759
+salmonella_typhimurium	CP150844.1	CP197152.1	99.62	8.0	4998.0	0.995
+salmonella_typhimurium	CP150844.1	CP197155.1	99.62	8.0	4996.0	0.994
+salmonella_typhimurium	CP150844.1	AP040137.1	99.64	4.0	4958.0	0.00081
+salmonella_typhimurium	CP185808.1	CP176561.1	99.93	1.0	5307.0	0.99981
+salmonella_typhimurium	CP185808.1	CP131749.1	99.62	7.0	4948.0	0.99798
+salmonella_typhimurium	CP185808.1	CP131753.1	99.91	5.0	5316.0	0.99906
+salmonella_typhimurium	CP185808.1	CP131757.1	99.57	7.0	4997.0	0.98759
+salmonella_typhimurium	CP185808.1	CP131777.1	99.91	8.0	5323.0	0.99906
+salmonella_typhimurium	CP185808.1	CP159171.1	99.94	8.0	5575.0	0.97632
+salmonella_typhimurium	CP185808.1	CP159176.1	99.94	8.0	5575.0	0.97632
+salmonella_typhimurium	CP185808.1	CP161837.1	99.88	6.0	5567.0	0.97431
+salmonella_typhimurium	CP185808.1	CP161840.1	99.92	8.0	5580.0	0.05663
+salmonella_typhimurium	CP185808.1	CP197140.1	99.84	10.0	5372.0	0.98976
+salmonella_typhimurium	CP185808.1	CP197159.1	99.94	2.0	5356.0	0.99832
+salmonella_typhimurium	CP185808.1	CP197136.1	99.92	6.0	5356.0	0.99944
+salmonella_typhimurium	CP185808.1	CP197146.1	99.93	5.0	5590.0	0.96887
+salmonella_typhimurium	CP185808.1	CP197163.1	99.94	5.0	5608.0	0.96879
+salmonella_typhimurium	CP185808.1	CP197145.1	99.99	2.0	5457.0	0.99597
+salmonella_typhimurium	CP185808.1	CP197152.1	99.98	5.0	5555.0	0.9784
+salmonella_typhimurium	CP185808.1	CP197155.1	99.97	5.0	5556.0	0.97786
+salmonella_typhimurium	CP185808.1	AP040137.1	99.95	1.0	5294.0	0.00057
+salmonella_typhimurium	CP176561.1	CP131749.1	99.64	6.0	4994.0	0.0004
+salmonella_typhimurium	CP176561.1	CP131753.1	99.93	2.0	5343.0	0.00056
+salmonella_typhimurium	CP176561.1	CP131757.1	99.67	7.0	4981.0	0.0004
+salmonella_typhimurium	CP176561.1	CP131777.1	99.92	4.0	5347.0	0.00037
+salmonella_typhimurium	CP176561.1	CP159171.1	99.95	0.0	5340.0	0.00037
+salmonella_typhimurium	CP176561.1	CP159176.1	99.95	0.0	5340.0	0.00037
+salmonella_typhimurium	CP176561.1	CP161837.1	99.88	4.0	5360.0	0.00765
+salmonella_typhimurium	CP176561.1	CP161840.1	99.95	0.0	5338.0	0.96628
+salmonella_typhimurium	CP176561.1	CP197140.1	99.83	2.0	5343.0	0.00056
+salmonella_typhimurium	CP176561.1	CP197159.1	99.88	0.0	5421.0	0.00018
+salmonella_typhimurium	CP176561.1	CP197136.1	99.94	6.0	5492.0	0.01712
+salmonella_typhimurium	CP176561.1	CP197146.1	99.92	2.0	5331.0	0.00056
+salmonella_typhimurium	CP176561.1	CP197163.1	99.92	2.0	5339.0	0.00056
+salmonella_typhimurium	CP176561.1	CP197145.1	99.85	0.0	5340.0	0.00019
+salmonella_typhimurium	CP176561.1	CP197152.1	99.92	2.0	5340.0	0.00037
+salmonella_typhimurium	CP176561.1	CP197155.1	99.92	2.0	5338.0	0.00019
+salmonella_typhimurium	CP176561.1	AP040137.1	99.97	0.0	5347.0	1.0
+salmonella_typhimurium	CP131749.1	CP131753.1	99.59	5.0	5005.0	0.001
+salmonella_typhimurium	CP131749.1	CP131757.1	100.0	0.0	5441.0	0.0
+salmonella_typhimurium	CP131749.1	CP131777.1	99.62	7.0	4995.0	0.001
+salmonella_typhimurium	CP131749.1	CP159171.1	99.64	6.0	4977.0	0.00181
+salmonella_typhimurium	CP131749.1	CP159176.1	99.64	6.0	4977.0	0.00181
+salmonella_typhimurium	CP131749.1	CP161837.1	99.57	7.0	4989.0	0.01002
+salmonella_typhimurium	CP131749.1	CP161840.1	99.59	6.0	4975.0	0.96382
+salmonella_typhimurium	CP131749.1	CP197140.1	99.59	5.0	5002.0	0.001
+salmonella_typhimurium	CP131749.1	CP197159.1	99.59	7.0	5033.0	0.00238
+salmonella_typhimurium	CP131749.1	CP197136.1	99.45	9.0	5030.0	0.00119
+salmonella_typhimurium	CP131749.1	CP197146.1	99.48	7.0	5086.0	0.01022
+salmonella_typhimurium	CP131749.1	CP197163.1	99.5	9.0	5092.0	0.01767
+salmonella_typhimurium	CP131749.1	CP197145.1	99.63	6.0	4974.0	0.00121
+salmonella_typhimurium	CP131749.1	CP197152.1	99.5	9.0	5092.0	0.01748
+salmonella_typhimurium	CP131749.1	CP197155.1	99.5	9.0	5094.0	0.02022
+salmonella_typhimurium	CP131749.1	AP040137.1	99.66	2.0	5001.0	0.9998
+salmonella_typhimurium	CP131753.1	CP131757.1	99.63	5.0	5010.0	0.002
+salmonella_typhimurium	CP131753.1	CP131777.1	99.99	2.0	5524.0	0.00416
+salmonella_typhimurium	CP131753.1	CP159171.1	99.78	5.0	5357.0	0.00261
+salmonella_typhimurium	CP131753.1	CP159176.1	99.78	5.0	5357.0	0.00261
+salmonella_typhimurium	CP131753.1	CP161837.1	99.86	6.0	5349.0	0.00748
+salmonella_typhimurium	CP131753.1	CP161840.1	99.77	5.0	5355.0	0.9662
+salmonella_typhimurium	CP131753.1	CP197140.1	99.78	0.0	5396.0	0.00167
+salmonella_typhimurium	CP131753.1	CP197159.1	99.94	0.0	5391.0	0.00037
+salmonella_typhimurium	CP131753.1	CP197136.1	99.9	3.0	5399.0	0.00074
+salmonella_typhimurium	CP131753.1	CP197146.1	99.85	3.0	5337.0	0.0015
+salmonella_typhimurium	CP131753.1	CP197163.1	99.85	3.0	5344.0	0.0015
+salmonella_typhimurium	CP131753.1	CP197145.1	99.86	4.0	5344.0	0.00019
+salmonella_typhimurium	CP131753.1	CP197152.1	99.85	3.0	5345.0	0.00131
+salmonella_typhimurium	CP131753.1	CP197155.1	99.85	3.0	5343.0	0.00019
+salmonella_typhimurium	CP131753.1	AP040137.1	99.99	0.0	5378.0	0.99981
+salmonella_typhimurium	CP131757.1	CP131777.1	99.67	7.0	4998.0	0.0022
+salmonella_typhimurium	CP131757.1	CP159171.1	99.59	5.0	4980.0	0.00201
+salmonella_typhimurium	CP131757.1	CP159176.1	99.59	5.0	4980.0	0.00201
+salmonella_typhimurium	CP131757.1	CP161837.1	99.59	8.0	4981.0	0.01024
+salmonella_typhimurium	CP131757.1	CP161840.1	99.59	5.0	4978.0	0.96284
+salmonella_typhimurium	CP131757.1	CP197140.1	99.59	7.0	5056.0	0.00138
+salmonella_typhimurium	CP131757.1	CP197159.1	99.64	5.0	5011.0	0.0016
+salmonella_typhimurium	CP131757.1	CP197136.1	99.62	9.0	5054.0	0.0089
+salmonella_typhimurium	CP131757.1	CP197146.1	99.62	5.0	4974.0	0.00302
+salmonella_typhimurium	CP131757.1	CP197163.1	99.62	5.0	4978.0	0.00281
+salmonella_typhimurium	CP131757.1	CP197145.1	99.63	5.0	4972.0	0.00121
+salmonella_typhimurium	CP131757.1	CP197152.1	99.62	5.0	4978.0	0.00261
+salmonella_typhimurium	CP131757.1	CP197155.1	99.62	5.0	4980.0	0.00141
+salmonella_typhimurium	CP131757.1	AP040137.1	99.66	2.0	5000.0	1.0
+salmonella_typhimurium	CP131777.1	CP159171.1	99.78	7.0	5361.0	0.00354
+salmonella_typhimurium	CP131777.1	CP159176.1	99.78	7.0	5361.0	0.00354
+salmonella_typhimurium	CP131777.1	CP161837.1	99.85	8.0	5353.0	0.00841
+salmonella_typhimurium	CP131777.1	CP161840.1	99.78	7.0	5359.0	0.96529
+salmonella_typhimurium	CP131777.1	CP197140.1	99.85	3.0	5382.0	0.00074
+salmonella_typhimurium	CP131777.1	CP197159.1	99.93	2.0	5377.0	0.00037
+salmonella_typhimurium	CP131777.1	CP197136.1	99.92	5.0	5385.0	0.00074
+salmonella_typhimurium	CP131777.1	CP197146.1	99.85	5.0	5341.0	0.00056
+salmonella_typhimurium	CP131777.1	CP197163.1	99.86	5.0	5349.0	0.00056
+salmonella_typhimurium	CP131777.1	CP197145.1	99.86	6.0	5348.0	0.00112
+salmonella_typhimurium	CP131777.1	CP197152.1	99.86	5.0	5350.0	0.00037
+salmonella_typhimurium	CP131777.1	CP197155.1	99.86	5.0	5348.0	0.0015
+salmonella_typhimurium	CP131777.1	AP040137.1	99.99	2.0	5345.0	0.99963
+salmonella_typhimurium	CP159171.1	CP159176.1	100.0	0.0	5703.0	0.0
+salmonella_typhimurium	CP159171.1	CP161837.1	99.98	5.0	5654.0	0.00973
+salmonella_typhimurium	CP159171.1	CP161840.1	100.0	0.0	5700.0	0.95719
+salmonella_typhimurium	CP159171.1	CP197140.1	99.87	5.0	5361.0	0.00522
+salmonella_typhimurium	CP159171.1	CP197159.1	99.93	2.0	5392.0	0.00111
+salmonella_typhimurium	CP159171.1	CP197136.1	99.88	5.0	5350.0	0.00131
+salmonella_typhimurium	CP159171.1	CP197146.1	99.93	0.0	5602.0	0.00036
+salmonella_typhimurium	CP159171.1	CP197163.1	99.95	0.0	5624.0	0.00036
+salmonella_typhimurium	CP159171.1	CP197145.1	100.0	0.0	5527.0	0.0
+salmonella_typhimurium	CP159171.1	CP197152.1	99.94	0.0	5624.0	0.00036
+salmonella_typhimurium	CP159171.1	CP197155.1	99.94	0.0	5623.0	0.00036
+salmonella_typhimurium	CP159171.1	AP040137.1	99.95	1.0	5320.0	0.99925
+salmonella_typhimurium	CP159176.1	CP161837.1	99.98	5.0	5654.0	0.00973
+salmonella_typhimurium	CP159176.1	CP161840.1	100.0	0.0	5701.0	0.9572
+salmonella_typhimurium	CP159176.1	CP197140.1	99.87	5.0	5361.0	0.00522
+salmonella_typhimurium	CP159176.1	CP197159.1	99.93	2.0	5392.0	0.00111
+salmonella_typhimurium	CP159176.1	CP197136.1	99.88	5.0	5350.0	0.00131
+salmonella_typhimurium	CP159176.1	CP197146.1	99.93	0.0	5602.0	0.00036
+salmonella_typhimurium	CP159176.1	CP197163.1	99.95	0.0	5624.0	0.00036
+salmonella_typhimurium	CP159176.1	CP197145.1	100.0	0.0	5527.0	0.0
+salmonella_typhimurium	CP159176.1	CP197152.1	99.94	0.0	5624.0	0.00036
+salmonella_typhimurium	CP159176.1	CP197155.1	99.94	0.0	5623.0	0.00036
+salmonella_typhimurium	CP159176.1	AP040137.1	99.95	1.0	5320.0	0.99925
+salmonella_typhimurium	CP161837.1	CP161840.1	99.98	5.0	5651.0	0.95983
+salmonella_typhimurium	CP161837.1	CP197140.1	99.86	7.0	5366.0	0.01155
+salmonella_typhimurium	CP161837.1	CP197159.1	99.92	5.0	5453.0	0.00715
+salmonella_typhimurium	CP161837.1	CP197136.1	99.91	4.0	5371.0	0.00912
+salmonella_typhimurium	CP161837.1	CP197146.1	99.9	4.0	5614.0	0.00713
+salmonella_typhimurium	CP161837.1	CP197163.1	99.91	2.0	5634.0	0.00763
+salmonella_typhimurium	CP161837.1	CP197145.1	99.99	2.0	5528.0	0.00742
+salmonella_typhimurium	CP161837.1	CP197152.1	99.95	2.0	5631.0	0.00728
+salmonella_typhimurium	CP161837.1	CP197155.1	99.92	2.0	5632.0	0.00852
+salmonella_typhimurium	CP161837.1	AP040137.1	99.95	3.0	5320.0	0.99211
+salmonella_typhimurium	CP161840.1	CP197140.1	99.87	5.0	5359.0	0.96305
+salmonella_typhimurium	CP161840.1	CP197159.1	99.93	2.0	5390.0	0.96623
+salmonella_typhimurium	CP161840.1	CP197136.1	99.87	5.0	5348.0	0.96634
+salmonella_typhimurium	CP161840.1	CP197146.1	99.94	0.0	5600.0	0.96804
+salmonella_typhimurium	CP161840.1	CP197163.1	99.95	0.0	5621.0	0.96798
+salmonella_typhimurium	CP161840.1	CP197145.1	99.98	0.0	5525.0	0.9676
+salmonella_typhimurium	CP161840.1	CP197152.1	99.95	0.0	5622.0	0.96798
+salmonella_typhimurium	CP161840.1	CP197155.1	99.95	0.0	5621.0	0.9678
+salmonella_typhimurium	CP161840.1	AP040137.1	99.95	1.0	5324.0	0.03418
+salmonella_typhimurium	CP197140.1	CP197159.1	99.98	2.0	5448.0	0.0033
+salmonella_typhimurium	CP197140.1	CP197136.1	99.86	8.0	5472.0	0.00804
+salmonella_typhimurium	CP197140.1	CP197146.1	99.92	5.0	5352.0	0.00374
+salmonella_typhimurium	CP197140.1	CP197163.1	99.91	5.0	5358.0	0.00373
+salmonella_typhimurium	CP197140.1	CP197145.1	99.9	3.0	5346.0	0.00299
+salmonella_typhimurium	CP197140.1	CP197152.1	99.91	5.0	5360.0	0.00373
+salmonella_typhimurium	CP197140.1	CP197155.1	99.91	5.0	5358.0	0.00504
+salmonella_typhimurium	CP197140.1	AP040137.1	99.95	0.0	5338.0	1.0
+salmonella_typhimurium	CP197159.1	CP197136.1	99.92	2.0	5489.0	0.00219
+salmonella_typhimurium	CP197159.1	CP197146.1	99.93	3.0	5390.0	0.00148
+salmonella_typhimurium	CP197159.1	CP197163.1	99.93	3.0	5400.0	0.00056
+salmonella_typhimurium	CP197159.1	CP197145.1	99.83	1.0	5383.0	0.00056
+salmonella_typhimurium	CP197159.1	CP197152.1	99.93	3.0	5402.0	0.00056
+salmonella_typhimurium	CP197159.1	CP197155.1	99.93	3.0	5400.0	0.00167
+salmonella_typhimurium	CP197159.1	AP040137.1	99.94	0.0	5375.0	1.0
+salmonella_typhimurium	CP197136.1	CP197146.1	99.93	2.0	5338.0	0.0015
+salmonella_typhimurium	CP197136.1	CP197163.1	99.93	4.0	5348.0	0.00131
+salmonella_typhimurium	CP197136.1	CP197145.1	99.8	3.0	5346.0	0.00037
+salmonella_typhimurium	CP197136.1	CP197152.1	99.93	4.0	5350.0	0.00131
+salmonella_typhimurium	CP197136.1	CP197155.1	99.93	4.0	5348.0	0.00037
+salmonella_typhimurium	CP197136.1	AP040137.1	99.95	2.0	5354.0	0.99944
+salmonella_typhimurium	CP197146.1	CP197163.1	99.99	1.0	5885.0	0.02821
+salmonella_typhimurium	CP197146.1	CP197145.1	99.97	0.0	5495.0	0.0
+salmonella_typhimurium	CP197146.1	CP197152.1	99.98	1.0	5800.0	0.02862
+salmonella_typhimurium	CP197146.1	CP197155.1	99.98	3.0	5811.0	0.02616
+salmonella_typhimurium	CP197146.1	AP040137.1	99.95	1.0	5312.0	0.99925
+salmonella_typhimurium	CP197163.1	CP197145.1	99.98	0.0	5519.0	0.0
+salmonella_typhimurium	CP197163.1	CP197152.1	100.0	0.0	5827.0	0.00017
+salmonella_typhimurium	CP197163.1	CP197155.1	100.0	2.0	5828.0	0.01407
+salmonella_typhimurium	CP197163.1	AP040137.1	99.95	1.0	5318.0	0.99925
+salmonella_typhimurium	CP197145.1	CP197152.1	99.98	0.0	5522.0	0.0
+salmonella_typhimurium	CP197145.1	CP197155.1	99.98	0.0	5520.0	0.0
+salmonella_typhimurium	CP197145.1	AP040137.1	99.95	1.0	5319.0	0.99944
+salmonella_typhimurium	CP197152.1	CP197155.1	100.0	2.0	5827.0	0.01424
+salmonella_typhimurium	CP197152.1	AP040137.1	99.95	1.0	5318.0	0.99944
+salmonella_typhimurium	CP197155.1	AP040137.1	99.95	1.0	5316.0	0.99944
+shigella_sonnei	CP179990.1	CP179971.1	99.93	18.0	5465.0	0.09058
+shigella_sonnei	CP179990.1	CP179970.1	99.92	16.0	5258.0	0.89996
+shigella_sonnei	CP179990.1	CP179952.1	99.87	20.0	5488.0	0.90306
+shigella_sonnei	CP179990.1	CP179977.1	99.91	18.0	5466.0	0.09056
+shigella_sonnei	CP179990.1	CP179958.1	99.91	16.0	5451.0	0.90405
+shigella_sonnei	CP179990.1	CP180008.1	99.91	20.0	5442.0	0.74587
+shigella_sonnei	CP179990.1	CP180015.1	99.79	20.0	5455.0	0.08616
+shigella_sonnei	CP179990.1	CP179997.1	99.84	16.0	5467.0	0.07774
+shigella_sonnei	CP179990.1	CP176614.1	99.8	21.0	5468.0	0.90271
+shigella_sonnei	CP179990.1	CP182545.1	94.73	19.0	1589.0	0.73191
+shigella_sonnei	CP179990.1	CP146298.2	99.88	18.0	5359.0	0.09255
+shigella_sonnei	CP179990.1	CP176663.1	99.89	17.0	5363.0	0.92225
+shigella_sonnei	CP179990.1	CP180280.1	99.76	14.0	5461.0	0.87896
+shigella_sonnei	CP179990.1	OZ477357.1	99.93	18.0	5349.0	0.09235
+shigella_sonnei	CP179971.1	CP179970.1	99.94	12.0	5387.0	0.92797
+shigella_sonnei	CP179971.1	CP179952.1	99.97	4.0	5589.0	0.93308
+shigella_sonnei	CP179971.1	CP179977.1	99.95	3.0	5626.0	0.00391
+shigella_sonnei	CP179971.1	CP179958.1	99.97	4.0	5562.0	0.93258
+shigella_sonnei	CP179971.1	CP180008.1	99.97	6.0	5565.0	0.76783
+shigella_sonnei	CP179971.1	CP180015.1	99.92	9.0	5593.0	0.01126
+shigella_sonnei	CP179971.1	CP179997.1	99.82	25.0	5431.0	0.06334
+shigella_sonnei	CP179971.1	CP176614.1	99.94	7.0	5603.0	0.92629
+shigella_sonnei	CP179971.1	CP182545.1	94.62	16.0	1591.0	0.75801
+shigella_sonnei	CP179971.1	CP146298.2	99.99	0.0	5484.0	0.0031
+shigella_sonnei	CP179971.1	CP176663.1	99.97	3.0	5475.0	0.95489
+shigella_sonnei	CP179971.1	CP180280.1	99.72	29.0	5416.0	0.8894
+shigella_sonnei	CP179971.1	OZ477357.1	99.98	0.0	5474.0	0.00128
+shigella_sonnei	CP179970.1	CP179952.1	99.99	2.0	5382.0	0.00204
+shigella_sonnei	CP179970.1	CP179977.1	99.97	9.0	5385.0	0.92572
+shigella_sonnei	CP179970.1	CP179958.1	99.97	2.0	5353.0	0.00056
+shigella_sonnei	CP179970.1	CP180008.1	99.99	4.0	5359.0	0.13379
+shigella_sonnei	CP179970.1	CP180015.1	99.94	11.0	5363.0	0.94164
+shigella_sonnei	CP179970.1	CP179997.1	99.81	29.0	5232.0	0.94209
+shigella_sonnei	CP179970.1	CP176614.1	99.97	7.0	5404.0	0.00481
+shigella_sonnei	CP179970.1	CP182545.1	94.73	21.0	1525.0	0.19082
+shigella_sonnei	CP179970.1	CP146298.2	99.93	6.0	5269.0	0.94762
+shigella_sonnei	CP179970.1	CP176663.1	99.97	2.0	5254.0	0.00076
+shigella_sonnei	CP179970.1	CP180280.1	99.74	30.0	5202.0	0.04652
+shigella_sonnei	CP179970.1	OZ477357.1	99.98	6.0	5250.0	0.94952
+shigella_sonnei	CP179952.1	CP179977.1	99.99	4.0	5590.0	0.93399
+shigella_sonnei	CP179952.1	CP179958.1	99.98	0.0	5588.0	0.0
+shigella_sonnei	CP179952.1	CP180008.1	99.99	2.0	5582.0	0.16553
+shigella_sonnei	CP179952.1	CP180015.1	99.97	6.0	5565.0	0.94591
+shigella_sonnei	CP179952.1	CP179997.1	99.87	26.0	5437.0	0.94445
+shigella_sonnei	CP179952.1	CP176614.1	99.94	0.0	5595.0	0.00214
+shigella_sonnei	CP179952.1	CP182545.1	94.62	20.0	1597.0	0.22417
+shigella_sonnei	CP179952.1	CP146298.2	99.99	4.0	5470.0	0.9532
+shigella_sonnei	CP179952.1	CP176663.1	99.99	0.0	5482.0	0.00146
+shigella_sonnei	CP179952.1	CP180280.1	99.74	21.0	5401.0	0.04536
+shigella_sonnei	CP179952.1	OZ477357.1	99.98	4.0	5471.0	0.9512
+shigella_sonnei	CP179977.1	CP179958.1	99.97	4.0	5563.0	0.93349
+shigella_sonnei	CP179977.1	CP180008.1	99.98	6.0	5566.0	0.76734
+shigella_sonnei	CP179977.1	CP180015.1	99.97	9.0	5584.0	0.0154
+shigella_sonnei	CP179977.1	CP179997.1	99.89	25.0	5432.0	0.06646
+shigella_sonnei	CP179977.1	CP176614.1	99.97	7.0	5598.0	0.93248
+shigella_sonnei	CP179977.1	CP182545.1	94.73	16.0	1588.0	0.75945
+shigella_sonnei	CP179977.1	CP146298.2	100.0	0.0	5505.0	0.00309
+shigella_sonnei	CP179977.1	CP176663.1	99.97	3.0	5476.0	0.95544
+shigella_sonnei	CP179977.1	CP180280.1	99.84	26.0	5412.0	0.88489
+shigella_sonnei	CP179977.1	OZ477357.1	99.99	0.0	5494.0	0.00146
+shigella_sonnei	CP179958.1	CP180008.1	99.99	2.0	5563.0	0.16304
+shigella_sonnei	CP179958.1	CP180015.1	99.97	6.0	5536.0	0.94563
+shigella_sonnei	CP179958.1	CP179997.1	99.87	23.0	5398.0	0.94516
+shigella_sonnei	CP179958.1	CP176614.1	99.97	0.0	5565.0	0.00072
+shigella_sonnei	CP179958.1	CP182545.1	94.84	19.0	1588.0	0.22418
+shigella_sonnei	CP179958.1	CP146298.2	99.97	4.0	5441.0	0.95295
+shigella_sonnei	CP179958.1	CP176663.1	99.98	0.0	5452.0	0.0
+shigella_sonnei	CP179958.1	CP180280.1	99.76	21.0	5372.0	0.04449
+shigella_sonnei	CP179958.1	OZ477357.1	99.98	4.0	5443.0	0.95242
+shigella_sonnei	CP180008.1	CP180015.1	99.95	8.0	5545.0	0.77818
+shigella_sonnei	CP180008.1	CP179997.1	99.89	25.0	5392.0	0.78895
+shigella_sonnei	CP180008.1	CP176614.1	99.97	2.0	5564.0	0.16247
+shigella_sonnei	CP180008.1	CP182545.1	94.73	18.0	1587.0	0.07561
+shigella_sonnei	CP180008.1	CP146298.2	99.99	6.0	5445.0	0.78494
+shigella_sonnei	CP180008.1	CP176663.1	99.99	2.0	5458.0	0.16856
+shigella_sonnei	CP180008.1	CP180280.1	99.82	23.0	5356.0	0.20183
+shigella_sonnei	CP180008.1	OZ477357.1	99.98	6.0	5447.0	0.78428
+shigella_sonnei	CP180015.1	CP179997.1	99.81	26.0	5423.0	0.06306
+shigella_sonnei	CP180015.1	CP176614.1	99.94	9.0	5581.0	0.93908
+shigella_sonnei	CP180015.1	CP182545.1	94.73	17.0	1593.0	0.74827
+shigella_sonnei	CP180015.1	CP146298.2	99.93	6.0	5448.0	0.01175
+shigella_sonnei	CP180015.1	CP176663.1	99.98	3.0	5459.0	0.96281
+shigella_sonnei	CP180015.1	CP180280.1	99.69	26.0	5401.0	0.90113
+shigella_sonnei	CP180015.1	OZ477357.1	99.98	4.0	5443.0	0.01176
+shigella_sonnei	CP179997.1	CP176614.1	99.77	29.0	5423.0	0.94007
+shigella_sonnei	CP179997.1	CP182545.1	94.73	16.0	1606.0	0.77958
+shigella_sonnei	CP179997.1	CP146298.2	99.82	20.0	5309.0	0.05538
+shigella_sonnei	CP179997.1	CP176663.1	99.89	20.0	5323.0	0.95247
+shigella_sonnei	CP179997.1	CP180280.1	99.78	11.0	5522.0	0.94386
+shigella_sonnei	CP179997.1	OZ477357.1	99.9	20.0	5309.0	0.05519
+shigella_sonnei	CP176614.1	CP182545.1	94.62	22.0	1614.0	0.23172
+shigella_sonnei	CP176614.1	CP146298.2	99.97	4.0	5503.0	0.94421
+shigella_sonnei	CP176614.1	CP176663.1	99.95	0.0	5463.0	0.0
+shigella_sonnei	CP176614.1	CP180280.1	99.54	28.0	5457.0	0.05259
+shigella_sonnei	CP176614.1	OZ477357.1	99.97	4.0	5452.0	0.95268
+shigella_sonnei	CP182545.1	CP146298.2	94.73	17.0	1591.0	0.75801
+shigella_sonnei	CP182545.1	CP176663.1	94.73	19.0	1594.0	0.22459
+shigella_sonnei	CP182545.1	CP180280.1	94.73	22.0	1601.0	0.24422
+shigella_sonnei	CP182545.1	OZ477357.1	94.73	16.0	1589.0	0.75897
+shigella_sonnei	CP146298.2	CP176663.1	99.95	3.0	5474.0	0.9525
+shigella_sonnei	CP146298.2	CP180280.1	99.73	26.0	5313.0	0.90043
+shigella_sonnei	CP146298.2	OZ477357.1	99.99	0.0	5494.0	0.00255
+shigella_sonnei	CP176663.1	CP180280.1	99.82	22.0	5283.0	0.04751
+shigella_sonnei	CP176663.1	OZ477357.1	99.97	3.0	5464.0	0.95608
+shigella_sonnei	CP180280.1	OZ477357.1	99.74	24.0	5262.0	0.90878
+shigella_flexneri	CP182546.1	CP182547.1	95.3	0.0	2152.0	0.0
+shigella_flexneri	CP182546.1	CP182548.1	91.71	3.0	1096.0	0.00091
+shigella_flexneri	CP182546.1	CP182549.1	94.94	0.0	2037.0	0.00196
+shigella_flexneri	CP182546.1	CP182550.1	93.96	0.0	1648.0	0.0
+shigella_flexneri	CP182546.1	CP182552.1	94.96	0.0	2122.0	0.00047
+shigella_flexneri	CP182546.1	CP182551.1	95.31	0.0	2143.0	0.00093
+shigella_flexneri	CP182546.1	CP182553.1	94.67	0.0	2064.0	0.00048
+shigella_flexneri	CP182546.1	CP182555.1	94.97	0.0	1747.0	0.00115
+shigella_flexneri	CP182546.1	CP182554.1	96.57	0.0	2761.0	0.0
+shigella_flexneri	CP182546.1	CP182556.1	94.82	0.0	1941.0	0.00103
+shigella_flexneri	CP182546.1	CP182557.1	94.26	29.0	1477.0	0.86256
+shigella_flexneri	CP182546.1	CP162042.1	95.83	51.0	2396.0	0.35684
+shigella_flexneri	CP182546.1	CP162048.1	95.83	60.0	2387.0	0.37579
+shigella_flexneri	CP182546.1	CP162053.1	95.83	50.0	2394.0	0.6249
+shigella_flexneri	CP182546.1	CP162059.1	95.83	50.0	2394.0	0.37469
+shigella_flexneri	CP182546.1	CP162066.1	95.83	61.0	2392.0	0.64632
+shigella_flexneri	CP182546.1	CP162073.1	95.83	59.0	2392.0	0.33236
+shigella_flexneri	CP182546.1	CP162080.1	95.83	63.0	2395.0	0.33862
+shigella_flexneri	CP182546.1	CP186935.1	96.14	32.0	2462.0	0.85175
+shigella_flexneri	CP182546.1	CP189683.1	98.12	0.0	3755.0	0.00053
+shigella_flexneri	CP182546.1	AP040255.1	98.11	0.0	3751.0	0.00053
+shigella_flexneri	CP182546.1	AP040250.1	98.12	0.0	3750.0	0.00053
+shigella_flexneri	CP182546.1	OY725391.1	95.99	37.0	2403.0	0.84353
+shigella_flexneri	CP182546.1	OY725486.1	95.81	32.0	2326.0	0.62468
+shigella_flexneri	CP182547.1	CP182548.1	92.51	0.0	1153.0	0.0
+shigella_flexneri	CP182547.1	CP182549.1	94.13	0.0	1687.0	0.0
+shigella_flexneri	CP182547.1	CP182550.1	93.99	0.0	1801.0	0.0
+shigella_flexneri	CP182547.1	CP182552.1	94.98	0.0	1731.0	0.0
+shigella_flexneri	CP182547.1	CP182551.1	94.41	0.0	1727.0	0.00058
+shigella_flexneri	CP182547.1	CP182553.1	94.12	0.0	1694.0	0.0
+shigella_flexneri	CP182547.1	CP182555.1	94.13	0.0	1397.0	0.00072
+shigella_flexneri	CP182547.1	CP182554.1	96.04	0.0	2363.0	0.0
+shigella_flexneri	CP182547.1	CP182556.1	94.01	0.0	1517.0	0.00066
+shigella_flexneri	CP182547.1	CP182557.1	92.51	28.0	1079.0	0.83874
+shigella_flexneri	CP182547.1	CP162042.1	94.51	54.0	1732.0	0.36085
+shigella_flexneri	CP182547.1	CP162048.1	94.51	59.0	1718.0	0.37602
+shigella_flexneri	CP182547.1	CP162053.1	94.51	53.0	1728.0	0.62789
+shigella_flexneri	CP182547.1	CP162059.1	94.51	53.0	1731.0	0.37146
+shigella_flexneri	CP182547.1	CP162066.1	94.52	62.0	1734.0	0.64302
+shigella_flexneri	CP182547.1	CP162073.1	94.51	60.0	1734.0	0.32065
+shigella_flexneri	CP182547.1	CP162080.1	94.52	67.0	1737.0	0.35463
+shigella_flexneri	CP182547.1	CP186935.1	94.51	30.0	1809.0	0.82255
+shigella_flexneri	CP182547.1	CP189683.1	96.91	0.0	2870.0	0.00035
+shigella_flexneri	CP182547.1	AP040255.1	96.93	0.0	2873.0	0.00035
+shigella_flexneri	CP182547.1	AP040250.1	96.93	0.0	2877.0	0.00035
+shigella_flexneri	CP182547.1	OY725391.1	94.38	35.0	1744.0	0.81594
+shigella_flexneri	CP182547.1	OY725486.1	94.38	31.0	1707.0	0.60574
+shigella_flexneri	CP182548.1	CP182549.1	90.99	0.0	902.0	0.0
+shigella_flexneri	CP182548.1	CP182550.1	92.98	0.0	1138.0	0.0
+shigella_flexneri	CP182548.1	CP182552.1	90.93	3.0	907.0	0.0
+shigella_flexneri	CP182548.1	CP182551.1	91.08	0.0	894.0	0.00112
+shigella_flexneri	CP182548.1	CP182553.1	91.77	0.0	960.0	0.00104
+shigella_flexneri	CP182548.1	CP182555.1	91.03	0.0	768.0	0.0
+shigella_flexneri	CP182548.1	CP182554.1	92.87	0.0	1299.0	0.0
+shigella_flexneri	CP182548.1	CP182556.1	90.99	0.0	862.0	0.0
+shigella_flexneri	CP182548.1	CP182557.1	88.39	26.0	466.0	0.76609
+shigella_flexneri	CP182548.1	CP162042.1	89.93	39.0	683.0	0.4202
+shigella_flexneri	CP182548.1	CP162048.1	89.83	41.0	667.0	0.43628
+shigella_flexneri	CP182548.1	CP162053.1	89.93	39.0	680.0	0.55588
+shigella_flexneri	CP182548.1	CP162059.1	89.93	38.0	682.0	0.44135
+shigella_flexneri	CP182548.1	CP162066.1	89.9	46.0	679.0	0.5729
+shigella_flexneri	CP182548.1	CP162073.1	89.92	41.0	681.0	0.36564
+shigella_flexneri	CP182548.1	CP162080.1	89.94	44.0	683.0	0.37482
+shigella_flexneri	CP182548.1	CP186935.1	90.28	27.0	761.0	0.77004
+shigella_flexneri	CP182548.1	CP189683.1	92.98	3.0	1392.0	0.00216
+shigella_flexneri	CP182548.1	AP040255.1	92.98	3.0	1394.0	0.00215
+shigella_flexneri	CP182548.1	AP040250.1	92.98	3.0	1398.0	0.00215
+shigella_flexneri	CP182548.1	OY725391.1	89.87	26.0	697.0	0.75897
+shigella_flexneri	CP182548.1	OY725486.1	90.06	29.0	681.0	0.66373
+shigella_flexneri	CP182549.1	CP182550.1	93.09	0.0	1270.0	0.00079
+shigella_flexneri	CP182549.1	CP182552.1	94.41	0.0	1637.0	0.00122
+shigella_flexneri	CP182549.1	CP182551.1	94.3	0.0	1580.0	0.00063
+shigella_flexneri	CP182549.1	CP182553.1	94.08	0.0	1560.0	0.0
+shigella_flexneri	CP182549.1	CP182555.1	94.26	0.0	1447.0	0.00138
+shigella_flexneri	CP182549.1	CP182554.1	95.05	0.0	2019.0	0.0
+shigella_flexneri	CP182549.1	CP182556.1	94.14	0.0	1474.0	0.00272
+shigella_flexneri	CP182549.1	CP182557.1	93.83	25.0	1268.0	0.84937
+shigella_flexneri	CP182549.1	CP162042.1	94.73	48.0	1794.0	0.34504
+shigella_flexneri	CP182549.1	CP162048.1	94.73	56.0	1780.0	0.3618
+shigella_flexneri	CP182549.1	CP162053.1	94.73	47.0	1793.0	0.63915
+shigella_flexneri	CP182549.1	CP162059.1	94.73	47.0	1794.0	0.36065
+shigella_flexneri	CP182549.1	CP162066.1	94.73	57.0	1794.0	0.66332
+shigella_flexneri	CP182549.1	CP162073.1	94.73	54.0	1791.0	0.32552
+shigella_flexneri	CP182549.1	CP162080.1	94.73	60.0	1796.0	0.34911
+shigella_flexneri	CP182549.1	CP186935.1	94.95	27.0	1911.0	0.84406
+shigella_flexneri	CP182549.1	CP189683.1	96.63	3.0	2645.0	0.00151
+shigella_flexneri	CP182549.1	AP040255.1	96.63	3.0	2645.0	0.00151
+shigella_flexneri	CP182549.1	AP040250.1	96.63	3.0	2642.0	0.00151
+shigella_flexneri	CP182549.1	OY725391.1	94.94	32.0	1857.0	0.83737
+shigella_flexneri	CP182549.1	OY725486.1	94.62	26.0	1734.0	0.64475
+shigella_flexneri	CP182550.1	CP182552.1	93.21	0.0	1316.0	0.0
+shigella_flexneri	CP182550.1	CP182551.1	93.21	0.0	1274.0	0.00079
+shigella_flexneri	CP182550.1	CP182553.1	93.21	0.0	1377.0	0.0
+shigella_flexneri	CP182550.1	CP182555.1	92.42	0.0	1028.0	0.0
+shigella_flexneri	CP182550.1	CP182554.1	94.84	0.0	1959.0	0.0
+shigella_flexneri	CP182550.1	CP182556.1	92.75	0.0	1225.0	0.00082
+shigella_flexneri	CP182550.1	CP182557.1	90.97	28.0	732.0	0.82377
+shigella_flexneri	CP182550.1	CP162042.1	92.39	52.0	1145.0	0.40873
+shigella_flexneri	CP182550.1	CP162048.1	92.39	59.0	1134.0	0.42504
+shigella_flexneri	CP182550.1	CP162053.1	92.39	51.0	1141.0	0.58195
+shigella_flexneri	CP182550.1	CP162059.1	92.39	51.0	1143.0	0.41645
+shigella_flexneri	CP182550.1	CP162066.1	92.39	59.0	1145.0	0.60087
+shigella_flexneri	CP182550.1	CP162073.1	92.39	58.0	1145.0	0.37293
+shigella_flexneri	CP182550.1	CP162080.1	92.39	62.0	1149.0	0.39426
+shigella_flexneri	CP182550.1	CP186935.1	92.55	29.0	1204.0	0.80648
+shigella_flexneri	CP182550.1	CP189683.1	95.05	3.0	2115.0	0.00142
+shigella_flexneri	CP182550.1	AP040255.1	94.94	3.0	2122.0	0.00141
+shigella_flexneri	CP182550.1	AP040250.1	94.94	3.0	2120.0	0.00142
+shigella_flexneri	CP182550.1	OY725391.1	92.09	33.0	1152.0	0.80035
+shigella_flexneri	CP182550.1	OY725486.1	92.01	31.0	1122.0	0.64617
+shigella_flexneri	CP182552.1	CP182551.1	94.62	0.0	1749.0	0.00114
+shigella_flexneri	CP182552.1	CP182553.1	94.33	3.0	1689.0	0.00059
+shigella_flexneri	CP182552.1	CP182555.1	94.64	0.0	1533.0	0.00065
+shigella_flexneri	CP182552.1	CP182554.1	95.64	0.0	2248.0	0.0
+shigella_flexneri	CP182552.1	CP182556.1	94.17	0.0	1524.0	0.00066
+shigella_flexneri	CP182552.1	CP182557.1	93.48	22.0	1188.0	0.85859
+shigella_flexneri	CP182552.1	CP162042.1	95.08	52.0	1916.0	0.35125
+shigella_flexneri	CP182552.1	CP162048.1	95.08	60.0	1906.0	0.36149
+shigella_flexneri	CP182552.1	CP162053.1	95.08	51.0	1913.0	0.6367
+shigella_flexneri	CP182552.1	CP162059.1	95.08	51.0	1913.0	0.36278
+shigella_flexneri	CP182552.1	CP162066.1	95.08	62.0	1918.0	0.6585
+shigella_flexneri	CP182552.1	CP162073.1	95.08	58.0	1917.0	0.31508
+shigella_flexneri	CP182552.1	CP162080.1	95.08	66.0	1921.0	0.35606
+shigella_flexneri	CP182552.1	CP186935.1	95.08	26.0	1954.0	0.84033
+shigella_flexneri	CP182552.1	CP189683.1	97.01	3.0	2862.0	0.0014
+shigella_flexneri	CP182552.1	AP040255.1	97.15	3.0	2863.0	0.00175
+shigella_flexneri	CP182552.1	AP040250.1	97.15	3.0	2863.0	0.00175
+shigella_flexneri	CP182552.1	OY725391.1	94.94	34.0	1887.0	0.83996
+shigella_flexneri	CP182552.1	OY725486.1	94.94	29.0	1834.0	0.6265
+shigella_flexneri	CP182551.1	CP182553.1	94.2	0.0	1681.0	0.00179
+shigella_flexneri	CP182551.1	CP182555.1	94.73	0.0	1525.0	0.00131
+shigella_flexneri	CP182551.1	CP182554.1	95.45	0.0	2197.0	0.00091
+shigella_flexneri	CP182551.1	CP182556.1	94.28	2.0	1489.0	0.00202
+shigella_flexneri	CP182551.1	CP182557.1	93.6	24.0	1211.0	0.85384
+shigella_flexneri	CP182551.1	CP162042.1	95.05	46.0	1993.0	0.33618
+shigella_flexneri	CP182551.1	CP162048.1	95.08	53.0	1975.0	0.35949
+shigella_flexneri	CP182551.1	CP162053.1	95.05	45.0	1989.0	0.64505
+shigella_flexneri	CP182551.1	CP162059.1	95.05	45.0	1991.0	0.35409
+shigella_flexneri	CP182551.1	CP162066.1	95.05	57.0	1986.0	0.6566
+shigella_flexneri	CP182551.1	CP162073.1	95.06	56.0	1988.0	0.31439
+shigella_flexneri	CP182551.1	CP162080.1	95.05	60.0	1990.0	0.32161
+shigella_flexneri	CP182551.1	CP186935.1	95.21	25.0	2006.0	0.84447
+shigella_flexneri	CP182551.1	CP189683.1	97.01	8.0	2940.0	0.00238
+shigella_flexneri	CP182551.1	AP040255.1	97.01	8.0	2936.0	0.00239
+shigella_flexneri	CP182551.1	AP040250.1	97.01	8.0	2937.0	0.00238
+shigella_flexneri	CP182551.1	OY725391.1	95.08	32.0	1955.0	0.83939
+shigella_flexneri	CP182551.1	OY725486.1	94.94	26.0	1885.0	0.60477
+shigella_flexneri	CP182553.1	CP182555.1	94.07	0.0	1353.0	0.00074
+shigella_flexneri	CP182553.1	CP182554.1	95.2	0.0	2231.0	0.0
+shigella_flexneri	CP182553.1	CP182556.1	94.06	0.0	1485.0	0.00202
+shigella_flexneri	CP182553.1	CP182557.1	93.21	30.0	1124.0	0.8194
+shigella_flexneri	CP182553.1	CP162042.1	94.62	55.0	1689.0	0.36116
+shigella_flexneri	CP182553.1	CP162048.1	94.62	62.0	1682.0	0.39001
+shigella_flexneri	CP182553.1	CP162053.1	94.62	54.0	1687.0	0.62537
+shigella_flexneri	CP182553.1	CP162059.1	94.62	54.0	1687.0	0.37404
+shigella_flexneri	CP182553.1	CP162066.1	94.5	62.0	1688.0	0.63803
+shigella_flexneri	CP182553.1	CP162073.1	94.62	59.0	1687.0	0.34499
+shigella_flexneri	CP182553.1	CP162080.1	94.62	67.0	1692.0	0.36111
+shigella_flexneri	CP182553.1	CP186935.1	94.84	32.0	1823.0	0.8113
+shigella_flexneri	CP182553.1	CP189683.1	96.51	0.0	2721.0	0.0
+shigella_flexneri	CP182553.1	AP040255.1	96.52	0.0	2719.0	0.0
+shigella_flexneri	CP182553.1	AP040250.1	96.51	0.0	2722.0	0.0
+shigella_flexneri	CP182553.1	OY725391.1	94.73	36.0	1782.0	0.7991
+shigella_flexneri	CP182553.1	OY725486.1	94.5	31.0	1677.0	0.62254
+shigella_flexneri	CP182555.1	CP182554.1	95.08	0.0	1728.0	0.00058
+shigella_flexneri	CP182555.1	CP182556.1	94.39	0.0	1370.0	0.00146
+shigella_flexneri	CP182555.1	CP182557.1	94.06	27.0	1338.0	0.8722
+shigella_flexneri	CP182555.1	CP162042.1	95.83	46.0	1992.0	0.3489
+shigella_flexneri	CP182555.1	CP162048.1	95.83	53.0	1978.0	0.37513
+shigella_flexneri	CP182555.1	CP162053.1	95.83	45.0	1990.0	0.6407
+shigella_flexneri	CP182555.1	CP162059.1	95.83	45.0	1990.0	0.35879
+shigella_flexneri	CP182555.1	CP162066.1	95.83	55.0	1992.0	0.63755
+shigella_flexneri	CP182555.1	CP162073.1	95.83	52.0	1991.0	0.32195
+shigella_flexneri	CP182555.1	CP162080.1	95.83	60.0	1994.0	0.34002
+shigella_flexneri	CP182555.1	CP186935.1	95.58	24.0	2051.0	0.86446
+shigella_flexneri	CP182555.1	CP189683.1	96.81	6.0	2331.0	0.00258
+shigella_flexneri	CP182555.1	AP040255.1	96.79	6.0	2334.0	0.00257
+shigella_flexneri	CP182555.1	AP040250.1	96.79	6.0	2332.0	0.00257
+shigella_flexneri	CP182555.1	OY725391.1	95.84	27.0	1987.0	0.85757
+shigella_flexneri	CP182555.1	OY725486.1	95.6	29.0	1896.0	0.62711
+shigella_flexneri	CP182554.1	CP182556.1	94.93	0.0	1948.0	0.0
+shigella_flexneri	CP182554.1	CP182557.1	94.12	30.0	1420.0	0.84225
+shigella_flexneri	CP182554.1	CP162042.1	95.83	57.0	2264.0	0.375
+shigella_flexneri	CP182554.1	CP162048.1	95.83	64.0	2250.0	0.38489
+shigella_flexneri	CP182554.1	CP162053.1	95.83	56.0	2260.0	0.61549
+shigella_flexneri	CP182554.1	CP162059.1	95.83	56.0	2261.0	0.3839
+shigella_flexneri	CP182554.1	CP162066.1	95.83	66.0	2263.0	0.63544
+shigella_flexneri	CP182554.1	CP162073.1	95.81	63.0	2261.0	0.3441
+shigella_flexneri	CP182554.1	CP162080.1	95.83	69.0	2267.0	0.36215
+shigella_flexneri	CP182554.1	CP186935.1	96.01	31.0	2366.0	0.82967
+shigella_flexneri	CP182554.1	CP189683.1	98.27	3.0	3718.0	0.00108
+shigella_flexneri	CP182554.1	AP040255.1	98.27	3.0	3720.0	0.00134
+shigella_flexneri	CP182554.1	AP040250.1	98.28	3.0	3722.0	0.00134
+shigella_flexneri	CP182554.1	OY725391.1	95.57	35.0	2283.0	0.82523
+shigella_flexneri	CP182554.1	OY725486.1	95.43	33.0	2220.0	0.63559
+shigella_flexneri	CP182556.1	CP182557.1	93.95	26.0	1206.0	0.83085
+shigella_flexneri	CP182556.1	CP162042.1	94.94	43.0	1692.0	0.36407
+shigella_flexneri	CP182556.1	CP162048.1	94.84	50.0	1686.0	0.3968
+shigella_flexneri	CP182556.1	CP162053.1	94.94	42.0	1688.0	0.61493
+shigella_flexneri	CP182556.1	CP162059.1	94.94	42.0	1690.0	0.38343
+shigella_flexneri	CP182556.1	CP162066.1	94.84	52.0	1690.0	0.62781
+shigella_flexneri	CP182556.1	CP162073.1	94.84	49.0	1686.0	0.34638
+shigella_flexneri	CP182556.1	CP162080.1	94.84	56.0	1694.0	0.35006
+shigella_flexneri	CP182556.1	CP186935.1	95.11	29.0	1822.0	0.80845
+shigella_flexneri	CP182556.1	CP189683.1	96.5	0.0	2548.0	0.00039
+shigella_flexneri	CP182556.1	AP040255.1	96.5	0.0	2552.0	0.00039
+shigella_flexneri	CP182556.1	AP040250.1	96.5	0.0	2549.0	0.00039
+shigella_flexneri	CP182556.1	OY725391.1	95.06	36.0	1750.0	0.81257
+shigella_flexneri	CP182556.1	OY725486.1	94.73	33.0	1657.0	0.62643
+shigella_flexneri	CP182557.1	CP162042.1	95.83	39.0	2154.0	0.62999
+shigella_flexneri	CP182557.1	CP162048.1	95.83	44.0	2140.0	0.63505
+shigella_flexneri	CP182557.1	CP162053.1	95.83	37.0	2153.0	0.35485
+shigella_flexneri	CP182557.1	CP162059.1	95.83	37.0	2152.0	0.64498
+shigella_flexneri	CP182557.1	CP162066.1	95.83	47.0	2159.0	0.34414
+shigella_flexneri	CP182557.1	CP162073.1	95.83	42.0	2156.0	0.67022
+shigella_flexneri	CP182557.1	CP162080.1	95.83	49.0	2159.0	0.62992
+shigella_flexneri	CP182557.1	CP186935.1	96.51	3.0	2568.0	0.0
+shigella_flexneri	CP182557.1	CP189683.1	95.6	33.0	2032.0	0.84941
+shigella_flexneri	CP182557.1	AP040255.1	95.6	32.0	2030.0	0.84926
+shigella_flexneri	CP182557.1	AP040250.1	95.6	32.0	2031.0	0.84835
+shigella_flexneri	CP182557.1	OY725391.1	96.52	15.0	2414.0	0.0145
+shigella_flexneri	CP182557.1	OY725486.1	95.75	9.0	2181.0	0.3205
+shigella_flexneri	CP162042.1	CP162048.1	99.94	10.0	5281.0	0.10547
+shigella_flexneri	CP162042.1	CP162053.1	99.99	4.0	5356.0	0.96471
+shigella_flexneri	CP162042.1	CP162059.1	99.98	2.0	5369.0	0.01527
+shigella_flexneri	CP162042.1	CP162066.1	99.96	14.0	5338.0	0.89116
+shigella_flexneri	CP162042.1	CP162073.1	99.94	8.0	5337.0	0.06015
+shigella_flexneri	CP162042.1	CP162080.1	99.96	20.0	5317.0	0.12846
+shigella_flexneri	CP162042.1	CP186935.1	98.26	44.0	3561.0	0.62791
+shigella_flexneri	CP162042.1	CP189683.1	98.19	67.0	3433.0	0.33935
+shigella_flexneri	CP162042.1	AP040255.1	98.18	67.0	3424.0	0.3382
+shigella_flexneri	CP162042.1	AP040250.1	98.17	67.0	3438.0	0.33653
+shigella_flexneri	CP162042.1	OY725391.1	98.01	48.0	3462.0	0.62767
+shigella_flexneri	CP162042.1	OY725486.1	97.69	44.0	3300.0	0.38576
+shigella_flexneri	CP162048.1	CP162053.1	99.94	12.0	5280.0	0.88598
+shigella_flexneri	CP162048.1	CP162059.1	99.94	10.0	5283.0	0.08953
+shigella_flexneri	CP162048.1	CP162066.1	99.98	14.0	5312.0	0.90456
+shigella_flexneri	CP162048.1	CP162073.1	99.97	5.0	5316.0	0.05775
+shigella_flexneri	CP162048.1	CP162080.1	99.96	17.0	5295.0	0.15071
+shigella_flexneri	CP162048.1	CP186935.1	98.19	49.0	3535.0	0.62008
+shigella_flexneri	CP162048.1	CP189683.1	98.15	72.0	3410.0	0.36628
+shigella_flexneri	CP162048.1	AP040255.1	98.15	72.0	3409.0	0.36609
+shigella_flexneri	CP162048.1	AP040250.1	98.14	72.0	3418.0	0.36776
+shigella_flexneri	CP162048.1	OY725391.1	97.96	53.0	3454.0	0.61031
+shigella_flexneri	CP162048.1	OY725486.1	97.69	49.0	3282.0	0.37112
+shigella_flexneri	CP162053.1	CP162059.1	99.99	1.0	5359.0	0.97649
+shigella_flexneri	CP162053.1	CP162066.1	99.97	13.0	5336.0	0.07253
+shigella_flexneri	CP162053.1	CP162073.1	99.96	7.0	5330.0	0.93283
+shigella_flexneri	CP162053.1	CP162080.1	99.96	18.0	5312.0	0.83735
+shigella_flexneri	CP162053.1	CP186935.1	98.28	39.0	3559.0	0.356
+shigella_flexneri	CP162053.1	CP189683.1	98.17	65.0	3422.0	0.62653
+shigella_flexneri	CP162053.1	AP040255.1	98.17	65.0	3421.0	0.62613
+shigella_flexneri	CP162053.1	AP040250.1	98.15	65.0	3427.0	0.62708
+shigella_flexneri	CP162053.1	OY725391.1	98.01	44.0	3462.0	0.35702
+shigella_flexneri	CP162053.1	OY725486.1	97.69	41.0	3299.0	0.59836
+shigella_flexneri	CP162059.1	CP162066.1	99.96	12.0	5340.0	0.90318
+shigella_flexneri	CP162059.1	CP162073.1	99.95	6.0	5341.0	0.04662
+shigella_flexneri	CP162059.1	CP162080.1	99.94	16.0	5322.0	0.14036
+shigella_flexneri	CP162059.1	CP186935.1	98.27	42.0	3560.0	0.64298
+shigella_flexneri	CP162059.1	CP189683.1	98.01	65.0	3431.0	0.35616
+shigella_flexneri	CP162059.1	AP040255.1	98.28	65.0	3422.0	0.35447
+shigella_flexneri	CP162059.1	AP040250.1	98.28	65.0	3436.0	0.35274
+shigella_flexneri	CP162059.1	OY725391.1	98.01	45.0	3462.0	0.64269
+shigella_flexneri	CP162059.1	OY725486.1	97.69	42.0	3300.0	0.40061
+shigella_flexneri	CP162066.1	CP162073.1	99.97	10.0	5419.0	0.88393
+shigella_flexneri	CP162066.1	CP162080.1	99.99	9.0	5415.0	0.80868
+shigella_flexneri	CP162066.1	CP186935.1	98.27	52.0	3562.0	0.3644
+shigella_flexneri	CP162066.1	CP189683.1	98.06	77.0	3470.0	0.63718
+shigella_flexneri	CP162066.1	AP040255.1	98.16	77.0	3458.0	0.63534
+shigella_flexneri	CP162066.1	AP040250.1	98.16	77.0	3479.0	0.63294
+shigella_flexneri	CP162066.1	OY725391.1	97.97	59.0	3476.0	0.36594
+shigella_flexneri	CP162066.1	OY725486.1	97.71	54.0	3312.0	0.61232
+shigella_flexneri	CP162073.1	CP162080.1	99.98	13.0	5401.0	0.11942
+shigella_flexneri	CP162073.1	CP186935.1	97.88	49.0	3562.0	0.6603
+shigella_flexneri	CP162073.1	CP189683.1	98.12	75.0	3466.0	0.32602
+shigella_flexneri	CP162073.1	AP040255.1	98.03	75.0	3456.0	0.32726
+shigella_flexneri	CP162073.1	AP040250.1	97.88	75.0	3475.0	0.32662
+shigella_flexneri	CP162073.1	OY725391.1	97.97	54.0	3474.0	0.654
+shigella_flexneri	CP162073.1	OY725486.1	97.71	48.0	3312.0	0.41697
+shigella_flexneri	CP162080.1	CP186935.1	98.29	56.0	3563.0	0.62363
+shigella_flexneri	CP162080.1	CP189683.1	98.06	81.0	3473.0	0.34351
+shigella_flexneri	CP162080.1	AP040255.1	98.17	81.0	3461.0	0.3447
+shigella_flexneri	CP162080.1	AP040250.1	98.17	81.0	3482.0	0.34434
+shigella_flexneri	CP162080.1	OY725391.1	98.08	62.0	3472.0	0.61895
+shigella_flexneri	CP162080.1	OY725486.1	97.71	58.0	3309.0	0.37927
+shigella_flexneri	CP186935.1	CP189683.1	98.22	29.0	3409.0	0.83925
+shigella_flexneri	CP186935.1	AP040255.1	97.91	29.0	3407.0	0.83974
+shigella_flexneri	CP186935.1	AP040250.1	98.19	29.0	3408.0	0.83891
+shigella_flexneri	CP186935.1	OY725391.1	99.12	15.0	4422.0	0.01131
+shigella_flexneri	CP186935.1	OY725486.1	98.24	13.0	3681.0	0.326
+shigella_flexneri	CP189683.1	AP040255.1	99.98	0.0	5410.0	0.00055
+shigella_flexneri	CP189683.1	AP040250.1	99.99	0.0	5427.0	0.00258
+shigella_flexneri	CP189683.1	OY725391.1	97.9	36.0	3300.0	0.83485
+shigella_flexneri	CP189683.1	OY725486.1	97.7	35.0	3235.0	0.62071
+shigella_flexneri	AP040255.1	AP040250.1	99.98	0.0	5434.0	0.00055
+shigella_flexneri	AP040255.1	OY725391.1	97.92	36.0	3299.0	0.83419
+shigella_flexneri	AP040255.1	OY725486.1	97.74	35.0	3228.0	0.62144
+shigella_flexneri	AP040250.1	OY725391.1	97.89	36.0	3314.0	0.83404
+shigella_flexneri	AP040250.1	OY725486.1	97.7	35.0	3239.0	0.6218
+shigella_flexneri	OY725391.1	OY725486.1	98.26	24.0	3655.0	0.33461

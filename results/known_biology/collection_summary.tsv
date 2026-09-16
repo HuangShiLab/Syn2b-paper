@@ -1,0 +1,6 @@
+collection	n_pairs	median_ani	min_ani	median_junctions	pct_ge2_junctions_ani_ge99	median_junctions_ani_ge99	max_junctions
+mycobacterium_tuberculosis	190	99.92	99.72	0.0	10.0	0.0	2.0
+escherichia_coli	190	97.99	94.62	8.0	58.3	3.0	21.0
+salmonella_typhimurium	190	99.91	99.45	4.0	74.7	4.0	12.0
+shigella_sonnei	105	99.93	94.62	9.0	87.9	7.0	30.0
+shigella_flexneri	300	95.50999999999999	88.39	31.0	84.0	10.0	81.0

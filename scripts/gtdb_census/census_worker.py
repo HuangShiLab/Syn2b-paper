@@ -202,10 +202,13 @@ class Worker:
                         continue
                     a = f[cols["genome_A"]] if "genome_A" in cols else f[0]
                     b = f[cols["genome_B"]] if "genome_B" in cols else f[1]
+                    # The matrix emits each unique pair once, oriented by
+                    # sorted-filename loading order, so a pair is attributed to
+                    # the task of its positionally-earlier genome: keeping rows
+                    # whose genome_A is in the query batch partitions the output
+                    # exactly, with no duplicates and no losses.
                     if a not in batch_ids or a == b:
                         continue
-                    if b in batch_ids and not a < b:
-                        continue   # intra-batch: keep lex order only
                     fout.write("\t".join(f) + "\n")
                     kept += 1
         (self.ckpt / f"{task_id}.done").write_text(

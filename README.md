@@ -185,13 +185,30 @@ amortized. Full benchmarks are in `results/efficiency_v8/syn2b_struct_benchmark.
 Merging the held-out set with the ANIm-verified high-ANI sample (47,748 pairs
 with per-pair ANIm and dnadiff inversion-event counts) shows that rearrangement
 is common at strain-level ANI: 45% of pairs with ANIm ≥ 97% carry ≥1 dnadiff
-inversion and 34% (1,295 pairs) carry ≥2; at ANIm ≥ 99% 29% still carry ≥1.
-Syn2b's junction count ranks these pairs by rearrangement burden with AUC 0.80
-and no contig-count dependence, enabling fast genome-search screening. Full
-statistics in `results/discordance/discordance_summary.md`; reproduction:
+inversion (95% CI 43.5–46.7) and 34% (1,295 pairs) carry ≥2; at ANIm ≥ 99% 29%
+still carry ≥1. Syn2b's junction count ranks these pairs by rearrangement
+burden with AUC 0.80 and no contig-count dependence (normalizing by shared
+tags does not improve it), enabling fast genome-search screening: screening
+everything and aligning only flagged pairs costs ~7.5× less than aligning all
+pairs. Full statistics in `results/discordance/`; reproduction:
 
 ```bash
 python3 scripts/analyze_ani_synteny_discordance.py
+python3 scripts/analyze_discordance_flagging.py   # feature comparison + CIs
+```
+
+### 6b. Known-biology calibration on complete genomes (Supplementary Figure 5)
+
+975 within-collection pairs from complete-genome sets with known rearrangement
+phenotypes (*M. tuberculosis* conserved negative control: median 0 junctions
+at 99.92% ANI; *Shigella* 84–88% of ≥99%-ANI pairs with ≥2 junctions;
+*Salmonella* Typhimurium and *E. coli* in between). Genomes are fetched from
+NCBI Assembly (accessions in `data/known_biology/manifest.tsv`; FASTAs are
+gitignored and re-downloadable):
+
+```bash
+python3 scripts/fetch_vignette_genomes.py
+python3 scripts/analyze_known_biology.py
 ```
 
 ### 7. GTDB-R207 within-species census (in preparation)
