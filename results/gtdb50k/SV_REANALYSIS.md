@@ -1,20 +1,21 @@
 # SV comparison, re-analysed with confounders controlled
 
-> **Status (2026-09-16): superseded in part.** All `breakpoint_count` and
-> `synteny_blocks` statistics below were computed with the Syn2bANI chain-based
-> counter as of the 2026-09-02 `c974f5f` fix. Two further defects in that
-> counter were identified on 2026-09-16 (paralogous chains counted as adjacency
-> evidence; chain breaks with reference-consecutive neighbours counted as
-> rearrangements), inflating counts by one to two orders of magnitude and fixed
-> in Syn2bANI v0.1.1. The `breakpoint_count`/`synteny_blocks` rows and the
-> contig-count analysis of `synteny_blocks` are therefore **withdrawn pending
-> recomputation** on the HPC-held genomes (open item). The dnadiff-side
-> fragmentation statistics (dnadiff breakpoints vs contig count) and the
-> Syn2b-tool junction statistics used by the manuscript are unaffected — they
-> are computed from `results/discordance/` and `inverted_fraction_truth_four.tsv`.
+> **Status (2026-09-17): superseded by `sv_reanalysis_v011.md`.** Everything
+> below was computed with the pre-v0.1.1 chain-based counter (the 2026-09-02
+> `c974f5f` fix), which still over-counted breakpoints by one to two orders of
+> magnitude via paralogous chains and chain breaks (fixed in Syn2bANI v0.1.1,
+> 2026-09-16). The full 43,334-pair set was recomputed with v0.1.1 on the HPC
+> (job 4071690) and re-analysed by `scripts/sv_reanalysis.py`; the corrected
+> table lives in `sv_reanalysis_v011.{tsv,md}`. Headline outcome: the
+> breakpoints partial correlation survives the fix (r = 0.411 vs the 0.414
+> quoted below), the raw correlation improves (0.361 vs 0.133), and the two
+> independent implementations now agree at scale (Spearman rho = 0.86 over
+> 43,312 pairs).
 
-Date: 2026-09-02. Reproduce with `python3 scripts/sv_reanalysis.py results/gtdb50k`
-(writes `sv_reanalysis_metrics.tsv`). n = 43,334 pairs.
+Date: 2026-09-02. Reproduce the corrected numbers with
+`python3 scripts/sv_reanalysis.py` (v0.1.1 outputs in
+`results/gtdb50k/rerun_v011/`; per-pair residuals via
+`python3 scripts/gtdb50k/validate_inverted_fraction_truth.py results/gtdb50k`).
 
 **Correction (2026-09-02):** The `breakpoint_count` implementation previously
 subtracted only the query-side contig term (`n_chained_contigs`) and not the

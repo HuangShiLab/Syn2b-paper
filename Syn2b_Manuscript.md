@@ -360,14 +360,15 @@ count (Spearman ρ = 0.02; partial ρ = 0.01 controlling ANIm). The junction
 channel is cross-validated by an independent implementation: the companion
 tool's chain-based breakpoint counter (Syn2bANI v0.1.1) agrees exactly on
 control comparisons — both report 0 junctions for a genome compared with a
-renamed copy of itself and 2 for *E. coli* O157:H7 EDL933 vs Sakai. An earlier
-version of this section reported partial correlations between Syn2bANI's
-breakpoint count and dnadiff breakpoints on the 43,334-pair set (r = 0.414);
-that statistic was computed before two further defects in the chain-based
+renamed copy of itself and 2 for *E. coli* O157:H7 EDL933 vs Sakai — and,
+recomputed on the full 43,334-pair set after two defects in the chain-based
 counter were identified and fixed (paralogous chains counted as adjacency
-evidence, and chain breaks counted as rearrangements, inflating counts by one
-to two orders of magnitude), and it is withdrawn pending recomputation on the
-HPC-held genomes. These results support the fragmentation principle and argue
+evidence, and chain breaks counted as rearrangements), its partial
+correlation with dnadiff breakpoints controlling for ANIm and contig count is
+r = 0.411 (raw r = 0.361; no contig-count dependence, r = −0.05), in
+agreement with the per-pair ranking of Syn2b's junction count across the same
+pairs (Spearman ρ = 0.86). These results support the
+fragmentation principle and argue
 for prioritizing ratio-type over transition-count metrics in structural
 comparison of draft assemblies.
 
@@ -647,9 +648,10 @@ Fisher z-transformation.
 ### skani ANI for cohort analysis
 
 skani²¹ v0.1.0 `dist` was run with default parameters on the four SynTracker
-cohort assembly sets to obtain the ANI values used in Figure 4. The values sit
-at ≥94.6% ANI, where skani's estimate is stable across versions; re-running
-with the current skani release is queued alongside the HPC recomputation.
+cohort assembly sets to obtain the ANI values used in Figure 4. The full set
+was re-run with skani v0.3.2 (unique-pair triangles,
+`results/syntracker_validation/rerun_v032/`): every value quoted in the text
+reproduces exactly in the ≥94.6% ANI regime these cohorts occupy.
 
 ### Known-biology complete-genome collections
 
