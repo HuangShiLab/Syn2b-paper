@@ -217,7 +217,8 @@ All 711,020,841 within-species pairs of GTDB R207 via a few long SLURM jobs
 with in-run disk-space auditing. Plan and pipeline:
 `results/census/job_plan_summary.md`, `scripts/gtdb_census/`
 ([README](scripts/gtdb_census/README.md)), strategy in
-`APPLICATION_EXPANSION_PLAN.md`.
+`APPLICATION_EXPANSION_PLAN.md`. Full HPC runbook (census + all open items):
+[`HPC_TASKS.md`](HPC_TASKS.md).
 
 ---
 
