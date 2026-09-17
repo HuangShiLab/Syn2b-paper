@@ -6,6 +6,27 @@
 
 ---
 
+## 执行状态（2026-09-17，已通过 SSH 提交）
+
+| 任务 | Job ID | 状态 |
+|---|---|---|
+| T2 43,334 对 syn2bani v0.1.1 重算（8×24h） | 4071690 | RUNNING（~46% @ 16 min） |
+| T3+T4 队列 skani 0.3.2 + syn2bani triangle | 4071698 | RUNNING |
+| T1a reps skani 65,703 三角矩阵（预筛层） | 4071749 | PENDING（排队） |
+| 对照组（renamed-copy=0；双工具口径记录） | — | 完成 controls.md |
+
+**T1 普查前置发现**：`genomes_all` 只含 65,703 个代表基因组；种内普查还需
+251,839 个成员基因组，其中 239,370 个可从 NCBI 下载（12,469 个已被撤回，
+QC 将如实记录；普查覆盖 96.1%）。下载清单已生成：
+`data/gtdb-r207/download_missing/urls_missing_genomes.tsv`（URL+accession）。
+**I/O 节点下载脚本**：`download_missing/io_download_missing.sh`（8 并发、
+断点续传、跳过已有、失败重试，进度每 5 分钟记录；登录节点 15 分钟限制与
+I/O 节点不可 SSH，故需经 OnDemand 在 I/O 节点启动，或明确授权分块登录节点
+下载）。二进制：syn2b 64717ab / syn2bani v0.1.1 已构建，
+skani 0.3.2 在 `tools/bin/`。
+
+---
+
 ## 环境速查（来自现有脚本的实际路径）
 
 | 项 | 值 |
