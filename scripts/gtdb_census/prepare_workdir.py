@@ -47,6 +47,11 @@ def main():
     ap.add_argument("--taxonomy", required=True)
     ap.add_argument("--genome-dir", required=True,
                     help="root containing GTDB genome files (searched recursively)")
+    ap.add_argument("--flat-dir", action="store_true",
+                    help="genome files are {accession}.fna directly under "
+                         "--genome-dir; construct manifest paths without "
+                         "scanning (fast on large Lustre directories; missing "
+                         "files are tolerated and surfaced by the worker)")
     ap.add_argument("--tasks", required=True)
     ap.add_argument("--workdir", required=True)
     args = ap.parse_args()
@@ -54,14 +59,16 @@ def main():
     clusters = load_clusters(args.taxonomy)
     tasks = [json.loads(l) for l in open(args.tasks)]
     needed = {t["cluster"] for t in tasks}
-    genomes = {}
-    for p in Path(args.genome_dir).rglob("*"):
-        if p.name.endswith(ACCESSION_SUFFIXES):
-            genomes.setdefault(p.name.split("_genomic")[0].rsplit(".", 1)[0], p)
-    # also index by simple stem (GCA_...)
-    by_stem = {}
-    for stem, p in genomes.items():
-        by_stem.setdefault(stem, p)
+    if not args.flat_dir:
+        genomes = {}
+        for p in Path(args.genome_dir).rglob("*"):
+            if p.name.endswith(ACCESSION_SUFFIXES):
+                genomes.setdefault(p.name.split("_genomic")[0].rsplit(".", 1)[0], p)
+        by_stem = {}
+        for stem, p in genomes.items():
+            by_stem.setdefault(stem, p)
+    else:
+        genomes, by_stem = {}, {}
 
     root = Path(args.workdir)
     ca = root / "cluster_accessions"
@@ -77,6 +84,9 @@ def main():
         counts[cl] = sum(1 for t in tasks if t["cluster"] == cl)
         for acc in accs:
             p = genomes.get(acc) or by_stem.get(acc)
+            if p is None and args.flat_dir:
+                cand = Path(args.genome_dir) / f"{acc}.fna"
+                p = cand  # constructively; existence checked at digest time
             if p is None:
                 missing.append(acc)
             else:
