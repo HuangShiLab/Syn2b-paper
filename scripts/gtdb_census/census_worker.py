@@ -303,9 +303,9 @@ def main():
     w = Worker(args)
     auditor = SpaceAuditor(w.root, w.tgt, args.soft_gb, args.hard_gb,
                            args.min_free_gb, w.log, args.audit_interval)
-    auditor.paused = mp.Event()  # cross-process pause flag (auditor thread sets it)
-    auditor.start()
     ctx = mp.get_context("spawn")
+    auditor.paused = ctx.Event()  # same context as the shard processes
+    auditor.start()
     stop_evt = ctx.Event()
     procs = []
     for i in range(max(1, args.workers)):
