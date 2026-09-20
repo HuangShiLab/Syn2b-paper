@@ -124,15 +124,22 @@ class Worker:
         return self.cluster_seqs[cluster]
 
     def digest_missing(self, cluster):
-        """Digest any cluster genome whose TGT is absent (cheap, 42 ms/genome)."""
+        """Digest any cluster genome whose TGT is absent. Per-accession claims
+        prevent duplicated work when many workers hit the same mega cluster;
+        normally a no-op after digest_all.py has pre-digested the store."""
         manifest = json.loads((self.root / "manifest.json").read_text()) \
             if (self.root / "manifest.json").exists() else {}
         for acc in self.cluster_accessions(cluster):
             tgt = self.tgt / f"{acc}.tgt"
             if tgt.exists():
                 continue
+            try:
+                (self.locks / f"digest.{acc}").mkdir()
+            except FileExistsError:
+                continue  # another worker owns it; retry on a later pass
             fasta = manifest.get(acc)
             if not fasta:
+                (self.locks / f"digest.{acc}").rmdir()
                 self.log(f"WARN no FASTA for {acc}; skipped")
                 continue
             sh([self.a.syn2b, "digest", "-i", fasta, "-o", str(tgt),

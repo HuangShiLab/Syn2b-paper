@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""One-time pre-digestion of every census genome (thundering-herd fix).
+
+census_worker.py digests missing TGTs per task, which races badly on mega
+clusters (every task attempt re-digests the same genomes). This pass digests
+each genome exactly once, with a per-accession mkdir claim, so the census
+workers later find everything present.
+
+Idempotent and multi-node safe: run as a SLURM array over shards, or several
+single-node jobs; already-digested accessions are skipped.
+"""
+import argparse
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--workdir", required=True)
+    ap.add_argument("--syn2b", required=True)
+    ap.add_argument("--enzymes", default="BcgI,AlfI,AloI,FalI")
+    ap.add_argument("--shard", type=int, default=0)
+    ap.add_argument("--nshards", type=int, default=1)
+    ap.add_argument("--max-per-core", type=int, default=0,
+                    help="stop after N digests (0 = unlimited); use for chunked runs")
+    args = ap.parse_args()
+
+    root = Path(args.workdir)
+    tgt = root / "tgt"
+    locks = root / "locks"
+    tgt.mkdir(parents=True, exist_ok=True)
+    locks.mkdir(parents=True, exist_ok=True)
+    manifest = __import__("json").loads((root / "manifest.json").read_text())
+
+    items = sorted(manifest.items())
+    mine = items[args.shard::args.nshards]
+    done = 0
+    t0 = time.time()
+    for acc, fasta in mine:
+        if args.max_per_core and done >= args.max_per_core:
+            break
+        if (tgt / f"{acc}.tgt").exists():
+            continue
+        try:
+            (locks / f"digest.{acc}").mkdir()
+        except FileExistsError:
+            continue
+        try:
+            subprocess.run([args.syn2b, "digest", "-i", fasta,
+                            "-o", str(tgt / f"{acc}.tgt"), "-e", args.enzymes],
+                           check=True, capture_output=True)
+            done += 1
+            if done % 500 == 0:
+                r = done / (time.time() - t0)
+                print(f"shard {args.shard}: {done} digested ({r:.0f}/s)", flush=True)
+        except subprocess.CalledProcessError as e:
+            print(f"FAIL {acc}: {e.stderr[:200]}", flush=True)
+    print(f"shard {args.shard}: DONE {done} new digests", flush=True)
+
+
+if __name__ == "__main__":
+    main()
