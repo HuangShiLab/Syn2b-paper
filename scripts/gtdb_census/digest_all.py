@@ -49,6 +49,10 @@ def main():
     ap.add_argument("--enzymes", default="BcgI,AlfI,AloI,FalI")
     ap.add_argument("--shard", type=int, default=0)
     ap.add_argument("--nshards", type=int, default=1)
+    ap.add_argument("--purge-broken", action="store_true",
+                    help="first delete any of this shard's TGTs whose genome "
+                         "id is the broken literal 'ENA' token (leftover from "
+                         "unsanitized ENA digests)")
     ap.add_argument("--max-per-core", type=int, default=0,
                     help="stop after N digests (0 = unlimited); use for chunked runs")
     args = ap.parse_args()
@@ -62,6 +66,20 @@ def main():
 
     items = sorted(manifest.items())
     mine = items[args.shard::args.nshards]
+    if args.purge_broken:
+        purged = 0
+        for acc, _ in mine:
+            t = tgt / f"{acc}.tgt"
+            if t.exists() and t.stat().st_size == 0:
+                t.unlink(); purged += 1; continue
+            try:
+                with t.open() as fh:
+                    if fh.readline().startswith(">ENA|"):
+                        t.unlink(); purged += 1
+            except OSError:
+                pass
+        if purged:
+            print(f"shard {args.shard}: purged {purged} broken TGTs", flush=True)
     done = 0
     t0 = time.time()
     for acc, fasta in mine:
