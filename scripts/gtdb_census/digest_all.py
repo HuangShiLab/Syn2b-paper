@@ -13,8 +13,33 @@ import argparse
 import os
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
+
+
+def sanitize_fasta(src, tmpdir):
+    """Copy a FASTA, stripping ENA's leading 'ENA|' header field so genome and
+    contig IDs are the unique INSDC accessions (ENA browser output prefixes
+    every header with the literal token ENA, which collapses all genomes to
+    one id in downstream tools)."""
+    dst = Path(tmpdir) / (Path(src).name + ".sanitized.fna")
+    with open(src) as fin, open(dst, "w") as fout:
+        for line in fin:
+            if line.startswith(">ENA|"):
+                fout.write(">" + line[5:])
+            else:
+                fout.write(line)
+    return dst
+
+
+def digest_one(syn2b, enzymes, fasta, tgt_out, tmpdir):
+    fasta = sanitize_fasta(fasta, tmpdir)
+    try:
+        subprocess.run([syn2b, "digest", "-i", str(fasta), "-o", str(tgt_out),
+                        "-e", enzymes], check=True, capture_output=True)
+    finally:
+        fasta.unlink(missing_ok=True)
 
 
 def main():
@@ -49,9 +74,8 @@ def main():
         except FileExistsError:
             continue
         try:
-            subprocess.run([args.syn2b, "digest", "-i", fasta,
-                            "-o", str(tgt / f"{acc}.tgt"), "-e", args.enzymes],
-                           check=True, capture_output=True)
+            digest_one(args.syn2b, args.enzymes, fasta,
+                       tgt / f"{acc}.tgt", tempfile.gettempdir())
             done += 1
             if done % 500 == 0:
                 r = done / (time.time() - t0)

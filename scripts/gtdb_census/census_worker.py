@@ -126,7 +126,9 @@ class Worker:
     def digest_missing(self, cluster):
         """Digest any cluster genome whose TGT is absent. Per-accession claims
         prevent duplicated work when many workers hit the same mega cluster;
-        normally a no-op after digest_all.py has pre-digested the store."""
+        normally a no-op after digest_all.py has pre-digested the store.
+        FASTAs are sanitized (ENA header prefix stripped) before digestion."""
+        import tempfile
         manifest = json.loads((self.root / "manifest.json").read_text()) \
             if (self.root / "manifest.json").exists() else {}
         for acc in self.cluster_accessions(cluster):
@@ -142,8 +144,17 @@ class Worker:
                 (self.locks / f"digest.{acc}").rmdir()
                 self.log(f"WARN no FASTA for {acc}; skipped")
                 continue
-            sh([self.a.syn2b, "digest", "-i", fasta, "-o", str(tgt),
-                "-e", self.a.enzymes])
+            tmp = tempfile.mkdtemp(prefix="san_")
+            try:
+                src = Path(fasta)
+                san = Path(tmp) / "sanitized.fna"
+                with open(src) as fin, open(san, "w") as fout:
+                    for line in fin:
+                        fout.write(">" + line[5:] if line.startswith(">ENA|") else line)
+                sh([self.a.syn2b, "digest", "-i", str(san), "-o", str(tgt),
+                    "-e", self.a.enzymes])
+            finally:
+                shutil.rmtree(tmp, ignore_errors=True)
 
     def claim(self, task_id):
         try:
@@ -250,6 +261,9 @@ class Worker:
                     idle += 1
                     if idle >= 2000:
                         return
+            except Exception as e:  # one bad task must not kill the shard
+                self.log(f"ERROR task {t.get('cluster')}|{t['q_start']}: {e}")
+                idle += 1
             finally:
                 if is_mega and mega_slot is not None:
                     (self.locks / f"mega.{mega_slot}").rmdir()
