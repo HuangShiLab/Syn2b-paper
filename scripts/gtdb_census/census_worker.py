@@ -117,6 +117,14 @@ class Worker:
     def log(self, msg):
         self.logf.write(f"{time.strftime('%F %T')} {msg}\n")
 
+    @staticmethod
+    def release_failed_claim(locks_dir, cluster, q_start, q_end):
+        task_id = f"{cluster.replace('/', '_')}|{q_start}_{q_end}"
+        try:
+            (locks_dir / task_id).rmdir()
+        except OSError:
+            pass
+
     def cluster_accessions(self, cluster):
         if cluster not in self.cluster_seqs:
             path = self.root / "cluster_accessions" / (cluster.replace("/", "_") + ".txt")
@@ -140,9 +148,12 @@ class Worker:
             except FileExistsError:
                 continue  # another worker owns it; retry on a later pass
             fasta = manifest.get(acc)
-            if not fasta:
+            if not fasta or not Path(fasta).exists():
                 (self.locks / f"digest.{acc}").rmdir()
-                self.log(f"WARN no FASTA for {acc}; skipped")
+                if fasta:
+                    self.log(f"WARN FASTA absent for {acc}: {fasta}; skipped")
+                else:
+                    self.log(f"WARN no FASTA for {acc}; skipped")
                 continue
             tmp = tempfile.mkdtemp(prefix="san_")
             try:
@@ -262,6 +273,9 @@ class Worker:
                     if idle >= 2000:
                         return
             except Exception as e:  # one bad task must not kill the shard
+                self.release_failed_claim(
+                    self.locks, t.get("cluster", ""), t.get("q_start", 0),
+                    t.get("q_end", 0))
                 self.log(f"ERROR task {t.get('cluster')}|{t['q_start']}: {e}")
                 idle += 1
             finally:
