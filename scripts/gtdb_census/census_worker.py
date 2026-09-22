@@ -194,7 +194,19 @@ class Worker:
             return False
         if not self.claim(task_id):
             return False
-        t0 = time.time()
+        try:
+            return self._run_task_body(t, task_id)
+        except Exception:
+            # release the claim so another worker can retry; never leave
+            # claimed-but-never-done tasks behind
+            try:
+                (self.locks / task_id).rmdir()
+            except OSError:
+                pass
+            raise
+
+    def _run_task_body(self, t, task_id):
+        cl = t["cluster"]
         self.digest_missing(cl)
         accs = self.cluster_accessions(cl)
         batch = accs[t["q_start"]:t["q_end"]]

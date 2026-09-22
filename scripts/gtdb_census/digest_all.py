@@ -92,14 +92,26 @@ def main():
         except FileExistsError:
             continue
         try:
+            if not os.path.exists(fasta):
+                print(f"MISSING-FASTA {acc}", flush=True)
+                (locks / f"digest.{acc}").rmdir()
+                continue
             digest_one(args.syn2b, args.enzymes, fasta,
                        tgt / f"{acc}.tgt", tempfile.gettempdir())
             done += 1
             if done % 500 == 0:
                 r = done / (time.time() - t0)
                 print(f"shard {args.shard}: {done} digested ({r:.0f}/s)", flush=True)
-        except subprocess.CalledProcessError as e:
-            print(f"FAIL {acc}: {e.stderr[:200]}", flush=True)
+        except Exception as e:
+            print(f"FAIL {acc}: {str(e)[:200]}", flush=True)
+            # leave the tgt absent and the lock released so a later pass can retry
+            tgt_file = tgt / f"{acc}.tgt"
+            if tgt_file.exists() and tgt_file.stat().st_size == 0:
+                tgt_file.unlink()
+            try:
+                (locks / f"digest.{acc}").rmdir()
+            except OSError:
+                pass
     print(f"shard {args.shard}: DONE {done} new digests", flush=True)
 
 
