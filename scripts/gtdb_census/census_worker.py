@@ -118,12 +118,16 @@ class Worker:
         self.logf.write(f"{time.strftime('%F %T')} {msg}\n")
 
     @staticmethod
-    def release_failed_claim(locks_dir, cluster, q_start, q_end):
-        task_id = f"{cluster.replace('/', '_')}|{q_start}_{q_end}"
+    def release_failed_claim(locks_dir, cluster, block_i, block_j):
+        task_id = f"{cluster.replace('/', '_')}|{block_i}x{block_j}"
         try:
             (locks_dir / task_id).rmdir()
         except OSError:
             pass
+
+    @staticmethod
+    def task_id_of(t):
+        return f"{t['cluster'].replace('/', '_')}|{t['block_i']}x{t['block_j']}"
 
     def cluster_accessions(self, cluster):
         if cluster not in self.cluster_seqs:
@@ -189,7 +193,7 @@ class Worker:
 
     def run_task(self, t):
         cl = t["cluster"]
-        task_id = f"{cl.replace('/', '_')}|{t['q_start']}_{t['q_end']}"
+        task_id = f"{cl.replace('/', '_')}|{t['block_i']}x{t['block_j']}"
         if (self.ckpt / f"{task_id}.done").exists():
             return False
         if not self.claim(task_id):
@@ -209,18 +213,23 @@ class Worker:
         cl = t["cluster"]
         self.digest_missing(cl)
         accs = self.cluster_accessions(cl)
-        batch = accs[t["q_start"]:t["q_end"]]
+        bs = t.get("block_size", 500)
+        bi, bj = t["block_i"], t["block_j"]
+        batch = accs[bi * bs: (bi + 1) * bs]
+        partner = accs[bj * bs: (bj + 1) * bs]
         batch_names = {f"{a}.tgt" for a in batch}
+        partner_names = {f"{a}.tgt" for a in partner} - batch_names
         batch_ids = {gid for gid in (self.tgt_genome_id(a) for a in batch)
                      if gid is not None}
         with tempfile.TemporaryDirectory(prefix="census_", dir=self.a.tmpdir) as td:
             tdir = Path(td) / "tgts"
             tdir.mkdir()
+            # batch files first so cross rows read (batch, partner)
             for acc in batch:
                 src = self.tgt / f"{acc}.tgt"
                 if src.exists():
                     os.symlink(src, tdir / src.name)
-            for acc in accs:
+            for acc in partner:
                 src = self.tgt / f"{acc}.tgt"
                 if src.exists() and src.name not in batch_names:
                     os.symlink(src, tdir / src.name)
@@ -286,9 +295,9 @@ class Worker:
                         return
             except Exception as e:  # one bad task must not kill the shard
                 self.release_failed_claim(
-                    self.locks, t.get("cluster", ""), t.get("q_start", 0),
-                    t.get("q_end", 0))
-                self.log(f"ERROR task {t.get('cluster')}|{t['q_start']}: {e}")
+                    self.locks, t.get("cluster", ""), t.get("block_i", 0),
+                    t.get("block_j", 0))
+                self.log(f"ERROR task {self.task_id_of(t)}: {e}")
                 idle += 1
             finally:
                 if is_mega and mega_slot is not None:
@@ -308,8 +317,7 @@ class Worker:
         while True:
             left = sum(
                 1 for t in self.tasks
-                if not (self.ckpt / f"{t['cluster'].replace('/','_')}|"
-                                   f"{t['q_start']}_{t['q_end']}.done").exists())
+                if not (self.ckpt / f"{self.task_id_of(t)}.done").exists())
             if left == 0:
                 return
             self.log(f"drain: {left} tasks left (other workers)")

@@ -46,8 +46,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--taxonomy", required=True, help="accession_taxonomy_r207.tsv.gz")
     ap.add_argument("--outdir", required=True)
-    ap.add_argument("--batch-size", type=int, default=100,
-                    help="query genomes per task (task cost ~ batch x cluster x 9 ms)")
+    ap.add_argument("--batch-size", type=int, default=500,
+                    help="query genomes per task (block-pair tasks: dir = block_i+block_j)")
     ap.add_argument("--jobs", type=int, default=6,
                     help="number of long jobs the budget is split across in the summary")
     ap.add_argument("--node-cores", type=int, default=16)
@@ -67,14 +67,22 @@ def main():
             continue
         n_genomes_multi += n
         digest_h += n * MS_PER_DIGEST / CORE_H
-        for start in range(0, n, args.batch_size):
-            batch = accs[start:start + args.batch_size]
-            cost_h = len(batch) * n * MS_PER_ORDERED_PAIR / CORE_H
-            tasks.append({
-                "cluster": sp, "n_genomes": n,
-                "q_start": start, "q_end": start + len(batch),
-                "est_core_h": round(cost_h, 4),
-            })
+        # block-pair tasks: dir = block_i + block_j, so the tool computes
+        # exactly (i+j) size-ordered pairs -- the whole-cluster directory of
+        # the earlier query-batch design made every task pay n**2, inflating
+        # mega clusters by n/batch (E. coli ~134x).
+        nb = (n + args.batch_size - 1) // args.batch_size
+        for bi in range(nb):
+            for bj in range(bi, nb):
+                ni = min(args.batch_size, n - bi * args.batch_size)
+                nj = min(args.batch_size, n - bj * args.batch_size)
+                size = ni + nj
+                cost_h = size * size * MS_PER_ORDERED_PAIR / CORE_H
+                tasks.append({
+                    "cluster": sp, "n_genomes": n,
+                    "block_i": bi, "block_j": bj, "block_size": args.batch_size,
+                    "est_core_h": round(cost_h, 4),
+                })
 
     tasks.sort(key=lambda t: -t["est_core_h"])
     with open(out / "tasks.jsonl", "w") as fh:
@@ -105,7 +113,7 @@ def main():
     ]
     for t in big:
         lines.append(f"| {t['cluster']} | {t['n_genomes']:,} | "
-                     f"[{t['q_start']:,},{t['q_end']:,}) | {t['est_core_h']:.1f} |")
+                     f"blocks {t['block_i']}x{t['block_j']} | {t['est_core_h']:.1f} |")
     lines += [
         "",
         "Execution policy: submit a FEW LONG array jobs (e.g. `--array=0-%d%%%d`)," % (max(args.jobs, n_jobs_needed) - 1, max(args.jobs, n_jobs_needed)),
