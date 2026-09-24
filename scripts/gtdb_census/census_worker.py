@@ -143,6 +143,8 @@ class Worker:
         import tempfile
         manifest = json.loads((self.root / "manifest.json").read_text()) \
             if (self.root / "manifest.json").exists() else {}
+        if (self.root / "digest_scan" / (cluster.replace("/", "_") + ".done")).exists():
+            return
         for acc in self.cluster_accessions(cluster):
             tgt = self.tgt / f"{acc}.tgt"
             if tgt.exists():
@@ -170,6 +172,9 @@ class Worker:
                     "-e", self.a.enzymes])
             finally:
                 shutil.rmtree(tmp, ignore_errors=True)
+        scan = self.root / "digest_scan"
+        scan.mkdir(exist_ok=True)
+        (scan / (cluster.replace("/", "_") + ".done")).write_text("ok\n")
 
     def claim(self, task_id):
         try:
@@ -210,6 +215,7 @@ class Worker:
             raise
 
     def _run_task_body(self, t, task_id):
+        t0 = time.time()
         cl = t["cluster"]
         self.digest_missing(cl)
         accs = self.cluster_accessions(cl)
