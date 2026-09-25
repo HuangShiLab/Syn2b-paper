@@ -28,7 +28,7 @@ def main():
     root, out = Path(a.workdir), Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
 
-    final = out / args.output_name
+    final = out / a.output_name
     stats = defaultdict(lambda: [0, [], []])   # rows, junctions, inverted
 
     header = None
