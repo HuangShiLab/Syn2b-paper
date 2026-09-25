@@ -18,23 +18,29 @@ import time
 from pathlib import Path
 
 
-def sanitize_fasta(src, tmpdir):
+def sanitize_fasta(src, tmpdir, genome_id=None):
     """Copy a FASTA, stripping ENA's leading 'ENA|' header field so genome and
-    contig IDs are the unique INSDC accessions (ENA browser output prefixes
-    every header with the literal token ENA, which collapses all genomes to
-    one id in downstream tools)."""
+    contig IDs are the unique INSDC accessions.  For catalogs whose FASTA
+    headers are contig IDs (HROM), ``genome_id`` prefixes every header so all
+    contigs in one file become one TGT genome."""
     dst = Path(tmpdir) / (Path(src).name + ".sanitized.fna")
     with open(src) as fin, open(dst, "w") as fout:
         for line in fin:
-            if line.startswith(">ENA|"):
-                fout.write(">" + line[5:])
-            else:
+            if not line.startswith(">"):
                 fout.write(line)
+                continue
+            header = line[1:].rstrip("\n")
+            if genome_id is not None:
+                if not header.startswith(genome_id + "|"):
+                    header = f"{genome_id}|{header}"
+            elif header.startswith("ENA|"):
+                header = header[4:]
+            fout.write(f">{header}\n")
     return dst
 
 
-def digest_one(syn2b, enzymes, fasta, tgt_out, tmpdir):
-    fasta = sanitize_fasta(fasta, tmpdir)
+def digest_one(syn2b, enzymes, fasta, tgt_out, tmpdir, genome_id=None):
+    fasta = sanitize_fasta(fasta, tmpdir, genome_id)
     try:
         subprocess.run([syn2b, "digest", "-i", str(fasta), "-o", str(tgt_out),
                         "-e", enzymes], check=True, capture_output=True)
@@ -53,6 +59,9 @@ def main():
                     help="first delete any of this shard's TGTs whose genome "
                          "id is the broken literal 'ENA' token (leftover from "
                          "unsanitized ENA digests)")
+    ap.add_argument("--ensure-filename-genome-id", action="store_true",
+                    help="prefix each sanitized FASTA header with the manifest "
+                         "accession; required for HROM contig headers")
     ap.add_argument("--max-per-core", type=int, default=0,
                     help="stop after N digests (0 = unlimited); use for chunked runs")
     args = ap.parse_args()
@@ -96,12 +105,21 @@ def main():
                 print(f"MISSING-FASTA {acc}", flush=True)
                 (locks / f"digest.{acc}").rmdir()
                 continue
-            digest_one(args.syn2b, args.enzymes, fasta,
-                       tgt / f"{acc}.tgt", tempfile.gettempdir())
-            done += 1
-            if done % 500 == 0:
-                r = done / (time.time() - t0)
-                print(f"shard {args.shard}: {done} digested ({r:.0f}/s)", flush=True)
+            try:
+                genome_id = acc if args.ensure_filename_genome_id else None
+                digest_one(args.syn2b, args.enzymes, fasta,
+                           tgt / f"{acc}.tgt", tempfile.gettempdir(),
+                           genome_id)
+                done += 1
+                if done % 500 == 0:
+                    rate = done / (time.time() - t0)
+                    print(f"shard {args.shard}: {done} digested "
+                          f"({rate:.0f}/s)", flush=True)
+            finally:
+                try:
+                    (locks / f"digest.{acc}").rmdir()
+                except OSError:
+                    pass
         except Exception as e:
             print(f"FAIL {acc}: {str(e)[:200]}", flush=True)
             # leave the tgt absent and the lock released so a later pass can retry

@@ -140,38 +140,56 @@ class Worker:
         prevent duplicated work when many workers hit the same mega cluster;
         normally a no-op after digest_all.py has pre-digested the store.
         FASTAs are sanitized (ENA header prefix stripped) before digestion."""
+        if (self.root / "digest_scan" / (cluster.replace("/", "_") + ".done")).exists():
+            return
         import tempfile
         manifest = json.loads((self.root / "manifest.json").read_text()) \
             if (self.root / "manifest.json").exists() else {}
-        if (self.root / "digest_scan" / (cluster.replace("/", "_") + ".done")).exists():
-            return
         for acc in self.cluster_accessions(cluster):
             tgt = self.tgt / f"{acc}.tgt"
             if tgt.exists():
                 continue
+            lock = self.locks / f"digest.{acc}"
             try:
-                (self.locks / f"digest.{acc}").mkdir()
+                lock.mkdir()
             except FileExistsError:
                 continue  # another worker owns it; retry on a later pass
-            fasta = manifest.get(acc)
-            if not fasta or not Path(fasta).exists():
-                (self.locks / f"digest.{acc}").rmdir()
-                if fasta:
-                    self.log(f"WARN FASTA absent for {acc}: {fasta}; skipped")
-                else:
-                    self.log(f"WARN no FASTA for {acc}; skipped")
-                continue
-            tmp = tempfile.mkdtemp(prefix="san_")
             try:
-                src = Path(fasta)
-                san = Path(tmp) / "sanitized.fna"
-                with open(src) as fin, open(san, "w") as fout:
-                    for line in fin:
-                        fout.write(">" + line[5:] if line.startswith(">ENA|") else line)
-                sh([self.a.syn2b, "digest", "-i", str(san), "-o", str(tgt),
-                    "-e", self.a.enzymes])
+                fasta = manifest.get(acc)
+                if not fasta or not Path(fasta).exists():
+                    if fasta:
+                        self.log(f"WARN FASTA absent for {acc}: {fasta}; skipped")
+                    else:
+                        self.log(f"WARN no FASTA for {acc}; skipped")
+                    continue
+                tmp = tempfile.mkdtemp(prefix="san_")
+                try:
+                    src = Path(fasta)
+                    san = Path(tmp) / "sanitized.fna"
+                    with open(src) as fin, open(san, "w") as fout:
+                        for line in fin:
+                            if not line.startswith(">"):
+                                fout.write(line)
+                                continue
+                            header = line[1:].rstrip("\n")
+                            if self.a.ensure_filename_genome_id:
+                                # HROM headers are contig IDs. Prefix the file's
+                                # genome ID so all contigs share one TGT genome.
+                                if not header.startswith(acc + "|"):
+                                    header = f"{acc}|{header}"
+                            elif header.startswith("ENA|"):
+                                header = header[4:]  # strip the ENA token
+                            fout.write(f">{header}\n")
+                    sh([self.a.syn2b, "digest", "-i", str(san), "-o", str(tgt),
+                        "-e", self.a.enzymes])
+                finally:
+                    shutil.rmtree(tmp, ignore_errors=True)
             finally:
-                shutil.rmtree(tmp, ignore_errors=True)
+                # A failed digest must not poison this accession for later retries.
+                try:
+                    lock.rmdir()
+                except OSError:
+                    pass
         scan = self.root / "digest_scan"
         scan.mkdir(exist_ok=True)
         (scan / (cluster.replace("/", "_") + ".done")).write_text("ok\n")
@@ -342,6 +360,10 @@ def main():
     ap.add_argument("--tasks", required=True, help="tasks.jsonl from plan_census.py")
     ap.add_argument("--syn2b", required=True)
     ap.add_argument("--enzymes", default="BcgI,AlfI,AloI,FalI")
+    ap.add_argument("--ensure-filename-genome-id", action="store_true",
+                    help="rewrite each FASTA header as <file stem>|<original "
+                         "header> before digestion; needed when the first "
+                         "header is a contig rather than genome ID")
     ap.add_argument("--tmpdir", default=None, help="fast local scratch for task dirs")
     ap.add_argument("--workers", type=int, default=1,
                     help="concurrent task executors on this node")

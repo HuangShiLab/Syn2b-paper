@@ -21,11 +21,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--workdir", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--output-name",
+                    default="gtdb_r207_within_species_sv.tsv.gz",
+                    help="final compressed table filename")
     a = ap.parse_args()
     root, out = Path(a.workdir), Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
 
-    final = out / "gtdb_r207_within_species_sv.tsv.gz"
+    final = out / args.output_name
     stats = defaultdict(lambda: [0, [], []])   # rows, junctions, inverted
 
     header = None
