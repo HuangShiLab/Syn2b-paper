@@ -11,6 +11,7 @@ Run AFTER prepare_workdir.py (needs cluster_accessions/ and manifest.json).
 import argparse
 import gzip
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -39,11 +40,15 @@ def run_cluster(skani, cl_key, accs, manifest, outdir):
             ani[(order[j], stem)] = v
     stem2acc = {Path(manifest[a]).stem: a for a in accs if a in manifest}
     n = 0
-    with gzip.open(out, "wt") as fh:
+    tmp = out.with_name(out.name + ".tmp")
+    with gzip.open(tmp, "wt") as fh:
         fh.write("genome_A\tgenome_B\tskani_ani\n")
         for (sa, sb), v in ani.items():
             fh.write(f"{stem2acc.get(sa, sa)}\t{stem2acc.get(sb, sb)}\t{v}\n")
             n += 1
+    # A killed worker can leave a partial gzip; publication must be atomic so
+    # an idempotent rerun does not mistake it for a completed cluster.
+    os.replace(tmp, out)
     return cl_key, n
 
 
