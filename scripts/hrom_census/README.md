@@ -35,14 +35,16 @@ running preparation. The pre-run estimate is:
 | skani ANI output (gzip) | ~2–4 GB |
 | Recommended shared-workdir ceiling | 80 GB hard, 60 GB soft |
 | Local scratch per task | <2 GB at block size 250 |
-| Structural compute | ~314 core-h raw at 9 ms/ordered-pair-equivalent; budget **500–800 core-h** with I/O/block overhead |
+| Structural compute | 785 core-h from the generated 250-genome block-pair plan; budget **800–1,200 core-h** with I/O variability |
 | Digest compute | ~1.7 core-h raw; budget **50–150 core-h** with Lustre I/O |
 | ANI compute | budget **20–80 core-h** |
 | Recommended production run | 3 jobs × 16 cores × 24 h = 1,152 core-h |
 | Expected wall time after digest | ~8–20 h if 3 nodes start promptly |
 
-The structural estimate is ~11× smaller than the GTDB-R207 census because HROM
-has 62.9M rather than 711M within-species pairs.
+The HROM plan has 3,525 block-pair tasks. Although the unique-pair count is
+~11× smaller than the GTDB-R207 census (62.9M vs 711M), block-pair overhead and
+the top-heavy cluster-size distribution make the generated task estimate 785
+core-h.
 
 ## Commands
 
