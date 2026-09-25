@@ -1,8 +1,8 @@
 #!/bin/bash
-# One-time HROM pre-digest. 48 shards let Lustre metadata and syn2b I/O overlap
-# while keeping a bounded number of concurrent array tasks.
+# One-time HROM pre-digest. 39 shards fit Lustre metadata and syn2b I/O overlap
+# within the current account submit limit.
 #SBATCH --job-name=hrom-digest
-#SBATCH --array=0-47%48
+#SBATCH --array=0-38%39
 #SBATCH --partition=amd
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -22,5 +22,5 @@ python3 scripts/gtdb_census/digest_all.py \
     --workdir "$WORKDIR" \
     --syn2b "$SYN2B" \
     --shard "$SLURM_ARRAY_TASK_ID" \
-    --nshards 48 \
+    --nshards 39 \
     --ensure-filename-genome-id
