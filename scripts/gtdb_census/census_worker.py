@@ -245,6 +245,8 @@ class Worker:
         partner_names = {f"{a}.tgt" for a in partner} - batch_names
         batch_ids = {gid for gid in (self.tgt_genome_id(a) for a in batch)
                      if gid is not None}
+        partner_ids = {gid for gid in (self.tgt_genome_id(a) for a in partner)
+                       if gid is not None}
         with tempfile.TemporaryDirectory(prefix="census_", dir=self.a.tmpdir) as td:
             tdir = Path(td) / "tgts"
             tdir.mkdir()
@@ -282,6 +284,11 @@ class Worker:
                     # whose genome_A is in the query batch partitions the output
                     # exactly, with no duplicates and no losses.
                     if a not in batch_ids or a == b:
+                        continue
+                    # Diagonal tasks own within-block pairs. Cross tasks must
+                    # retain only batch x partner rows; otherwise the batch x
+                    # batch rows are duplicated by the explicit diagonal task.
+                    if bi != bj and b not in partner_ids:
                         continue
                     fout.write("\t".join(f) + "\n")
                     kept += 1
