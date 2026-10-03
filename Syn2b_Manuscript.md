@@ -437,6 +437,14 @@ consequence is direct: a genome search that reports only ANI will rank 1,295
 structurally divergent surveyed pairs as top hits, and Syn2b recovers this
 signal in ~19 ms per pair without any alignment.
 
+### 6b. Effective within-species GTDB-R207 structural census
+
+To test whether the strain-level observations scale beyond curated representative pairs, we applied the same production enzyme panel to all multi-genome GTDB-R207 species clusters. The planned set contained 274,374 genomes in 22,535 clusters (711,020,841 unique pairs). After removing 12,637 genomes without usable digests and normalizing legacy contig-level output identifiers to accessions, the effective scope was **261,737 genomes in 21,973 clusters**, corresponding to **653,584,719 unique unordered pairs**. Global canonicalization and external-sort deduplication produced **646,012,820 structurally reported pairs**.
+
+In this observed effective set, **502,819,691 pairs (77.83%) carried at least two alignment-visible breakpoints**. Species-level rates spanned nearly the full range even among clusters with ≥1,000 effective pairs. High-rate examples included *Pseudomonas_E viridiflava* (943,251/943,251 informative pairs; 97.88%), *Streptococcus pneumoniae* (97.81% of 29.42M pairs), and several *Mesorhizobium/Rhizobium* lineages (>99%). Low-rate examples included *Chlamydia trachomatis* (2.95%), *Treponema pallidum* (2.33%), *Francisella tularensis* (9.50%), and *Wolbachia pipientis* (11.15%). These differences persisted after restricting to clusters with ≥1,000 pairs, but are reported here as quality-aware structural prevalence rather than direct evolutionary-rate estimates.
+
+Quality control found one cluster-level discrepancy: *E. coli* had 331,221,566 reported pairs versus 338,793,465 expected from its effective genome list. All other clusters matched `C(n,2)`. Because this shortfall affects only 1.16% of the effective pairs and does not change the ordering of the other species, it is reported transparently rather than imputed. The paired ANI layer for the complete effective census is still being generated; therefore, this section updates the structural layer only and does not yet make species-level hypermutator or hyper-recombinant calls.
+
 ### 7. SynTracker cohorts show ANI–synteny decoupling
 
 We re-analysed four published SynTracker isolate cohorts (*E. coli*
@@ -620,6 +628,10 @@ and the rank correlation of shared-tag positions, respectively. Because any
 chaining scheme starts a new block at every contig boundary, block counts are
 dominated by assembly structure and are reported as assembly-quality rather
 than rearrangement statistics.
+
+### GTDB-R207 effective within-species census
+
+GTDB-R207 species clusters with multiple genomes were decomposed into 500-genome block pairs. Of 274,374 planned genomes, 261,737 genomes in 21,973 clusters produced non-empty digestion TGTs. Structural tasks covered 653,584,719 effective unique pairs; 646,012,820 pairs remained after mapping legacy contig identifiers to accessions, canonicalizing unordered genome pairs, and global external-sort deduplication. Per-cluster row counts and SV-positive fractions were computed streamingly. One cluster (*E. coli*) had a 7.57M-pair shortfall relative to its effective expectation and is reported as a QC exception rather than imputed. The effective summary is stored in `results/census/gtdb/effective/`.
 
 ### GTDB-R207 validation
 
