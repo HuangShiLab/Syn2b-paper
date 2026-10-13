@@ -21,8 +21,12 @@ agrees with alignment-based truth at Pearson r = 0.996, slope = 1.006; across
 43,312 held-out GTDB-R207 pairs, r = 0.94. A four-enzyme panel (BcgI+AlfI+AloI+FalI)
 yields ~1.34 tags/kb in *E. coli* K-12 and detects inversions down to ~4 kb.
 Applied to a 47,748-pair GTDB-R207 survey, we find that 34% of pairs with
-ANIm ≥ 97% carry ≥2 alignment-visible inversion events — rearrangements
-invisible to ANI ranking. Syn2b is available at
+ANIm ≥ 97% carry ≥2 alignment-defined inversion events, rearrangements that
+ANI ranking alone does not report. Two application-scale censuses established
+feasibility: 502,819,691 of 646,012,820 effective GTDB-R207 species pairs
+(77.83%) had ≥2 landmark-defined breakpoints, while an independent HROM census
+found 17,535,013 of 62,872,901 conspecific pairs (27.89%) positive. Both surveys
+showed wide taxon-specific variation. Syn2b is available at
 https://github.com/HuangShiLab/Syn2b.
 
 ---
@@ -31,8 +35,8 @@ https://github.com/HuangShiLab/Syn2b.
 
 Microbial species exist as diverse strain assemblages in host-associated and
 environmental microbiomes. Strain-level variation arises through point mutations
-and structural genomic changes — insertions, deletions, inversions,
-translocations, and homologous recombination — that together determine phenotype,
+and structural genomic changes, including insertions, deletions, inversions,
+translocations, and homologous recombination, that together determine phenotype,
 virulence, and antibiotic resistance¹⁻³. While SNP-based methods such as
 inStrain⁴, MIDAS⁵, and StrainPhlAn⁶ are standard for strain tracking, they are
 inherently blind to structural variation, particularly when reads are mapped to
@@ -85,13 +89,15 @@ counts inflate with contig count and why the inverted landmark fraction agrees
 with alignment-based estimates even on fragmented assemblies
 (Supplementary Note 1).
 
-We validate Syn2b through four lines of evidence: (1) in-silico simulations of
+We validate Syn2b through five lines of evidence: (1) in-silico simulations of
 inversions, translocations, insertions, and deletions; (2) systematic enzyme
 comparison showing density-dependent sensitivity; (3) a 43,334-pair
 GTDB-R207 validation against dnadiff and minimap2, including a calibrated error
-model for the strain-level regime; and (4) a genome-wide survey of
+model for the strain-level regime; (4) a genome-wide survey of
 ANI–rearrangement discordance showing that one third of strain-level GTDB pairs
-carry multiple inversion events that ANI ranking cannot see.
+carry multiple inversion events that ANI ranking does not report; and (5) large
+GTDB-R207 and independent HROM structural censuses demonstrating scalable
+application and taxon-specific variation.
 
 ---
 
@@ -108,12 +114,12 @@ specific motif within a 25–32 bp window and produces a tag of that length
 
 **Metrics.** Syn2b computes three complementary quantities:
 
-1. **Adjacency conservation** — shared adjacent tag pairs between genomes,
+1. **Adjacency conservation**: shared adjacent tag pairs between genomes,
    sensitive to local synteny disruption.
-2. **Breakpoint / junction count** — adjacent tag pairs present in one genome but
+2. **Breakpoint / junction count**: adjacent tag pairs present in one genome but
    not the other. This is a transition count and therefore inherits a
    fragmentation-dependent term.
-3. **Length-weighted ratios** — the fraction of total length that carries a
+3. **Length-weighted ratios**: the fraction of total length that carries a
    property (e.g., inverted orientation), `Σ(length with property) /
    Σ(total length)`. Syn2b estimates these ratios over landmarks: the count of
    shared, orientation-informative landmarks carrying the property divided by
@@ -155,8 +161,8 @@ adjacency. In contrast, a length-weighted ratio
 is unchanged when a segment of length ℓ_i is split into ℓ_{i1} and ℓ_{i2},
 because numerator and denominator are both preserved. Syn2b instantiates the
 ratio over landmark counts rather than base pairs; the same preservation
-argument applies verbatim — splitting a segment cannot remove a landmark from
-either the numerator or the denominator — so the count ratio is exactly
+argument applies verbatim: splitting a segment cannot remove a landmark from
+either the numerator or the denominator, so the count ratio is exactly
 invariant, and under near-uniform landmark spacing it estimates the length
 ratio.
 
@@ -209,7 +215,7 @@ panel density (~1.3 tags per kb of indel; Supplementary Figure 3).
 
 **Mash is blind to SV.** The 1% SNP background alone gives a Mash distance of
 ≈1.0 × 10⁻² (k = 21); adding any structural variant changes the distance by
-only ~5 × 10⁻⁷ — five orders of magnitude below the SNP signal (Figure 2d) —
+only ~5 × 10⁻⁷, five orders of magnitude below the SNP signal (Figure 2d).
 confirming that k-mer-based methods cannot distinguish structural variation
 from point mutations¹⁸.
 
@@ -237,13 +243,13 @@ computational ones. First, Type IIB tags are physical molecules: each landmark
 is a 27–32-bp fragment flanking a fixed recognition site, so the exact tag set
 analysed here can be generated *in vitro* by 2bRAD-style digestion and
 sequencing, linking the in-silico metric to a real assay at negligible extra
-cost. Second, enzyme recognition is deterministic and parameter-free — the same
+cost. Second, enzyme recognition is deterministic and parameter-free: the same
 genome always yields the same landmarks across studies and software versions,
 which matters for database-scale applications where sketches must remain
 comparable over time. In practice, recognition sites can be affected by
 DNA methylation and by sequence polymorphism within the motif; however, because
-Syn2b reports ratios over many landmarks, the metric is robust
-to the occasional missing or extra site, which enters the error model as
+Syn2b reports ratios over many landmarks, the metric remains stable
+when occasional sites are missing or extra, which enters the error model as
 reduced landmark sampling (Supplementary Note 2).
 
 **Validation on GTDB-R207.** On the 43,312 held-out pairs with complete metrics
@@ -312,7 +318,7 @@ The error variance is well described by a sampling model plus a method floor:
 
 where p is the inverted fraction and m is the number of shared landmarks
 (shared_tags). The 1.50 coefficient absorbs spatial clustering of landmarks
-inside inverted segments — the difference between the landmark-count fraction
+inside inverted segments; the difference between the landmark-count fraction
 and a strictly length-weighted one; the 0.0205 floor reflects the different
 denominators used by dnadiff (aligned bases) and Syn2b (shared landmarks). This
 model is fitted on the held-out set and predicts the tighter spread observed at
@@ -331,8 +337,8 @@ opposite frame (Figure 3c). One caveat applies to both dnadiff and Syn2b
 fixed-reference fractions: because the orientation of individual contigs in a
 draft assembly is arbitrary, pairs whose assemblies follow different orientation
 conventions read as ~0.5 inverted regardless of biology. The fraction is
-therefore a *tracking* metric — Syn2b reproduces the alignment-based value with
-calibrated error — while per-pair biological interpretation of the inverted
+therefore a *tracking* metric: Syn2b reproduces the alignment-based value with
+calibrated error, while per-pair biological interpretation of the inverted
 fraction requires orientation-consistent assemblies; inversion *counts* are
 free of this convention (section 6).
 
@@ -344,14 +350,14 @@ outside Syn2b's landmark coverage. Pooling across pairs, 13.6% of dnadiff
 inversion boundaries had a matched Syn2b junction, and 40.4% of matched
 junctions lay within 5 kb of each other (p90 distance = 314.8 kb;
 Supplementary Figure 2). These numbers are consistent with the sampling
-model — closed genomes remove the fragmentation bias, and the remaining
+model: closed genomes remove the fragmentation bias, and the remaining
 discrepancies reflect landmark density and the ambiguity of one-to-one matching
 between two sets of predicted events rather than algorithmic error.
 
 **Transition-count metrics are confounded by fragmentation.** The
 contamination is directly visible in the truth data itself: across the held-out
 set, dnadiff's own breakpoint count correlates with assembly contig count at
-Spearman ρ = 0.28 (partial ρ = 0.34 controlling ANIm) — on draft assemblies a
+Spearman ρ = 0.28 (partial ρ = 0.34 controlling ANIm); on draft assemblies a
 substantial share of alignment-reported breakpoints measures assembly
 fragmentation, not rearrangement. Syn2b's junction count does not inherit this
 term: adjacencies are never formed across contig boundaries (Methods), and
@@ -359,8 +365,8 @@ across the same held-out set the junction count shows no dependence on contig
 count (Spearman ρ = 0.02; partial ρ = 0.01 controlling ANIm). The junction
 channel is cross-validated by an independent implementation: the companion
 tool's chain-based breakpoint counter (Syn2bANI v0.1.1) agrees exactly on
-control comparisons — both report 0 junctions for a genome compared with a
-renamed copy of itself and 2 for *E. coli* O157:H7 EDL933 vs Sakai — and,
+control comparisons: both report 0 junctions for a genome compared with a
+renamed copy of itself and 2 for *E. coli* O157:H7 EDL933 vs Sakai, and,
 recomputed on the full 43,334-pair set after two defects in the chain-based
 counter were identified and fixed (paralogous chains counted as adjacency
 evidence, and chain breaks counted as rearrangements), its partial
@@ -375,7 +381,7 @@ comparison of draft assemblies.
 ### 6. One third of strain-level GTDB pairs carry invisible rearrangements
 
 The validations above ask how faithfully Syn2b reproduces alignment-based
-metrics; we now ask what those metrics reveal when applied genome-wide. We
+metrics; we now ask what those metrics indicate when applied genome-wide. We
 merged the held-out set with the ANIm-verified high-ANI sample (47,748 pairs
 with per-pair ANIm, dnadiff structural events, and Syn2b metrics) and counted
 dnadiff inversion events per pair. Because inversion *counts* are insensitive to
@@ -384,7 +390,7 @@ the orientation conventions that affect length-based inverted fractions
 
 **Rearrangement is common at strain-level ANI.** Of the 3,828 pairs with
 ANIm ≥ 97%, 45% carry at least one dnadiff inversion (95% CI 43.5–46.7,
-pair bootstrap) and 1,295 (34%, CI 32.4–35.3) carry two or more — pairs that
+pair bootstrap) and 1,295 (34%, CI 32.4–35.3) carry two or more, pairs that
 any ANI-based ranking would report as near-identical (Figure 5a). The
 prevalence decays slowly with divergence: at ANIm ≥ 99%, 29% of pairs still
 carry ≥1 inversion (CI 27.2–31.0; 18% ≥2, CI 16.8–20.1; Figure 5b). Extreme
@@ -393,7 +399,7 @@ with 129 dnadiff inversions between them (top cases in Supplementary Table 6).
 These calls are not a by-product of assembly fragmentation: discordant pairs
 carry *fewer* contigs than concordant ones (median 122 vs 177 contigs per pair;
 Mann–Whitney p = 1.7 × 10⁻¹⁷), and because dnadiff can only call inversions
-inside aligned segments, fragmented assemblies under-count events — the 45%
+inside aligned segments, fragmented assemblies under-count events; the 45%
 prevalence is therefore conservative.
 
 **Discordant pairs are taxonomically structured.** Relative to concordant
@@ -407,9 +413,9 @@ across phyla.
 collections with documented rearrangement phenotypes calibrate the junction
 channel against real biology (Supplementary Figure 5). Among 190 pairs of
 complete *M. tuberculosis* genomes (median skani ANI 99.92%), the median
-junction count is 0 — the structurally hyper-conserved negative control.
-At the other end, *Shigella* — whose chromosomes rearrange through
-IS-element-mediated recombination — shows 84–88% of pairs carrying ≥2
+junction count is 0, the structurally hyper-conserved negative control.
+At the other end, *Shigella*, whose chromosomes rearrange through
+IS-element-mediated recombination, shows 84–88% of pairs carrying ≥2
 junctions even at ANI ≥ 99% (median 7–10 junctions; *S. flexneri* reaches 81),
 with *Salmonella* Typhimurium (75% at ≥2, rDNA-mediated inversions) and
 *E. coli* (58%) in between. All these pairs would be ranked near-identical by
@@ -427,8 +433,8 @@ discordant pairs at a 4.6% false-positive rate on concordant pairs (13.1% of
 all ≥97%-ANIm pairs); flagged pairs can then be committed to alignment-based
 validation. The economics of this two-stage workflow follow directly: at
 ~19 ms to screen a pair and ~8 s to align it, screening everything and
-aligning only the flagged pairs costs ~1.1 s per pair on average — ~7.5× less
-than aligning every pair — and at the scale of all 711M within-species GTDB
+aligning only the flagged pairs costs ~1.1 s per pair on average, ~7.5× less
+than aligning every pair, and at the scale of all 711M within-species GTDB
 pairs the difference is 0.21M versus 1.58M core-hours. The remaining
 discrepancy is expected from the sampling model: junction counts
 underestimate rearrangements that fall between landmarks, and the ratio metric
@@ -437,15 +443,35 @@ consequence is direct: a genome search that reports only ANI will rank 1,295
 structurally divergent surveyed pairs as top hits, and Syn2b recovers this
 signal in ~19 ms per pair without any alignment.
 
-### 6b. Effective within-species GTDB-R207 structural census
+### 7. Effective within-species GTDB-R207 structural census
 
 To test whether the strain-level observations scale beyond curated representative pairs, we applied the same production enzyme panel to all multi-genome GTDB-R207 species clusters. The planned set contained 274,374 genomes in 22,535 clusters (711,020,841 unique pairs). After removing 12,637 genomes without usable digests and normalizing legacy contig-level output identifiers to accessions, the effective scope was **261,737 genomes in 21,973 clusters**, corresponding to **653,584,719 unique unordered pairs**. Global canonicalization and external-sort deduplication produced **646,012,820 structurally reported pairs**.
 
-In this observed effective set, **502,819,691 pairs (77.83%) carried at least two alignment-visible breakpoints**. Species-level rates spanned nearly the full range even among clusters with ≥1,000 effective pairs. High-rate examples included *Pseudomonas_E viridiflava* (943,251/943,251 informative pairs; 97.88%), *Streptococcus pneumoniae* (97.81% of 29.42M pairs), and several *Mesorhizobium/Rhizobium* lineages (>99%). Low-rate examples included *Chlamydia trachomatis* (2.95%), *Treponema pallidum* (2.33%), *Francisella tularensis* (9.50%), and *Wolbachia pipientis* (11.15%). These differences persisted after restricting to clusters with ≥1,000 pairs, but are reported here as quality-aware structural prevalence rather than direct evolutionary-rate estimates.
+In this observed effective set, **502,819,691 pairs (77.83%) carried at least two landmark-defined breakpoints**. Species-level rates spanned nearly the full range even among clusters with ≥1,000 effective pairs (Supplementary Figure 6). High-rate examples included *Pseudomonas_E viridiflava* (943,251/943,251 informative pairs; 97.88%), *Streptococcus pneumoniae* (97.81% of 29.42M pairs), and several *Mesorhizobium/Rhizobium* lineages (>99%). Low-rate examples included *Chlamydia trachomatis* (2.95%), *Treponema pallidum* (2.33%), *Francisella tularensis* (9.50%), and *Wolbachia pipientis* (11.15%). These differences persisted after restricting to clusters with ≥1,000 pairs, but are reported here as digest-effective structural prevalence rather than direct evolutionary-rate estimates.
 
 Quality control found one cluster-level discrepancy: *E. coli* had 331,221,566 reported pairs versus 338,793,465 expected from its effective genome list. All other clusters matched `C(n,2)`. Because this shortfall affects only 1.16% of the effective pairs and does not change the ordering of the other species, it is reported transparently rather than imputed. The paired ANI layer for the complete effective census is still being generated; therefore, this section updates the structural layer only and does not yet make species-level hypermutator or hyper-recombinant calls.
 
-### 7. SynTracker cohorts show ANI–synteny decoupling
+### 8. Independent HROM census replicates taxon-specific structural variation
+
+To ask whether database-scale structural screening generalizes beyond GTDB, we
+analysed all 142,277 genomes in the 2,241 multi-genome clusters of the Human
+Reference Oral Microbiome (HROM) database. The analysis evaluated all
+62,872,901 unordered conspecific pairs with the same Syn2b structural channel
+and paired each structural row with skani 0.3.2 ANI. Of these pairs,
+**17,535,013 (27.89%; Wilson 95% CI 27.88–27.90%) carried ≥2 landmark-defined
+breakpoints**, and every row received a matched ANI value.
+
+The taxon-specific signal was broad. Among the 367 HROM clusters with at least
+1,000 pairs, the fraction of pairs with ≥2 breakpoints ranged from 0.66% to
+83.29%, with a median of 17.92%. This independent census therefore reproduced
+two central patterns from the GTDB survey: structural variation is widespread
+within named species clusters, and its prevalence differs greatly among taxa.
+The lower overall prevalence than in GTDB should not be interpreted as a direct
+evolutionary-rate difference because the two resources differ in genome
+catalogues, sampling, assembly continuity, clustering criteria, and quality
+structure.
+
+### 9. SynTracker cohorts show ANI–synteny decoupling
 
 We re-analysed four published SynTracker isolate cohorts (*E. coli*
 hypermutator, n = 253 pairs; *H. pylori*, n = 2,926 pairs; *N. gonorrhoeae*,
@@ -478,7 +504,7 @@ pattern mirrors the participant-level signal reported by SynTracker and
 demonstrates that Syn2b captures epidemiologically relevant structure using
 only restriction-enzyme tags.
 
-### 8. Runtime benchmarking
+### 10. Runtime benchmarking
 
 Digestion of a 4.6-Mbp genome with the full four-enzyme panel takes
 approximately 42 ms on a single core (measured on *E. coli* K-12, including
@@ -495,10 +521,10 @@ reciprocal comparisons recorded in the raw benchmark.
 Memory footprint is dominated by the genome sequence and tag index and remained
 well within standard laptop limits for all panel sizes tested. On the
 same 22-genome panel (484 ordered pairs), Syn2b completed structural comparison
-in 4.4 s, versus 1,844 s for the skani+dnadiff workflow — a ~420-fold speedup
+in 4.4 s, versus 1,844 s for the skani+dnadiff workflow, a ~420-fold speedup
 (Supplementary Table 4). Supplementary Table 2 gives the scaling across panel
 sizes. SynTracker, the microsynteny alternative, required 65,162 s (18.1 h) on
-the same 22-genome panel even with 16 cores — ~15,000-fold slower than Syn2b —
+the same 22-genome panel even with 16 cores, ~15,000-fold slower than Syn2b,
 consistent with its BLAST database construction and all-versus-all DECIPHER
 alignment being at least as expensive as the nucmer-based dnadiff stage.
 
@@ -521,26 +547,28 @@ Alignment-based callers such as dnadiff provide ground truth but require a
 pairwise nucmer alignment per genome pair (~8.0 s per unique pair on our
 benchmark; Supplementary Table 4); the cheapest alignment alternative,
 minimap2²² (`-cx asm5`, one thread), still needs ~1.9 s per complete-genome
-pair on the same machine as our local Syn2b timings — roughly 100× Syn2b's
+pair on the same machine as our local Syn2b timings, roughly 100× Syn2b's
 per-pair cost. Syn2b achieves the same structural signal
 through Type IIB tag adjacency, without pairwise alignment or a pre-built
-database, at ~19 ms per unique pair. Other alignment-free approaches — MinHash
-distances (Mash¹⁸) and sparse chaining (skani²¹) — summarize genomes as k-mer
+database, at ~19 ms per unique pair. Other alignment-free approaches, MinHash
+distances (Mash¹⁸) and sparse chaining (skani²¹), summarize genomes as k-mer
 sets and are by construction blind to adjacency, as our controlled benchmarks
 confirm (Figure 2d); Syn2b retains ordered landmarks at comparable cost and is,
 to our knowledge, the fastest method that reports any length-resolved
 structural quantity. The GTDB validation shows that the orientation ratio alone
 matches dnadiff at r = 0.94 overall and r = 0.996 at ANIm ≥ 97%.
 
-**What genome-wide screening reveals.** The discordance survey in section 6
+**What genome-wide screening shows.** The discordance survey in section 6
 gives a concrete use case. In the 47,748 surveyed pairs alone there are 1,295
 genome pairs that any ANI-only search would rank as near-identical
-(ANIm ≥ 97%) yet that carry ≥2 alignment-visible inversions; extrapolated to
-the full GTDB representative set, the absolute number is far larger. Fast
+(ANIm ≥ 97%) yet that carry ≥2 alignment-defined inversions; extrapolated to
+the full GTDB representative set, the absolute number is far larger. The
+application-scale GTDB and HROM censuses extend this observation from curated
+samples to 646,012,820 and 62,872,901 effective pairs, respectively. Fast
 adjacency-based metrics make such pairs
 discoverable at database scale and in real time during genome search, at which
 point selected pairs can be committed to alignment-based validation. We expect
-this screening role — rather than replacement of alignment-based callers — to
+this screening role, rather than replacement of alignment-based callers, to
 be the primary mode of use.
 
 **Enzyme selection.** Tag density is the primary determinant of sensitivity.
@@ -612,7 +640,7 @@ transforms one tag order into the other.
 
 **Inverted landmark fraction (length-weighted inverted fraction).** For
 shared, orientation-informative tags, the fraction whose stored strand differs
-from the reference — a landmark-count fraction, not a base-pair-weighted one.
+from the reference, a landmark-count fraction, not a base-pair-weighted one.
 Because Type IIB sites are approximately uniformly distributed, the landmark
 fraction estimates the length-weighted inverted fraction; the residual
 difference between the two is absorbed by the overdispersion coefficient of
@@ -633,6 +661,20 @@ than rearrangement statistics.
 
 GTDB-R207 species clusters with multiple genomes were decomposed into 500-genome block pairs. Of 274,374 planned genomes, 261,737 genomes in 21,973 clusters produced non-empty digestion TGTs. Structural tasks covered 653,584,719 effective unique pairs; 646,012,820 pairs remained after mapping legacy contig identifiers to accessions, canonicalizing unordered genome pairs, and global external-sort deduplication. Per-cluster row counts and SV-positive fractions were computed streamingly. One cluster (*E. coli*) had a 7.57M-pair shortfall relative to its effective expectation and is reported as a QC exception rather than imputed. The effective summary is stored in `results/census/gtdb/effective/`.
 
+### HROM within-species census
+
+HROM conspecific genomes were obtained from the Human Reference Oral Microbiome
+database. All 142,277 genomes in 2,241 multi-genome clusters were retained and
+compared with the BcgI+AlfI+AloI+FalI production panel. TGTs
+were keyed by filename genome accession because HROM FASTA headers are contig
+identifiers. Species clusters were decomposed into 250-genome block pairs, and
+all 62,872,901 unordered pairs were evaluated with Syn2b and skani 0.3.2. The
+merge step canonicalized unordered genome pairs and suppressed 10,644,750
+within-block duplicates introduced by the first block-pair implementation. The
+final table contained exactly the expected cluster-level sum of C(n,2) rows, and
+every structural row received a skani ANI value. Per-cluster summaries, ANI-bin
+summaries, and QC reports are stored in `results/census/hrom/`.
+
 ### GTDB-R207 validation
 
 Pairs were drawn from the GTDB-R207 representative genome set. A total of
@@ -644,8 +686,7 @@ strain-level regime, additional candidate pairs were sampled from GTDB-R207
 genomes enriched for close relatives (candidate strata of the companion
 Syn2bANI benchmark, initially ranked by predicted ANI) and retained only if
 their alignment-based ANIm was ≥ 95%. This ANIm-verified sample contributed
-4,436 pairs with complete metrics (3,826 at ≥ 97% ANIm); candidates that failed
-ANIm verification are excluded from all headline results. For each pair, ANIm
+4,436 pairs; 3,826 unique pairs remained after deduplication for the correlation analyses at ≥ 97% ANIm. The non-redundant discordance survey retained 3,828 pairs at ≥ 97% ANIm because two of the additional deduplicated pairs had usable inversion-event records but were not represented in the correlation table. Candidates that failed ANIm verification were excluded from all headline results. For each pair, ANIm
 was computed with minimap2²² (`-cx asm20`) and dnadiff (MUMmer 4.0²³) was run
 with default
 parameters; the `.1coords` output was used to derive the inverted aligned
@@ -715,7 +756,11 @@ MG1655 reference genome (NC_000913.3) and the *H. pylori* 26695 reference genome
 (NC_000915.1) were obtained from NCBI RefSeq. The four SynTracker cohort isolate
 sets and their participant metadata are included in the repository
 (`data/syntracker_validation/`). Simulated isolate parameters are
-described in Supplementary Table 3.
+described in Supplementary Table 3. The HROM resource was obtained from
+https://www.decodebiome.org/HROM/. Repository summaries and QC tables for the
+GTDB and HROM censuses are included in `results/census/`; the corresponding
+compressed full pair tables are prepared for deposit in a permanent archive
+(Zenodo or figshare) rather than repository hosting.
 
 ---
 
@@ -764,7 +809,7 @@ described in Supplementary Table 3.
 16. Enav, H., et al. SynTracker: a tool for tracking microbial strains across
     metagenomic samples. *Nat. Biotechnol.* **42**, 1502–1512 (2024).
 17. Pingoud, A., Wilson, G. G. & Wende, W. Type II restriction
-    endonucleases—a historical perspective and more. *Nucleic Acids Res.*
+    endonucleases: a historical perspective and more. *Nucleic Acids Res.*
     **42**, 7489–7527 (2014).
 18. Ondov, B. D., et al. Mash: fast genome and metagenome distance estimation
     using MinHash. *Genome Biol.* **17**, 132 (2016).
@@ -819,7 +864,7 @@ compared in Table 2.
  systematic dependence on assembly fragmentation (max contigs per pair),
  illustrating the fragmentation invariance of length-weighted ratios.
 
-**Figure 4. SynTracker cohorts reveal ANI–synteny decoupling.** Pairwise
+**Figure 4. SynTracker cohorts show ANI–synteny decoupling.** Pairwise
 comparisons of four published SynTracker cohorts (n = 3,435 pairs) using skani
 ANI and Syn2b structural metrics. (a) ANI versus breakpoint count; the inset
 zooms into the near-clonal, near-zero-breakpoint clusters. (b) ANI
@@ -835,10 +880,10 @@ captures epidemiologically relevant structure beyond ANI.
 47,748 pairs (held-out set plus ANIm-verified high-ANI sample); the red line
 marks the species-level ANI threshold and the annotation gives the number of
 discordant pairs (ANIm ≥ 97%, ≥2 inversions). (b) Percentage of pairs carrying
-at least 1, 2, or 5 dnadiff inversions per 1% ANIm bin — rearrangement
+at least 1, 2, or 5 dnadiff inversions per 1% ANIm bin, rearrangement
 prevalence decays slowly as ANI approaches 100%. (c) Phylum composition of
 discordant pairs (dark blue) versus concordant ANIm ≥ 97% pairs (light blue);
-numbers give the enrichment fold. (`figures/main/fig5_discordance_overview.png`).
+numbers give the enrichment fold. (`figures/main/fig5_discordance_overview.pdf`).
 
 **Figure 6. Runtime and scaling.** (a) Measured single-genome digestion time
 per enzyme of the production panel on *E. coli* K-12 (4.6 Mb) using the Rust
@@ -933,36 +978,6 @@ excluded from the amortized scaling curve in Figure 6b.
    `results/discordance/flagging_features.tsv`,
    `results/discordance/prevalence_ci.tsv`).
 
-**Supplementary Table 2.** Runtime scaling across panel sizes. Wall times are
-means of three replicates on the HPC (16 cores for skani/dnadiff/SynTracker).
-Per-pair times are per unique unordered pair C(n,2); the benchmark recorded
-n² ordered (self-plus-reciprocal) comparisons.
-
-| n genomes | n unique pairs | Syn2b (ms/pair) | skani (ms/pair) | dnadiff (s/pair) | skani+dnadiff (s/pair) | SynTracker (s/pair) | Syn2b speedup vs skani+dnadiff | Syn2b speedup vs SynTracker |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| 2 | 1 | 515.7 | 167.7 | 19.63 | 19.80 | 4,467.0 | 38x | 8,663x |
-| 5 | 10 | 39.8 | 14.8 | 4.04 | 4.06 | 1,871.0 | 102x | 46,971x |
-| 10 | 45 | 23.2 | 6.6 | 5.83 | 5.83 | 863.2 | 251x | 37,171x |
-| 15 | 105 | 22.0 | 4.9 | 15.03 | 15.04 | n.d. | 684x | n.d. |
-| 22 | 231 | 18.9 | 2.3 | 7.98 | 7.98 | 282.1 | 423x | 14,947x |
-
-**Supplementary Table 4.** Head-to-head runtime on the 22-genome panel
-(231 unique pairs; mean of three replicates, SynTracker single run). Syn2b
-reports structural metrics only; the companion tool Syn2bANI reuses the same
-tag framework to report ANI together with structural metrics. SynTracker was
-run with its default pipeline on 16 cores; its output (average pairwise
-synteny score over gene blocks) differs in content from Syn2b's junction and
-ratio metrics, so the comparison is of workflows rather than identical
-quantities.
-
-| tool | wall time (s) | per unique pair (s) | reports ANI | reports SV |
-|---|---:|---:|---|---|
-| Syn2b | 4.4 | 0.019 | no | yes (inverted fraction, junctions) |
-| skani | 0.5 | 0.002 | yes | no |
-| dnadiff (MUMmer) | 1,843.9 | 7.982 | no | yes (alignment-based truth) |
-| SynTracker (16 cores) | 65,162.0 | 282.087 | no | yes (gene synteny) |
-| skani + dnadiff | 1,844.5 | 7.985 | yes | yes |
-
 ### Supplementary Figures
 
 - **Supplementary Figure 1:** Inter-tag distance distribution for the
@@ -972,7 +987,7 @@ quantities.
   bp). Because the TGT path links the two tags flanking each cut site, the
   recorded intervals are not a partition of the genome and overestimate the
   average landmark spacing (genome length / 6,216 tags ≈ 747 bp)
-  (`figures/supplementary/fig1_tag_spacing.png`).
+  (`figures/supplementary/fig1_tag_spacing.pdf`).
 - **Supplementary Figure 2:** Closed-genome inversion validation on 100
   complete-genome pairs selected for high expected structural divergence.
   (a) Number of junctions reported by Syn2b versus dnadiff. (b) Fraction of
@@ -980,7 +995,7 @@ quantities.
   matched Syn2b and dnadiff junction positions. The low recovery and coarse
   position resolution reflect that many dnadiff inversions fall in regions
   without a nearby restriction-enzyme landmark
-  (`figures/supplementary/fig2_closed_genome_validation.png`).
+  (`figures/supplementary/fig2_closed_genome_validation.pdf`).
 - **Supplementary Figure 3:** Sensitivity of Syn2b junction counts and raw
   inverted fraction to SV size. Controlled *E. coli* K-12 variants carrying a
   single inversion, insertion, deletion, or translocation on a 1% SNP
@@ -989,13 +1004,13 @@ quantities.
   inverted segment length. Insertions and deletions produce zero junctions
   unless a landmark straddles the breakpoint; translocation of a 500-kb segment
   yields three junctions
-  (`figures/supplementary/fig3_sv_size_sensitivity.png`).
+  (`figures/supplementary/fig3_sv_size_sensitivity.pdf`).
 - **Supplementary Figure 4:** Inversion detection-size resolution. Fraction of
   replicates (10 random positions per size) in which both junctions of an
   inverted segment are recovered, for the production four-enzyme panel and for
   BcgI alone, on *E. coli* K-12 with a 1% SNP background. The panel recovers
   4-kb inversions in 10/10 replicates; BcgI alone requires ~8 kb for comparable
-  detection (`figures/supplementary/fig4_detection_size.png`).
+  detection (`figures/supplementary/fig4_detection_size.pdf`).
 - **Supplementary Figure 5:** Known-biology calibration of the junction
   channel on complete genomes. (a) skani ANI versus Syn2b junction count for
   within-collection pairs of *M. tuberculosis*, *E. coli*, *S.* Typhimurium,
@@ -1003,7 +1018,15 @@ quantities.
   Junction-count distributions by collection: the conserved *M. tuberculosis*
   control sits at a median of 0 junctions at 99.92% median ANI, while 84–88%
   of ≥99%-ANI *Shigella* pairs carry ≥2 junctions
-  (`figures/supplementary/fig5_known_biology.png`).
+  (`figures/supplementary/fig5_known_biology.pdf`).
+- **Supplementary Figure 6:** Application-scale structural censuses.
+  (a) Distribution of species-level prevalence of ≥2 landmark-defined
+  breakpoints across 383 GTDB-R207 clusters with ≥1,000 effective pairs.
+  (b) Distribution across 367 HROM clusters with ≥1,000 pairs.
+  (c) HROM prevalence by skani ANI bin. The GTDB and HROM censuses show wide
+  taxon-specific variation but differ in overall prevalence because of different
+  catalogues, assemblies, clustering, and quality structure
+  (`figures/supplementary/fig6_structural_censuses.pdf`).
 
 ---
 
