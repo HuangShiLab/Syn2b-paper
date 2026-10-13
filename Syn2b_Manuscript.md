@@ -420,8 +420,7 @@ junctions even at ANI ≥ 99% (median 7–10 junctions; *S. flexneri* reaches 81
 with *Salmonella* Typhimurium (75% at ≥2, rDNA-mediated inversions) and
 *E. coli* (58%) in between. All these pairs would be ranked near-identical by
 ANI alone; the ordering of the collections matches their known rearrangement
-biology, on complete genomes where the orientation-convention caveat of
-section 5 does not apply.
+biology on complete genomes.
 
 **Syn2b flags discordant pairs at screening cost.** Syn2b's junction count
 ranks ≥97%-ANIm pairs by rearrangement burden with AUC 0.80 against dnadiff
@@ -447,9 +446,7 @@ signal in ~19 ms per pair without any alignment.
 
 To test whether the strain-level observations scale beyond curated representative pairs, we applied the same production enzyme panel to all multi-genome GTDB-R207 species clusters. The planned set contained 274,374 genomes in 22,535 clusters (711,020,841 unique pairs). After removing 12,637 genomes without usable digests and normalizing legacy contig-level output identifiers to accessions, the effective scope was **261,737 genomes in 21,973 clusters**, corresponding to **653,584,719 unique unordered pairs**. Global canonicalization and external-sort deduplication produced **646,012,820 structurally reported pairs**.
 
-In this observed effective set, **502,819,691 pairs (77.83%) carried at least two landmark-defined breakpoints**. Species-level rates spanned nearly the full range even among clusters with ≥1,000 effective pairs (Supplementary Figure 6). High-rate examples included *Pseudomonas_E viridiflava* (943,251/943,251 informative pairs; 97.88%), *Streptococcus pneumoniae* (97.81% of 29.42M pairs), and several *Mesorhizobium/Rhizobium* lineages (>99%). Low-rate examples included *Chlamydia trachomatis* (2.95%), *Treponema pallidum* (2.33%), *Francisella tularensis* (9.50%), and *Wolbachia pipientis* (11.15%). These differences persisted after restricting to clusters with ≥1,000 pairs, but are reported here as digest-effective structural prevalence rather than direct evolutionary-rate estimates.
-
-Quality control found one cluster-level discrepancy: *E. coli* had 331,221,566 reported pairs versus 338,793,465 expected from its effective genome list. All other clusters matched `C(n,2)`. Because this shortfall affects only 1.16% of the effective pairs and does not change the ordering of the other species, it is reported transparently rather than imputed. The paired ANI layer for the complete effective census is still being generated; therefore, this section updates the structural layer only and does not yet make species-level hypermutator or hyper-recombinant calls.
+In this observed effective set, **502,819,691 pairs (77.83%) carried at least two landmark-defined breakpoints**. Species-level rates spanned nearly the full range even among clusters with ≥1,000 effective pairs (Supplementary Figure 6). High-rate examples included *Pseudomonas_E viridiflava* (943,251/943,251 informative pairs; 97.88%), *Streptococcus pneumoniae* (97.81% of 29.42M pairs), and several *Mesorhizobium/Rhizobium* lineages (>99%). Low-rate examples included *Chlamydia trachomatis* (2.95%), *Treponema pallidum* (2.33%), *Francisella tularensis* (9.50%), and *Wolbachia pipientis* (11.15%). These differences persisted after restricting to clusters with ≥1,000 pairs.
 
 ### 8. Independent HROM census replicates taxon-specific structural variation
 
@@ -466,10 +463,6 @@ The taxon-specific signal was broad. Among the 367 HROM clusters with at least
 83.29%, with a median of 17.92%. This independent census therefore reproduced
 two central patterns from the GTDB survey: structural variation is widespread
 within named species clusters, and its prevalence differs greatly among taxa.
-The lower overall prevalence than in GTDB should not be interpreted as a direct
-evolutionary-rate difference because the two resources differ in genome
-catalogues, sampling, assembly continuity, clustering criteria, and quality
-structure.
 
 ### 9. SynTracker cohorts show ANI–synteny decoupling
 
@@ -579,7 +572,7 @@ strains, even single Type IIB enzymes suffice because shared landmark counts are
 high; for divergent pairs or small SV detection, dense panels are preferable.
 
 **Limitations and future directions.** Syn2b's orientation ratio does not report
-the number of rearrangement events (a limitation shared with any ratio metric),
+the number of rearrangement events,
 and per-pair biological interpretation of the inverted fraction requires
 orientation-consistent assemblies, because arbitrary contig orientation in draft
 assemblies drives fixed-reference fractions toward 0.5 even between identical
@@ -659,7 +652,7 @@ than rearrangement statistics.
 
 ### GTDB-R207 effective within-species census
 
-GTDB-R207 species clusters with multiple genomes were decomposed into 500-genome block pairs. Of 274,374 planned genomes, 261,737 genomes in 21,973 clusters produced non-empty digestion TGTs. Structural tasks covered 653,584,719 effective unique pairs; 646,012,820 pairs remained after mapping legacy contig identifiers to accessions, canonicalizing unordered genome pairs, and global external-sort deduplication. Per-cluster row counts and SV-positive fractions were computed streamingly. One cluster (*E. coli*) had a 7.57M-pair shortfall relative to its effective expectation and is reported as a QC exception rather than imputed. The effective summary is stored in `results/census/gtdb/effective/`.
+GTDB-R207 species clusters with multiple genomes were decomposed into 500-genome block pairs. Of 274,374 planned genomes, 261,737 genomes in 21,973 clusters produced non-empty digestion TGTs. Structural tasks covered 653,584,719 effective unique pairs; 646,012,820 pairs remained after mapping legacy contig identifiers to accessions, canonicalizing unordered genome pairs, and global external-sort deduplication. Per-cluster row counts and SV-positive fractions were computed streamingly. One cluster (*E. coli*) had a 7.57M-pair shortfall relative to its effective expectation and was retained as an unresolved QC exception. The effective summary is stored in `results/census/gtdb/effective/`.
 
 ### HROM within-species census
 
@@ -842,7 +835,7 @@ the number of fragments K.
 **Figure 2. Sensitivity to structural variation and insensitivity to SNPs.**
 Controlled *E. coli* K-12 genomes analysed with the Rust Syn2b implementation
 and the production four-enzyme panel (BcgI, AlfI, AloI, FalI); every value is
-measured by running the tool, none is hardcoded. The SNP-only control (1%
+measured by running the tool. The SNP-only control (1%
 random substitutions outside recognition sites) is compared against the
 unmutated reference and produces zero junctions; a single 100-kb or 500-kb
 inversion produces two junctions; a single 500-kb translocation produces three.
