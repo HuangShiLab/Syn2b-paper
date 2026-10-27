@@ -1,0 +1,11 @@
+parameter	value	note
+reference_genome	E. coli K-12 MG1655 (NC_000913.3)	4,641,652 bp
+enzyme_panel	BcgI,AlfI,AloI,FalI	production panel
+snp_rate	0.01	1% random substitutions outside recognition sites
+random_seed	42	
+sv_types	single inversion, single insertion, single deletion, single translocation	
+inversion_sizes_bp	10000,50000,100000,500000	centred on chromosome
+insertion_sizes_bp	10000,50000,100000	duplicated segment inserted at 3/4 chromosome position
+deletion_sizes_bp	10000,50000,100000	segment removed from chromosome centre
+translocation_size_bp	500000	segment moved from 1/4 to 3/4 chromosome position
+replicates	1 per condition	

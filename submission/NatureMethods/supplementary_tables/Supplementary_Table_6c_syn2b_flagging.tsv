@@ -1,0 +1,2 @@
+threshold_inversion_events	n_pairs	n_discordant	syn2b_junctions_cutoff	sensitivity_pct	fpr_pct	auc
+2	3828	1295	12.0	29.72972972972973	4.579549940781682	0.7997663277173739

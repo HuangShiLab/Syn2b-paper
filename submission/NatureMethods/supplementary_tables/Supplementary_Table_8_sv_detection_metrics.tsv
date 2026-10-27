@@ -1,0 +1,9 @@
+sv_condition	enzyme_arm	junctions	scj_distance	raw_inverted_fraction	shared_tags
+SNP_1pct_vs_reference	BcgI	0	0	0.000	2040
+SNP_1pct_vs_reference	4-enzyme_panel	0	0	0.000	4256
+Inversion_100kb	BcgI	2	4	0.021	2768
+Inversion_100kb	4-enzyme_panel	2	4	0.023	5704
+Inversion_500kb	BcgI	2	4	0.116	2768
+Inversion_500kb	4-enzyme_panel	2	4	0.116	5703
+Translocation_500kb	BcgI	3	6	0.000	2768
+Translocation_500kb	4-enzyme_panel	3	6	0.000	5704

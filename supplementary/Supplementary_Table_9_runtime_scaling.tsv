@@ -1,0 +1,6 @@
+n_genomes	n_pairs_raw	n_unique_pairs	mean_wall_time_s	per_pair_time_ms
+2	4	1	0.52	515.7
+5	25	10	0.40	39.8
+10	100	45	1.05	23.2
+15	225	105	2.31	22.0
+22	484	231	4.36	18.9

@@ -30,3 +30,6 @@ node_modules/
 package*.json
 *.docx
 !Syn2b_Manuscript.docx
+
+# Nature Methods submission package
+!submission/**/*.docx

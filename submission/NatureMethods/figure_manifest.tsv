@@ -1,0 +1,7 @@
+figure	caption_file_pdf	source_pdf
+Fig. 1	Syn2b algorithm	figures/main/fig1_algorithm_schematic.pdf
+Fig. 2	Sensitivity to SV and insensitivity to SNPs	figures/main/fig2_sv_sensitivity_rust.pdf
+Fig. 3	GTDB-R207 validation	figures/main/fig3_gtdb_validation.pdf
+Fig. 4	SynTracker cohorts	figures/main/fig4_syntracker_cohorts.pdf
+Fig. 5	GTDB rearrangement discordance	figures/main/fig5_discordance_overview.pdf
+Fig. 6	Runtime and scaling	figures/main/fig6_runtime_scaling.pdf

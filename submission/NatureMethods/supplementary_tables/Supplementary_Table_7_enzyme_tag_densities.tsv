@@ -1,0 +1,6 @@
+enzyme	tag_count	density_per_kb
+BcgI	2935	0.632
+AlfI	2023	0.436
+AloI	523	0.113
+FalI	735	0.158
+BcgI+AlfI+AloI+FalI	6216	1.339
