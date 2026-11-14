@@ -1,0 +1,5 @@
+genome_A	genome_B	breakpoints	skani_ani	shared_tags	exclusion_reason
+HROM_Genome_0214_330	HROM_Genome_0214_331	NA	0.000000	0	no_shared_landmarks
+HROM_Genome_0302_1511	HROM_Genome_0302_2266	NA	0.000000	0	no_shared_landmarks
+HROM_Genome_1085_480	HROM_Genome_1085_586	NA	0.000000	0	no_shared_landmarks
+HROM_Genome_1085_586	HROM_Genome_1085_587	NA	0.000000	0	no_shared_landmarks

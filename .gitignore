@@ -17,6 +17,7 @@ __pycache__/
 # Output
 *.tmp
 *.log
+.tmp_docx/
 *.swp
 *.swo
 *~

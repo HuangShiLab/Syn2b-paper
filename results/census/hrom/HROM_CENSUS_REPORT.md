@@ -16,15 +16,20 @@
 | Structural tasks | 3,525 |
 | Structural task failures | 0 |
 | Missing clusters/pairs | 0 |
-| Pair rows with matched skani ANI | 62,872,901 / 62,872,901 |
+| Pair rows with matched skani ANI | 62,872,897 / 62,872,901 |
 
 ## QC
 
+- The catalogue contains 62,872,901 unordered pairs. Four pairs had no shared
+  landmarks and therefore no finite structural metrics; the structural-prevalence
+  denominator is 62,872,897 metric-complete pairs. The excluded pairs are listed in
+  `hrom_structural_missing_qc.tsv`.
 - All 3,525 block-pair tasks completed and produced checkpoints.
 - The merged unique-pair count is exactly `sum(C(n,2))` over included clusters:
   **62,872,901**.
 - No cluster has fewer pairs than its genome-level expectation.
-- Every structural pair received an ANI value.
+- Every pair with shared landmarks received a skani ANI value; four pairs
+  without shared landmarks had no finite structural metric.
 - The first block-pair implementation retained within-block rows in cross-block
   tasks; the merge step suppressed **10,644,750** duplicate rows. The final
   pair table is therefore complete and non-redundant. The worker filter was
@@ -41,6 +46,7 @@ Using the exact species-level counts:
 | Metric | Value |
 |---|---:|
 | Pairs with `breakpoints >= 2` | 17,535,013 |
+| Metric-complete structural denominator | 62,872,897 |
 | Fraction with `breakpoints >= 2` | 27.8896% |
 
 Thus, over half of HROM within-species pairs have ANI >= 97%, and about 28% of
@@ -87,6 +93,8 @@ contributions include:
 - `hrom_within_species_sv_ani.tsv.gz`: structural table plus `skani_ani`
   (2.0 GB compressed).
 - `species_summary.tsv`: per-cluster structural summary.
+- `hrom_structural_missing_qc.tsv`: four catalogue pairs excluded from
+  structural prevalence because they had no shared landmarks.
 - `ani_bin_summary.tsv`: ANI-bin summary.
 - `census_qc.md`, `merge_ani_qc.md`: QC reports.
 

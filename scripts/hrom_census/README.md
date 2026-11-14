@@ -79,3 +79,26 @@ sbatch scripts/hrom_census/hrom_merge_job.slurm
 would be keyed by the first contig ID (`HROM_Genome_0002_contig_1`) rather than
 the genome accession, so task row filters would fail or produce wrong genome
 labels. This was verified with a two-genome Syn2b digest/synteny smoke test.
+
+## Post-census summaries
+
+`census_robustness.py` recomputes the canonical pair table, reports overall and
+ANI-threshold prevalence, and performs 10,000 cluster-level bootstrap replicates
+plus a leave-one-largest-cluster-out sensitivity check. It also reads the GTDB
+effective cluster summary. `join_hrom_taxonomy_prevalence.py` joins
+representative species labels to per-cluster prevalence for clusters above a
+pair-count threshold.
+
+```bash
+python3 scripts/hrom_census/census_robustness.py \
+  --hrom-census /path/to/hrom_within_species_sv_ani.tsv.gz \
+  --gtdb-summary results/census/gtdb/effective/effective_species_summary.tsv \
+  --outfile results/census/census_robustness.tsv \
+  --replicates 10000 --seed 42
+
+python3 scripts/hrom_census/join_hrom_taxonomy_prevalence.py \
+  --summary results/census/hrom/species_summary.tsv \
+  --enrichment /path/to/hypermode_species_enrichment.tsv \
+  --outfile supplementary/Supplementary_Table_12_hrom_taxonomy_prevalence.tsv \
+  --min-pairs 1000
+```
