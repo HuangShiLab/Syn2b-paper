@@ -14,7 +14,7 @@
 | Outgoing package hygiene | PASS | Review 7 and Review 8 removed from `submission/NatureMethods` |
 | Package integrity | PASS | `submission/NatureMethods/SHA256SUMS`; all 29 listed deliverables verify |
 | Software version | PASS | Syn2b `v0.1.0`, commit `248441eabb2c2c72c8b3a85da65d88577839b63e`, CI passed |
-| Analysis version pin | PASS after commit | `paper-v1` tag points to this package commit |
+| Analysis version pin | PASS | `paper-v1` tag points to package commit `577f062` |
 | Data archive | BLOCKED | Permanent GTDB/HROM pair-table DOI requires external deposit |
 | Software archive | BLOCKED | Zenodo DOI requires external release linking |
 
