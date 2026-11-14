@@ -1,0 +1,4 @@
+mode	all_species	high_quality_species	intersection	jaccard
+structural_enriched	96	60	53	0.5145631067961165
+ani_enriched	161	93	79	0.4514285714285714
+both_enriched	36	19	9	0.1956521739130435
