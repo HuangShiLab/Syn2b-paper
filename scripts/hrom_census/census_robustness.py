@@ -69,7 +69,7 @@ def add_row(rows, source, metric, successes, trials, cluster_counts=None,
         "cluster_bootstrap_high": bhi,
         "leave_one_cluster_out_prevalence": lp,
         "clusters": len(cluster_counts) if cluster_counts is not None else "",
-        "left_out_cluster": leave_out or "",
+        "left_out_cluster": leave_out or "NA",
     })
 
 

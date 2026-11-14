@@ -1,7 +1,6 @@
 # Review 8: strengthened Nature Methods package audit
 
-**Date:** 2026-11-14  
-**Scope:** content strengthening after Review 7  
+**Date:** 2026-11-14<br>**Scope:** content strengthening after Review 7<br>
 **Skills applied:** `supervisor-review`, `nature-reviewer`, `nature-statistics`, `nature-polishing` and `anti-defensive-writing`.
 
 ## Verdict
